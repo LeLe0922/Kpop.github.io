@@ -455,23 +455,8 @@ function showEnding(){
     content.innerHTML='<div class="big-icon">'+icon+'</div><div class="ending-title">'+title+'</div><div class="ending-desc">'+desc+'</div><div class="ending-tags">🏷️ 标签：'+(state.flags.length?state.flags.join(' · '):'无')+'</div><button class="ending-btn" onclick="location.reload()">🔄 重新开始</button>';
     document.getElementById('endingModal').style.display='flex';
 }
-
 // ========== 启动与重置 ==========
-function startGame(){
-    var name=document.getElementById('nameInput').value.trim()||'林娜恩';
-    state.name=name;
-    document.getElementById('playerNameDisplay').textContent=name;
-    document.getElementById('startScreen').classList.add('hidden');
-    document.getElementById('gameApp').style.display='block';
-    state.month=0;
-    state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};
-    state.flags=[];
-    state.gameOver=false;
-    state.phase='schedule';
-    state.storyChosen=false;
-    state.pendingStory=null;
-    document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=false; });
-    document.getElementById('storyOptions').innerHTML='';
-    document.getElementById('storyText').textContent='👋 欢迎来到 DreamHaus！\n作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！';
-    document.getElementById('feedbackToast').textContent='✨ 点击日程安排你的本月计划';
-    document.getElementBy
+window.startGame = function() { // 显式挂载到 window
+    var name = document.getElementById('nameInput').value.trim() || '林娜恩';
+    state.name = name;
+    document.getElementById('playerNameDisplay').tex
