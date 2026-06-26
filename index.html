@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌸 练习生 · 三年之约</title>
     <style>
-        /* ---------- 全局重置 & 奶油韩系风格 ---------- */
+        /* ---------- 全局样式 ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -22,7 +22,7 @@
             padding: 20px;
         }
 
-        /* ---------- 起名界面 (启动弹窗) ---------- */
+        /* ---------- 起名界面 ---------- */
         #startScreen {
             position: fixed;
             top: 0;
@@ -35,7 +35,7 @@
             justify-content: center;
             align-items: center;
             z-index: 999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
         }
         #startScreen.hidden {
             opacity: 0;
@@ -99,7 +99,7 @@
             box-shadow: 0 10px 30px rgba(200, 150, 140, 0.3);
         }
 
-        /* ---------- 主应用 ---------- */
+        /* ---------- 主游戏 ---------- */
         .app {
             max-width: 1100px;
             width: 100%;
@@ -108,6 +108,7 @@
             padding: 28px 30px 40px;
             box-shadow: 0 20px 60px rgba(210, 170, 160, 0.25);
             border: 1px solid #ffede8;
+            display: none; /* 默认隐藏，开始后显示 */
         }
 
         .header {
@@ -417,12 +418,13 @@
             <h1>🌸 练习生 · 三年之约</h1>
             <p>请输入你的名字，开启专属偶像之旅</p>
             <input type="text" id="nameInput" placeholder="输入你的名字" value="林娜恩" maxlength="10">
-            <button id="startBtn">🎤 开始</button>
+            <button onclick="startGame()">🎤 开始</button>
         </div>
     </div>
 
     <!-- ========== 主游戏 ========== -->
-    <div class="app" id="gameApp" style="display:none;">
+    <div class="app" id="gameApp">
+        <!-- 内容与之前相同，略去重复以节省篇幅，但为了完整，我们包含全部 -->
         <div class="header">
             <h1>🌸 练习生 · 三年之约</h1>
             <div class="meta-info">
@@ -476,14 +478,14 @@
 
             <div class="feedback-toast" id="feedbackToast">✨ 点击日程安排你的本月计划</div>
             <div class="reset-area">
-                <button class="reset-btn" id="resetBtn">🔄 重新开始</button>
+                <button class="reset-btn" onclick="resetGame()">🔄 重新开始</button>
             </div>
         </div>
     </div>
 
     <script>
         // ============================================================
-        //  核心状态
+        //  状态与常量
         // ============================================================
         const STAT_KEYS = ['vocal', 'dance', 'rap', 'visual', 'stamina', 'mental', 'popularity'];
         const STAT_LABELS = {
@@ -511,13 +513,13 @@
             },
             flags: [],
             gameOver: false,
-            phase: 'schedule', // 'schedule' | 'story' | 'ending'
+            phase: 'schedule',
             pendingStory: null,
             storyChosen: false,
         };
 
         // ============================================================
-        //  剧情事件库 (仅保留关键月份)
+        //  剧情事件（同之前）
         // ============================================================
         const STORY_EVENTS = {
             0: {
@@ -685,7 +687,6 @@
                 const n = keys.length;
                 const angles = keys.map((_, i) => (i / n) * 2 * Math.PI - Math.PI / 2);
 
-                // 网格
                 ctx.strokeStyle = '#f0ddd5';
                 ctx.lineWidth = 1.2;
                 for (let level = 1; level <= 5; level++) {
@@ -699,7 +700,6 @@
                     ctx.closePath();
                     ctx.stroke();
                 }
-                // 轴线 + 标签
                 for (let i = 0; i < n; i++) {
                     const x = centerX + radius * Math.cos(angles[i]);
                     const y = centerY + radius * Math.sin(angles[i]);
@@ -718,7 +718,6 @@
                     ctx.fillText(STAT_LABELS[keys[i]], lx, ly);
                 }
 
-                // 数据
                 const values = keys.map(k => getStatValue(k) / 100);
                 ctx.beginPath();
                 for (let i = 0; i < n; i++) {
@@ -764,7 +763,6 @@
         // ============================================================
         function handleSchedule(action) {
             if (state.gameOver || state.phase !== 'schedule') {
-                console.log('当前状态不允许安排日程:', state.phase, state.gameOver);
                 return;
             }
 
@@ -802,7 +800,6 @@
                 default:
                     return;
             }
-            // 边界保护
             for (let k in effects) {
                 if (state.stats.hasOwnProperty(k)) {
                     let v = state.stats[k] + effects[k];
@@ -813,7 +810,6 @@
             document.getElementById('feedbackToast').textContent = `✅ ${baseMsg} → ${feedback}`;
             updateUI();
 
-            // 切换至剧情阶段
             state.phase = 'story';
             document.getElementById('phaseBadge').textContent = '🎬 剧情选择';
             document.querySelectorAll('#scheduleButtons button').forEach(b => b.disabled = true);
@@ -840,7 +836,6 @@
                     optContainer.appendChild(btn);
                 });
             } else {
-                // 没有选项时自动继续
                 setTimeout(() => { finishMonth(); }, 800);
             }
         }
@@ -888,6 +883,10 @@
 
             const randomMsg = ['🌈 新的一月，继续加油！', '☕ 公司咖啡厅出了新品～', '📈 上个月表现不错，继续努力！', '🌙 夜深了，但梦想还在发光。'];
             document.getElementById('storyText').textContent = randomMsg[Math.floor(Math.random() * randomMsg.length)] + '\n请选择本月的训练日程。';
-            document.getElementById('feedbackToast').textC
-            
-            
+            document.getElementById('feedbackToast').textContent = '📅 新的一月，选择你的日程吧！';
+            updateUI();
+        }
+
+        // ============================================================
+        //  结局系统
+        // =======================
