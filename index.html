@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌸 练习生 · 三年之约</title>
+<title>🌸 练习生模拟器</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:#fcf6f0;color:#4a3b3b;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
@@ -82,7 +82,7 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 <body>
 
 <!-- 起名界面 -->
-<div id="startScreen"><div class="start-card"><h1>🌸 练习生 · 三年之约</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button onclick="window.startGame()">🎤 开始</button></div></div>
+<div id="startScreen"><div class="start-card"><h1>🌸 练习生模拟器</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button onclick="window.startGame()">🎤 开始</button></div></div>
 <div id="startGlow"></div>
 
 <!-- 里程碑弹窗 -->
@@ -93,7 +93,7 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 
 <!-- 主游戏 -->
 <div class="app" id="gameApp">
-<div class="header"><h1>🌸 练习生 · 三年之约</h1><div class="meta-info"><div>📆 <span id="monthDisplay">1</span> / 36</div><div>🏷️ <span id="flagDisplay">新人</span></div></div></div>
+<div class="header"><h1>🌸 练习生模拟器</h1><div class="meta-info"><div>📆 <span id="monthDisplay">1</span> / 36</div><div>🏷️ <span id="flagDisplay">新人</span></div></div></div>
 <div class="profile-radar-row">
 <div class="profile-card">
 <div class="name-area"><span class="name-display" id="playerNameDisplay">林娜恩</span><span class="badge">🎤 练习生</span></div>
@@ -138,28 +138,28 @@ var isProcessingMilestone = false;
 //  社交恋爱系统数据
 // ========================================================================
 var TRAINEES = [
-    { name:'金敏俊', gender:'男', type:'练习生', personality:'开朗型', emoji:'😄' },
-    { name:'朴智浩', gender:'男', type:'练习生', personality:'努力型', emoji:'💪' },
-    { name:'李泰亨', gender:'男', type:'练习生', personality:'搞笑型', emoji:'😂' },
-    { name:'郑宇彬', gender:'男', type:'练习生', personality:'温柔型', emoji:'🤗' },
-    { name:'姜素拉', gender:'女', type:'练习生', personality:'开朗型', emoji:'😊' },
-    { name:'韩智恩', gender:'女', type:'练习生', personality:'努力型', emoji:'🌟' },
-    { name:'尹娜妍', gender:'女', type:'练习生', personality:'搞笑型', emoji:'🤣' }
+    { name:'金允浩', gender:'男', type:'练习生', personality:'开朗乐观', emoji:'😄' },
+    { name:'朴旻宇', gender:'男', type:'练习生', personality:'努力上进', emoji:'💪' },
+    { name:'李时安', gender:'男', type:'练习生', personality:'活泼爱笑', emoji:'😂' },
+    { name:'郑宇彬', gender:'男', type:'练习生', personality:'温柔包容', emoji:'🤗' },
+    { name:'姜素妍', gender:'女', type:'练习生', personality:'开朗乐观', emoji:'😊' },
+    { name:'韩智恩', gender:'女', type:'练习生', personality:'努力上进', emoji:'🌟' },
+    { name:'尹娜妃', gender:'女', type:'练习生', personality:'活泼爱笑', emoji:'🤣' }
 ];
 var SENIORS = [
-    { name:'权志龙', gender:'男', type:'前辈爱豆', personality:'野心型', emoji:'🔥' },
-    { name:'金硕珍', gender:'男', type:'前辈爱豆', personality:'温柔型', emoji:'💜' },
-    { name:'IU', gender:'女', type:'前辈爱豆', personality:'佛系型', emoji:'🍃' }
+    { name:'权尚宇', gender:'男', type:'前辈爱豆', personality:'野心大志', emoji:'🔥' },
+    { name:'金建河', gender:'男', type:'前辈爱豆', personality:'佛系躺平', emoji:'💜' },
+    { name:'夏恩', gender:'女', type:'前辈爱豆', personality:'温柔包容', emoji:'🍃' }
 ];
 var SOCIAL_POOL = TRAINEES.concat(SENIORS);
 
 var PERSONALITY_AFFINITY = {
-    '开朗型': { good: 2, normal: 1, bad: -1 },
-    '努力型': { good: 2, normal: 1, bad: -2 },
-    '搞笑型': { good: 2, normal: 1, bad: -1 },
-    '温柔型': { good: 2, normal: 1, bad: -1 },
-    '野心型': { good: 2, normal: 0, bad: -2 },
-    '佛系型': { good: 1, normal: 1, bad: -1 }
+    '开朗乐观': { good: 2, normal: 1, bad: -1 },
+    '努力上进': { good: 2, normal: 1, bad: -2 },
+    '活泼爱笑': { good: 2, normal: 1, bad: -1 },
+    '温柔包容': { good: 2, normal: 1, bad: -1 },
+    '野心大志': { good: 2, normal: 0, bad: -2 },
+    '佛系躺平': { good: 1, normal: 1, bad: -1 }
 };
 
 var SOCIAL_SCENES = [
@@ -188,7 +188,7 @@ var SOCIAL_SCENES = [
         { text: '🤝 表达敬佩，建立友谊', type:'good', effect:{popularity:3,mental:1} },
         { text: '🏃 一起练习，互相学习', type:'normal', effect:{dance:2,stamina:-1,popularity:1} }
     ]},
-    { text: '对方想和你组队参加月末评价，你？', options: [
+    { text: '对方想和你一challenge，你？', options: [
         { text: '👍 爽快答应', type:'good', effect:{popularity:2,mental:2,dance:1} },
         { text: '🤔 考虑后婉拒', type:'bad', effect:{mental:1,popularity:-1} },
         { text: '🎯 接受并制定详细计划', type:'good', effect:{dance:2,vocal:2,mental:1} }
@@ -211,25 +211,25 @@ var isLoveBroken = false;
 // ========================================================================
 var STORY_EVENTS = {
 0:{text:'第一天，经纪人问你最想成为哪种艺人？',options:[
-{text:'💪 全能实力派，我要当ACE',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
-{text:'🎭 舞台表演者，dance才是王道',effect:{dance:3,visual:2,stamina:2},flag:'performer'},
-{text:'✍️ 创作型歌手，我只想创造自己的音乐',effect:{vocal:2,rap:2,mental:3},flag:'creator'},
-{text:'🤝 社交达人，成为人脉最广的爱豆',effect:{popularity:3,mental:1,stamina:-1},flag:'socialite'}]},
+{text:'💪 全能ACE',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
+{text:'🎭 舞台表演者',effect:{dance:3,visual:2,stamina:2},flag:'performer'},
+{text:'✍️ 创作型歌手',effect:{vocal:2,rap:2,mental:3},flag:'creator'},
+{text:'🤝 综艺人脉咖',effect:{popularity:3,mental:1,stamina:-1},flag:'socialite'}]},
 1:{text:'第一周训练结束，身体吃不消。今晚怎么过？',options:[
 {text:'🏋️ 加练到深夜当卷王',effect:{dance:3,vocal:3,stamina:-3,mental:1},flag:'hardworking'},
 {text:'🛁 泡澡早睡美容养颜',effect:{stamina:3,mental:3},flag:'rested'},
-{text:'📱 视奸粉圈看最近流行趋势',effect:{popularity:2,visual:2,mental:-2},flag:'trendy'},
-{text:'🎵 创作歌词为当制作人铺垫',effect:{rap:3,mental:3,vocal:2},flag:'lyricist'}]},
+{text:'📱 视奸粉圈',effect:{popularity:2,visual:2,mental:-2},flag:'trendy'},
+{text:'🎵 创作歌词',effect:{rap:3,mental:3,vocal:2},flag:'lyricist'}]},
 2:{text:'第一次月末评价！你选择展示什么？',options:[
 {text:'💃 高难度舞蹈',effect:{dance:3,stamina:-3,popularity:2},flag:'dance_master'},
 {text:'🎤 深情抒情曲',effect:{vocal:3,mental:2,popularity:3},flag:'vocal_soul'},
 {text:'🎧 自作曲rap',effect:{rap:3,vocal:2,popularity:2},flag:'rap_genius'},
 {text:'🎭 综合ace舞台',effect:{dance:3,vocal:3,visual:3,popularity:3},flag:'versatile'}]},
 3:{text:'体重增加，上镜变差。你决定？',options:[
-{text:'🍎 严格控制饮食，不吃高热量食物',effect:{visual:2,stamina:-2,mental:-1},flag:'diet'},
-{text:'🏃 增加有氧运动，塑形减脂',effect:{stamina:3,visual:3,dance:2},flag:'fit'},
-{text:'💄 研究化妆技巧，脸好看就行了',effect:{visual:2,popularity:2},flag:'makeup'},
-{text:'🧘 接受自己，我无论怎样都很美',effect:{mental:3,stamina:2},flag:'bodypositive'}]},
+{text:'🍎 严格控制饮食',effect:{visual:2,stamina:-2,mental:-1},flag:'diet'},
+{text:'🏃 增加有氧运动',effect:{stamina:3,visual:3,dance:2},flag:'fit'},
+{text:'💄 研究化妆技巧',effect:{visual:2,popularity:2},flag:'makeup'},
+{text:'🧘 我怎样都很美',effect:{mental:3,stamina:2},flag:'bodypositive'}]},
 4:{text:'拍摄宣传物料，休息时你做什么？',options:[
 {text:'📸 和摄影师交流八卦',effect:{visual:2,popularity:3},flag:'photogenic'},
 {text:'👥 和其他练习生聊天',effect:{mental:2,popularity:2},flag:'friendly'},
@@ -491,13 +491,13 @@ function handleSchedule(action){
     if(state.gameOver || state.phase!=='schedule') return;
     var effects={}, baseMsg='';
     switch(action){
-        case'dance': effects={dance: 2+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='💃 练舞'; break;
-        case'vocal': effects={vocal: 2+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='🎤 练声'; break;
-        case'rap': effects={rap: 2+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='🎧 说唱'; break;
-        case'visual': effects={visual: 2+Math.floor(Math.random()*2), popularity: 1}; baseMsg='✨ 外貌'; break;
-        case'rest': effects={stamina: 2+Math.floor(Math.random()*2), mental: 2, popularity: -1}; baseMsg='🧘 休息'; break;
+        case'dance': effects={dance: 1+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='💃 练舞'; break;
+        case'vocal': effects={vocal: 1+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='🎤 练声'; break;
+        case'rap': effects={rap: 1+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='🎧 说唱'; break;
+        case'visual': effects={visual: 1+Math.floor(Math.random()*2), popularity: 1}; baseMsg='✨ 外貌'; break;
+        case'rest': effects={stamina: 1+Math.floor(Math.random()*2), mental: 2, popularity: -1}; baseMsg='🧘 休息'; break;
         case'social': startSocial(); return;
-        case'mental': effects={mental: 2+Math.floor(Math.random()*2), stamina: -1}; baseMsg='🧠 心理'; break;
+        case'mental': effects={mental: 1+Math.floor(Math.random()*2), stamina: -1}; baseMsg='🧠 心理'; break;
         default: return;
     }
     for(var k in effects){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+effects[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } }
