@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌸 kpop练习生模拟器</title>
+<title>🌸 练习生 · 三年之约</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:#fcf6f0;color:#4a3b3b;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
 #startScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(252,246,240,0.92);backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:center;z-index:999;transition:opacity .4s}
 #startScreen.hidden{opacity:0;pointer-events:none}
-/* 开始光晕特效 */
 #startGlow{position:fixed;top:50%;left:50%;width:0;height:0;background:radial-gradient(circle,rgba(232,169,156,0.6),rgba(212,135,122,0.2),transparent);border-radius:50%;transform:translate(-50%,-50%);z-index:998;pointer-events:none;transition:all .8s cubic-bezier(0.34,1.56,0.64,1);opacity:0}
 #startGlow.active{width:800px;height:800px;opacity:1}
 .start-card{background:#fffcf9;border-radius:60px;padding:40px 50px;max-width:420px;width:90%;text-align:center;border:1px solid #f7e6df;box-shadow:0 30px 60px rgba(200,170,160,0.25)}
@@ -48,7 +47,7 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 .schedule-buttons button{background:#f5eae5;border:none;padding:10px 22px;border-radius:40px;font-weight:600;cursor:pointer;transition:.2s;border:1px solid transparent;flex:1 0 auto;font-size:14px}
 .schedule-buttons button:hover:not(:disabled){background:#eccec2;transform:translateY(-2px);border-color:#dbb6aa}
 .schedule-buttons button:disabled{opacity:.4;pointer-events:none}
-.story-box{background:#fff7f3;border-radius:24px;padding:20px 24px;margin:14px 0 10px;border-left:6px solid #ecc6ba;min-height:100px}
+.story-box{background:#fff7f3;border-radius:24px;padding:20px 24px;margin:14px 0 10px;border-left:6px solid #ecc6ba;min-height:120px}
 .story-text{font-size:15px;line-height:1.9;white-space:pre-wrap}
 .story-options{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
 .story-options button{background:#fff;border:1.5px solid #e5cdc2;padding:8px 22px;border-radius:40px;font-weight:600;cursor:pointer;flex:1 0 auto;font-size:14px}
@@ -58,8 +57,6 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 .reset-area{margin-top:20px;text-align:right}
 .reset-btn{background:#eedbd2;border:none;padding:8px 28px;border-radius:40px;font-weight:600;cursor:pointer;font-size:14px}
 .reset-btn:hover{background:#e2c7bb}
-
-/* ===== 里程碑弹窗 ===== */
 #milestoneModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(20,15,15,0.6);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:center;z-index:1001;padding:30px}
 .milestone-card{background:#fffcf9;border-radius:40px;padding:30px 40px;max-width:480px;width:100%;text-align:center;border:1px solid #f7e6df;box-shadow:0 30px 60px rgba(0,0,0,0.3);animation:milestonePop .5s cubic-bezier(0.34,1.56,0.64,1)}
 @keyframes milestonePop{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
@@ -68,8 +65,6 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 .milestone-card .ms-desc{font-size:16px;line-height:1.8;color:#4a3b3b}
 .milestone-card .ms-btn{margin-top:16px;padding:8px 30px;border:none;border-radius:40px;background:linear-gradient(145deg,#f0cdc0,#e0b8aa);font-size:15px;font-weight:700;cursor:pointer;border:1px solid #eedad2}
 .milestone-card .ms-btn:hover{transform:scale(1.03)}
-
-/* ===== 结局聚光灯 ===== */
 #endingModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(20,15,15,0.7);display:none;justify-content:center;align-items:center;z-index:1000;padding:30px}
 #endingModal .spotlight{position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(ellipse,rgba(255,215,150,0.3),transparent 70%);border-radius:50%;pointer-events:none;animation:spotlightPulse 3s ease-in-out infinite}
 @keyframes spotlightPulse{0%,100%{transform:translateX(-50%) scale(0.8);opacity:0.6}50%{transform:translateX(-50%) scale(1.2);opacity:1}}
@@ -81,15 +76,13 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 .ending-card .ending-tags{background:#f5eae5;padding:12px 20px;border-radius:30px;font-size:15px;margin:16px 0 24px}
 .ending-card .ending-btn{background:linear-gradient(145deg,#f0cdc0,#e0b8aa);border:none;padding:12px 40px;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:.25s;border:1px solid #eedad2}
 .ending-card .ending-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,150,140,0.3)}
-
-@media(max-width:700px){.app{padding:18px 14px}.profile-radar-row{flex-direction:column}.radar-wrapper{height:200px}.ending-card{padding:30px 20px}.start-card{padding:30px 20px}.milestone-card{padding:24px 20px}}
+@media(max-width:700px){.app{padding:18px 14px}.profile-radar-row{flex-direction:column}.radar-wrapper{height:200px}.ending-card{padding:30px 20px}.start-card{padding:30px 20px}}
 </style>
 </head>
 <body>
 
 <!-- 起名界面 -->
-<div id="startScreen"><div class="start-card"><h1>🌸 KPOP练习生模拟器</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button onclick="window.startGame()">🎤 开始</button></div></div>
-<!-- 开始光晕 -->
+<div id="startScreen"><div class="start-card"><h1>🌸 练习生 · 三年之约</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button onclick="window.startGame()">🎤 开始</button></div></div>
 <div id="startGlow"></div>
 
 <!-- 里程碑弹窗 -->
@@ -100,7 +93,7 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 
 <!-- 主游戏 -->
 <div class="app" id="gameApp">
-<div class="header"><h1>🌸 KPOP练习生模拟器</h1><div class="meta-info"><div>📆 <span id="monthDisplay">1</span> / 36</div><div>🏷️ <span id="flagDisplay">新人</span></div></div></div>
+<div class="header"><h1>🌸 练习生 · 三年之约</h1><div class="meta-info"><div>📆 <span id="monthDisplay">1</span> / 36</div><div>🏷️ <span id="flagDisplay">新人</span></div></div></div>
 <div class="profile-radar-row">
 <div class="profile-card">
 <div class="name-area"><span class="name-display" id="playerNameDisplay">林娜恩</span><span class="badge">🎤 练习生</span></div>
@@ -130,7 +123,9 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 </div>
 
 <script>
-// ========== 全局状态 ==========
+// ========================================================================
+//  全局常量与状态
+// ========================================================================
 var STAT_KEYS = ['vocal','dance','rap','visual','stamina','mental','popularity'];
 var STAT_LABELS = {vocal:'唱功',dance:'舞蹈',rap:'说唱',visual:'外貌',stamina:'体力',mental:'心态',popularity:'人气'};
 var STAT_COLORS = ['#e8a99c','#d4a0c0','#aac0d4','#f0c8b0','#b5cfb0','#d4b8c8','#f0cfb0'];
@@ -139,16 +134,81 @@ var milestoneTriggered = { vocal:false, dance:false, rap:false, visual:false, st
 var milestoneQueue = [];
 var isProcessingMilestone = false;
 
-// ========== 里程碑剧情文案 ==========
-var MILESTONE_TEXTS = {
-    vocal: { icon:'🎤', title:'唱功突破70！', desc:'你的唱功达到70！声乐老师惊叹你有"天生歌喉"，练习生们开始不敢在你面前开嗓。你已经可以发出震撼世界的高音。' },
-    dance: { icon:'💃', title:'舞蹈突破70！', desc:'你的舞蹈达到70！你的动作被编舞老师当作示范，大家开始称你为"传奇练习生"。你的舞姿成为后辈模仿的对象。' },
-    rap: { icon:'🎧', title:'说唱突破70！', desc:'你的说唱达到70！你的flow让前辈都刮目相看，你被称作"黑泡新星"。你的歌词充满态度与思考。' },
-    visual: { icon:'✨', title:'外貌突破70！', desc:'你的外貌达到70！你被评价为"脸蛋天才"，公司开始重点培养你的形象。你成为练习生中的视觉代表。' },
-    stamina: { icon:'💪', title:'体力突破70！', desc:'你的体力达到70！你成为练习生中的"铁人"，别人休息时你还在加练。你的体能让人望尘莫及。' },
-    mental: { icon:'🧠', title:'心态突破70！', desc:'你的心态达到70！你被心理导师评为"最强心脏"，任何压力都打不倒你。你是团队中最稳定的支柱。' },
-    popularity: { icon:'🌟', title:'人气突破70！', desc:'你的人气达到70！你的后援会和大吧正式成立，你开始拥有自己的应援色。你成了公司的话题中心。' }
+// ========================================================================
+//  社交恋爱系统数据
+// ========================================================================
+var TRAINEES = [
+    { name:'金敏俊', gender:'男', type:'练习生', personality:'开朗型', emoji:'😄' },
+    { name:'朴智浩', gender:'男', type:'练习生', personality:'努力型', emoji:'💪' },
+    { name:'李泰亨', gender:'男', type:'练习生', personality:'搞笑型', emoji:'😂' },
+    { name:'郑宇彬', gender:'男', type:'练习生', personality:'温柔型', emoji:'🤗' },
+    { name:'姜素拉', gender:'女', type:'练习生', personality:'开朗型', emoji:'😊' },
+    { name:'韩智恩', gender:'女', type:'练习生', personality:'努力型', emoji:'🌟' },
+    { name:'尹娜妍', gender:'女', type:'练习生', personality:'搞笑型', emoji:'🤣' }
+];
+var SENIORS = [
+    { name:'权志龙', gender:'男', type:'前辈爱豆', personality:'野心型', emoji:'🔥' },
+    { name:'金硕珍', gender:'男', type:'前辈爱豆', personality:'温柔型', emoji:'💜' },
+    { name:'IU', gender:'女', type:'前辈爱豆', personality:'佛系型', emoji:'🍃' }
+];
+var SOCIAL_POOL = TRAINEES.concat(SENIORS);
+
+var PERSONALITY_AFFINITY = {
+    '开朗型': { good: 2, normal: 1, bad: -1 },
+    '努力型': { good: 2, normal: 1, bad: -2 },
+    '搞笑型': { good: 2, normal: 1, bad: -1 },
+    '温柔型': { good: 2, normal: 1, bad: -1 },
+    '野心型': { good: 2, normal: 0, bad: -2 },
+    '佛系型': { good: 1, normal: 1, bad: -1 }
 };
+
+var SOCIAL_SCENES = [
+    { text: '对方主动找你聊天，问你最近练习得怎么样。', options: [
+        { text: '💬 分享心得，互相鼓励', type:'good', effect:{mental:2} },
+        { text: '😅 吐槽练习太累了', type:'normal', effect:{stamina:1} },
+        { text: '🤐 简单寒暄就结束', type:'bad', effect:{popularity:-1} }
+    ]},
+    { text: '你看到对方在角落独自练习，似乎遇到困难了。', options: [
+        { text: '🤝 主动上前帮忙', type:'good', effect:{mental:2,popularity:2} },
+        { text: '👀 默默观察，不打扰', type:'normal', effect:{mental:1} },
+        { text: '💪 告诉对方"你一定能行"', type:'good', effect:{mental:2,popularity:1} }
+    ]},
+    { text: '对方邀请你一起去吃饭，你决定？', options: [
+        { text: '🍜 一起去，聊聊日常', type:'good', effect:{stamina:2,popularity:2} },
+        { text: '📚 婉拒，回去练习', type:'normal', effect:{vocal:1,dance:1,stamina:-1} },
+        { text: '😊 开心接受，请客拉近关系', type:'good', effect:{popularity:3,mental:1} }
+    ]},
+    { text: '对方心情低落，好像遇到了瓶颈。', options: [
+        { text: '🤗 认真倾听，安慰对方', type:'good', effect:{mental:3,popularity:2} },
+        { text: '😂 用笑话逗对方开心', type:'normal', effect:{popularity:2,mental:2} },
+        { text: '📝 分享自己的经验', type:'good', effect:{vocal:1,dance:1,mental:1} }
+    ]},
+    { text: '对方实力很强，你一直很敬佩。今天有机会请教。', options: [
+        { text: '🙇 虚心请教技巧', type:'good', effect:{dance:2,vocal:2,popularity:1} },
+        { text: '🤝 表达敬佩，建立友谊', type:'good', effect:{popularity:3,mental:1} },
+        { text: '🏃 一起练习，互相学习', type:'normal', effect:{dance:2,stamina:-1,popularity:1} }
+    ]},
+    { text: '对方想和你组队参加月末评价，你？', options: [
+        { text: '👍 爽快答应', type:'good', effect:{popularity:2,mental:2,dance:1} },
+        { text: '🤔 考虑后婉拒', type:'bad', effect:{mental:1,popularity:-1} },
+        { text: '🎯 接受并制定详细计划', type:'good', effect:{dance:2,vocal:2,mental:1} }
+    ]},
+    { text: '对方不小心弄坏了你的东西，你？', options: [
+        { text: '😊 没关系，别在意', type:'good', effect:{mental:2,popularity:2} },
+        { text: '😤 有点生气但原谅了', type:'normal', effect:{mental:-1,popularity:1} },
+        { text: '🤝 趁机拉近距离，关系反而变好', type:'good', effect:{popularity:3,mental:1} }
+    ]}
+];
+
+var loveInterest = null;
+var chatCount = {};
+var isInLove = false;
+var loveCount = 0;
+var isLoveBroken = false;
+
+// ========================================================================
+//  36个月事件（数值已调小，最大±3）
+// ========================================================================
 var STORY_EVENTS = {
 0:{text:'第一天，经纪人问你最想成为哪种艺人？',options:[
 {text:'💪 全能实力派，我要当ACE',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
@@ -332,12 +392,25 @@ var STORY_EVENTS = {
 {text:'🌟 终于在这一刻梦想成真',effect:{popularity:3,mental:3},flag:'dreamer'}]}
 };
 
-// ========== 辅助函数 ==========
+// ========================================================================
+//  辅助函数
+// ========================================================================
 function getStatValue(k){ return Math.min(100,Math.max(0,state.stats[k]||0)); }
 function applyEffects(effects){ var msg=[]; for(var k in effects){ if(state.stats.hasOwnProperty(k)){ var old=state.stats[k], delta=effects[k], nv=Math.min(100,Math.max(0,old+delta)); state.stats[k]=nv; if(delta!==0){ msg.push(STAT_LABELS[k]+' '+(delta>0?'+':'')+delta); } } } return msg.join(' · '); }
 function addFlag(flag){ if(flag && !state.flags.includes(flag)){ state.flags.push(flag); if(state.flags.length>5) state.flags.shift(); } }
 
-// ========== 里程碑检测 ==========
+// ========================================================================
+//  里程碑系统
+// ========================================================================
+var MILESTONE_TEXTS = {
+    vocal: { icon:'🎤', title:'唱功突破70！', desc:'你的唱功达到70！声乐老师惊叹你有"天生歌喉"，练习生们开始叫你"小歌王"。' },
+    dance: { icon:'💃', title:'舞蹈突破70！', desc:'你的舞蹈达到70！你的动作被编舞老师当作示范，大家开始称你为"传奇练习生"。' },
+    rap: { icon:'🎧', title:'说唱突破70！', desc:'你的说唱达到70！你的flow让前辈都刮目相看，你被称作"黑泡新星"。' },
+    visual: { icon:'✨', title:'外貌突破70！', desc:'你的外貌达到70！你被星探评价为"天生偶像脸"，公司开始重点培养你的形象。' },
+    stamina: { icon:'💪', title:'体力突破70！', desc:'你的体力达到70！你成为练习生中的"铁人"，别人休息时你还在加练。' },
+    mental: { icon:'🧠', title:'心态突破70！', desc:'你的心态达到70！你被心理导师评为"最强心脏"，任何压力都打不倒你。' },
+    popularity: { icon:'🌟', title:'人气突破70！', desc:'你的人气达到70！你的粉丝俱乐部正式成立，你开始拥有自己的应援色。' }
+};
 function checkMilestones(){
     var triggered = [];
     STAT_KEYS.forEach(function(key){
@@ -347,16 +420,12 @@ function checkMilestones(){
         }
     });
     if(triggered.length > 0){
-        triggered.forEach(function(key){
-            milestoneQueue.push(key);
-        });
-        if(!isProcessingMilestone){
-            processMilestoneQueue();
-        }
+        triggered.forEach(function(key){ milestoneQueue.push(key); });
+        if(!isProcessingMilestone) processMilestoneQueue();
     }
 }
 function processMilestoneQueue(){
-    if(milestoneQueue.length === 0 || isProcessingMilestone){ return; }
+    if(milestoneQueue.length === 0 || isProcessingMilestone) return;
     isProcessingMilestone = true;
     var key = milestoneQueue.shift();
     var data = MILESTONE_TEXTS[key];
@@ -369,13 +438,12 @@ function processMilestoneQueue(){
 function closeMilestone(){
     document.getElementById('milestoneModal').style.display = 'none';
     isProcessingMilestone = false;
-    // 检查是否还有更多里程碑在队列中
-    if(milestoneQueue.length > 0){
-        setTimeout(function(){ processMilestoneQueue(); }, 300);
-    }
+    if(milestoneQueue.length > 0) setTimeout(function(){ processMilestoneQueue(); }, 300);
 }
 
-// ========== 渲染 ==========
+// ========================================================================
+//  渲染UI
+// ========================================================================
 function renderStats(){
     var grid=document.getElementById('statsGrid'); grid.innerHTML='';
     STAT_KEYS.forEach(function(key){
@@ -412,36 +480,37 @@ function updateUI(){
     document.getElementById('monthYear').textContent='第 '+year+' 年 · '+mon+' 月';
     document.getElementById('flagDisplay').textContent=state.flags.length?state.flags.slice(-1)[0]:'新人';
     document.getElementById('playerNameDisplay').textContent=state.name;
-    // 年龄 = 17 + floor(month/12)
     var age = 17 + Math.floor(state.month / 12);
     document.getElementById('ageDisplay').textContent=age;
 }
 
-// ========== 核心流程 ==========
+// ========================================================================
+//  核心日程与剧情流程
+// ========================================================================
 function handleSchedule(action){
     if(state.gameOver || state.phase!=='schedule') return;
     var effects={}, baseMsg='';
     switch(action){
-        case'dance': effects={dance:1+Math.floor(Math.random()*4), stamina:-4, mental:1}; baseMsg='💃 练舞'; break;
-        case'vocal': effects={vocal:1+Math.floor(Math.random()*4), stamina:-3, mental:1}; baseMsg='🎤 练声'; break;
-        case'rap': effects={rap:1+Math.floor(Math.random()*4), stamina:-3, mental:1}; baseMsg='🎧 说唱'; break;
-        case'visual': effects={visual:1+Math.floor(Math.random()*3), popularity:2}; baseMsg='✨ 外貌'; break;
-        case'rest': effects={stamina:1+Math.floor(Math.random()*5), mental:6, popularity:-1}; baseMsg='🧘 休息'; break;
-        case'social': effects={popularity:1+Math.floor(Math.random()*5), mental:-3, visual:2}; baseMsg='📱 社交'; break;
-        case'mental': effects={mental:1+Math.floor(Math.random()*5), stamina:-2}; baseMsg='🧠 心理'; break;
+        case'dance': effects={dance: 2+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='💃 练舞'; break;
+        case'vocal': effects={vocal: 2+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='🎤 练声'; break;
+        case'rap': effects={rap: 2+Math.floor(Math.random()*2), stamina: -2, mental: 1}; baseMsg='🎧 说唱'; break;
+        case'visual': effects={visual: 2+Math.floor(Math.random()*2), popularity: 1}; baseMsg='✨ 外貌'; break;
+        case'rest': effects={stamina: 2+Math.floor(Math.random()*2), mental: 2, popularity: -1}; baseMsg='🧘 休息'; break;
+        case'social': startSocial(); return;
+        case'mental': effects={mental: 2+Math.floor(Math.random()*2), stamina: -1}; baseMsg='🧠 心理'; break;
         default: return;
     }
     for(var k in effects){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+effects[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } }
     var feedback=applyEffects(effects);
     document.getElementById('feedbackToast').textContent='✅ '+baseMsg+' → '+feedback;
     updateUI();
-    // 检查里程碑
     checkMilestones();
     state.phase='story';
     document.getElementById('phaseBadge').textContent='🎬 剧情选择';
     document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=true; });
     triggerStory();
 }
+
 function triggerStory(){
     var month=state.month;
     var story=STORY_EVENTS[month];
@@ -472,12 +541,11 @@ function handleStoryChoice(idx){
     var story=state.pendingStory;
     if(!story || !story.options || !story.options[idx]) return;
     var choice=story.options[idx];
-     if(choice.effect){ for(var k in choice.effect){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+choice.effect[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } } }
+    if(choice.effect){ for(var k in choice.effect){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+choice.effect[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } } }
     if(choice.flag) addFlag(choice.flag);
     var feedback=choice.effect?applyEffects(choice.effect):'无属性变化';
     document.getElementById('feedbackToast').textContent='📖 剧情选择: '+choice.text+' → '+feedback;
     updateUI();
-    // 检查里程碑
     checkMilestones();
     document.querySelectorAll('#storyOptions button').forEach(function(b){ b.disabled=true; });
     setTimeout(function(){ finishMonth(); },900);
@@ -496,68 +564,194 @@ function finishMonth(){
     updateUI();
 }
 
-// ========== 结局聚光灯弹窗 ==========
+// ========================================================================
+//  社交恋爱系统核心
+// ========================================================================
+var currentSocialData = null;
+
+function startSocial(){
+    if(state.gameOver || state.phase!=='schedule') return;
+    
+    // 检查是否有恋爱对象且未被劝分
+    if(loveInterest && !isLoveBroken){
+        var person = loveInterest;
+        var scene = SOCIAL_SCENES[Math.floor(Math.random() * SOCIAL_SCENES.length)];
+        var displayText = '💕 你的恋爱对象 ' + person.emoji + ' ' + person.name + ' 来找你了。\n';
+        displayText += '"' + scene.text + '"\n\n你如何回应？';
+        currentSocialData = { person: person, scene: scene, chosen: false };
+        showSocialOptions(displayText, scene.options);
+        return;
+    }
+    
+    // 随机挑选一个人（70%练习生，30%前辈）
+    var pool = SOCIAL_POOL;
+    var person;
+    if(Math.random() < 0.7){
+        var trainees = TRAINEES;
+        person = trainees[Math.floor(Math.random() * trainees.length)];
+    } else {
+        var seniors = SENIORS;
+        person = seniors[Math.floor(Math.random() * seniors.length)];
+    }
+    
+    if(!chatCount[person.name]) chatCount[person.name] = 0;
+    chatCount[person.name]++;
+    
+    var scene = SOCIAL_SCENES[Math.floor(Math.random() * SOCIAL_SCENES.length)];
+    var displayText = person.emoji + ' ' + person.name + '（' + person.type + '，' + person.personality + '）\n';
+    displayText += '"' + scene.text + '"\n\n你如何回应？';
+    currentSocialData = { person: person, scene: scene, chosen: false };
+    showSocialOptions(displayText, scene.options);
+}
+
+function showSocialOptions(text, options){
+    document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=true; });
+    document.getElementById('phaseBadge').textContent = '💬 社交对话';
+    document.getElementById('storyText').textContent = text;
+    var optContainer = document.getElementById('storyOptions');
+    optContainer.innerHTML = '';
+    options.forEach(function(opt, idx){
+        var btn = document.createElement('button');
+        btn.textContent = opt.text;
+        btn.onclick = function(){ handleSocialChoice(idx); };
+        optContainer.appendChild(btn);
+    });
+    document.getElementById('feedbackToast').textContent = '💬 选择你的回应...';
+}
+
+function handleSocialChoice(idx){
+    if(currentSocialData.chosen || state.gameOver) return;
+    currentSocialData.chosen = true;
+    var data = currentSocialData;
+    var person = data.person;
+    var scene = data.scene;
+    var choice = scene.options[idx];
+    if(!choice) return;
+    
+    var affinity = PERSONALITY_AFFINITY[person.personality] || { good:1, normal:0, bad:-1 };
+    var popDelta = 0;
+    if(choice.type === 'good') popDelta = affinity.good;
+    else if(choice.type === 'normal') popDelta = affinity.normal;
+    else if(choice.type === 'bad') popDelta = affinity.bad;
+    popDelta = Math.min(2, Math.max(-2, popDelta));
+    
+    var effects = choice.effect || {};
+    effects.popularity = (effects.popularity || 0) + popDelta;
+    var msg = [];
+    for(var k in effects){
+        if(state.stats.hasOwnProperty(k)){
+            var v = state.stats[k] + effects[k];
+            state.stats[k] = Math.min(100, Math.max(0, v));
+            if(effects[k] !== 0){
+                msg.push(STAT_LABELS[k] + ' ' + (effects[k] > 0 ? '+' : '') + effects[k]);
+            }
+        }
+    }
+    if(popDelta !== 0) msg.push('人气 ' + (popDelta > 0 ? '+' : '') + popDelta);
+    
+    var feedback = msg.join(' · ') || '无变化';
+    document.getElementById('feedbackToast').textContent = '💬 与 ' + person.name + ' 的对话结束 → ' + feedback;
+    
+    // 检查是否触发恋爱（聊天3次且不是前辈且未恋爱）
+    if(!loveInterest && person.type === '练习生' && chatCount[person.name] >= 3){
+        var loveOpt = confirm('💕 你与 ' + person.name + ' 已经聊了3次，感觉很有默契。\n要开始恋爱吗？（确定=恋爱，取消=保持朋友）');
+        if(loveOpt){
+            loveInterest = person;
+            isInLove = true;
+            loveCount = 0;
+            document.getElementById('feedbackToast').textContent = '💕 你和 ' + person.name + ' 开始了恋爱关系！';
+        } else {
+            document.getElementById('feedbackToast').textContent = '你们决定保持朋友关系。';
+        }
+    }
+    
+    if(loveInterest && person.name === loveInterest.name && isInLove && !isLoveBroken){
+        loveCount++;
+        if(loveCount > 3){
+            isLoveBroken = true;
+            document.getElementById('feedbackToast').textContent = '💔 公司发现了你们的恋情，要求你们分手！';
+            alert('💔 公司发现了你和 ' + loveInterest.name + ' 的恋情，强制要求分手。你们最终选择了事业。');
+            loveInterest = null;
+            isInLove = false;
+        }
+    }
+    
+    document.getElementById('storyText').textContent = '🤝 你和 ' + person.name + ' 的对话结束了。\n' + choice.text;
+    document.getElementById('storyOptions').innerHTML = '';
+    document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=true; });
+    updateUI();
+    checkMilestones();
+    
+    setTimeout(function(){
+        currentSocialData = null;
+        state.phase = 'story';
+        document.getElementById('phaseBadge').textContent = '🎬 剧情选择';
+        triggerStory();
+    }, 1200);
+}
+
+// ========================================================================
+//  结局系统（重写，更均衡）
+// ========================================================================
 function showEnding(){
-    var s=state.stats, flags=state.flags, avg=(s.vocal+s.dance+s.rap+s.visual)/4, pop=s.popularity, mental=s.mental, stamina=s.stamina;
-    var title='🌱 练习生结束', desc='三年的时光结束了...', icon='🌸';
-    var isHighAvg=avg>70, isLowMental=mental<25, isLowStamina=stamina<20, isPopStar=pop>85,
-        isVocalKing=s.vocal>85&&s.vocal>s.dance&&s.vocal>s.rap,
-        isDanceKing=s.dance>85&&s.dance>s.vocal&&s.dance>s.rap,
-        isRapKing=s.rap>85&&s.rap>s.vocal&&s.rap>s.dance,
-        isVisual=s.visual>85, hasHardwork=flags.includes('hard_worker')||flags.includes('humble');
-    if(isLowMental||isLowStamina){
-        icon='💔'; title='【遗憾退场】';
-        desc='三年的高压训练让你的身心不堪重负。在出道前夕，你选择了离开。但请记住，健康永远是第一位的。你回归普通生活，却拥有了更强大的内心。你的故事告诉我们，有时候放弃也是一种勇气，你找到了属于自己的平静。';
-    }else if(isPopStar&&isHighAvg&&flags.includes('legend')){
-        icon='👑'; title='【传奇全能ACE】';
-        desc='你以绝对的实力和超高人气断层出道！你不仅唱跳俱佳，更拥有极强的个人魅力。你的舞台表现力让整个业界震惊，你被媒体称为"下一个时代的天后"。你注定要登上格莱美的舞台，成为K-pop历史的传奇。你的名字将永远刻在偶像产业的丰碑上。';
-    }else if(isVocalKing&&pop>60){
-        icon='🎤'; title='【天籁主唱】';
-        desc='你的嗓音是上天赐予的礼物。你以主唱身份出道，每一首高音part都成为经典。你是音源强者，抒情曲的王者。你的歌声治愈了无数听众，你不仅是偶像，更是艺术家。你的演唱会被誉为"耳朵的盛宴"，你成为新生代vocal的代表人物。';
-    }else if(isDanceKing&&pop>60){
-        icon='💃'; title='【舞蹈机器】';
-        desc='你的舞蹈实力让所有练习生望尘莫及。你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，被称为"人间舞蹈家"。你的舞蹈视频在全球疯传，你开创了新的舞蹈风格，成为无数后辈模仿的对象。你是舞台上的王者，用身体讲述故事。';
-    }else if(isRapKing&&pop>60){
-        icon='🎧'; title='【嘻哈鬼才】';
-        desc='你的说唱flow独树一帜，歌词充满态度。你不仅成功出道，更成为队内的rap担和制作人。你打破了偶像的边界，被誉为"偶像界的黑泡之光"。你的音乐充满社会思考，你成为青年文化的代言人，你的专辑销量和口碑双丰收。';
-    }else if(isVisual&&pop>70){
-        icon='✨'; title='【神颜门面】';
-        desc='你的美貌是公司的王牌。你以门面担当出道，广告代言接到手软。你不仅是偶像，更是时尚圈的宠儿。你登上各大杂志封面，你的妆容和穿搭成为潮流风向标。你证明了美貌本身就是一种实力，但你从未停止努力，你的多才多艺同样令人赞叹。';
-    }else if(isHighAvg&&hasHardwork){
-        icon='🔥'; title='【努力黑马】';
-        desc='你并非天赋异禀，但你是最努力的那一个。你用汗水和毅力弥补了所有不足，最终成功出道。你的故事激励了无数人，你是"努力终有回报"的最佳代言。你从默默无闻到万众瞩目，你的每一步都踏实地踩出了自己的道路。你是所有练习生的榜样。';
-    }else if(avg>50&&pop>50){
-        icon='🌟'; title='【稳健出道组】';
-        desc='你没有短板，也没有绝对的长板，但你是组合最需要的"万能胶"。你以中间名次出道，凭借稳定的发挥和好人缘，成为团队中不可或缺的一员。你是队内的调解员，是粉丝心中的温暖存在。你的存在让团队更加完整，你证明了"平衡"也是一种强大的力量。';
+    var s=state.stats, flags=state.flags;
+    var vocal=s.vocal, dance=s.dance, rap=s.rap, visual=s.visual, stamina=s.stamina, mental=s.mental, popularity=s.popularity;
+    var avg = (vocal+dance+rap+visual)/4;
+    var sorted = [
+        {key:'vocal', val:vocal}, {key:'dance', val:dance}, {key:'rap', val:rap},
+        {key:'visual', val:visual}, {key:'stamina', val:stamina},
+        {key:'mental', val:mental}, {key:'popularity', val:popularity}
+    ].sort(function(a,b){ return b.val - a.val; });
+    var highest = sorted[0];
+    var hasHardwork = flags.includes('hard_worker')||flags.includes('hardworking')||flags.includes('humble')||flags.includes('persistent');
+    var hasCreative = flags.includes('creator')||flags.includes('artist')||flags.includes('original')||flags.includes('poet');
+    var hasFunny = flags.includes('funny')||flags.includes('variety')||flags.includes('comedian');
+    var title, desc, icon;
+    if(stamina < 20 || mental < 20){
+        icon='💔'; title='【遗憾退场】'; desc='三年的高压训练让你的身心不堪重负。在出道前夕，你选择了离开。但请记住，健康永远是第一位的。你回归普通生活，却拥有了更强大的内心。';
+    }else if(popularity > 75 && avg > 60){
+        icon='👑'; title='【人气巨星】'; desc='你的人气一骑绝尘！虽然实力不是最强，但你拥有无可比拟的粉丝缘和舞台魅力。你以超高人气出道，成为组合的"人气担当"。你的名字就是流量的保证。';
+    }else if(vocal > 55 && dance > 55 && rap > 50 && visual > 50 && avg > 60){
+        icon='🌟'; title='【全能ACE】'; desc='你拥有令人惊叹的均衡实力！唱、跳、拉、颜没有短板。你是公司最看重的"全能型选手"，无论在哪个位置都能发光发热。你以绝对实力出道，成为团队的万能核心。';
+    }else if(highest.key === 'vocal' && vocal - dance > 10 && vocal - rap > 10 && vocal > 55){
+        icon='🎤'; title='【天籁主唱】'; desc='你的嗓音是上天赐予的礼物！你以绝对的主唱实力出道，每一首高音part都成为经典。你是音源强者，抒情曲的王者。你的歌声治愈了无数听众。';
+    }else if(highest.key === 'dance' && dance - vocal > 10 && dance - rap > 10 && dance > 55){
+        icon='💃'; title='【舞蹈机器】'; desc='你的舞蹈实力让所有练习生望尘莫及！你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，被称为"人间舞蹈家"。你的舞蹈视频在网络上疯传。';
+    }else if(highest.key === 'rap' && rap - vocal > 10 && rap - dance > 10 && rap > 55){
+        icon='🎧'; title='【嘻哈鬼才】'; desc='你的说唱flow独树一帜，歌词充满态度！你不仅成功出道，更成为队内的rap担和制作人。你打破了偶像的边界，被誉为"偶像界的黑泡之光"。';
+    }else if(highest.key === 'visual' && visual - avg > 15 && popularity > 40){
+        icon='✨'; title='【神颜门面】'; desc='你的美貌是公司的王牌！你以门面担当出道，广告代言接到手软。你不仅是偶像，更是时尚圈的宠儿。你登上各大杂志封面，你的妆容和穿搭成为潮流风向标。';
+    }else if(hasHardwork && avg > 50){
+        icon='🔥'; title='【努力黑马】'; desc='你并非天赋异禀，但你是最努力的那一个！你用汗水和毅力弥补了所有不足，从练习生中的小透明逆袭出道。你的故事激励了无数人，你是"努力终有回报"的最佳代言。';
+    }else if(hasFunny && popularity > 45){
+        icon='🎭'; title='【综艺新星】'; desc='你的幽默感是与生俱来的天赋！虽然没有最强的业务能力，但你是队内公认的"气氛制造机"。你凭借超强的综艺感获得大量关注，成为各大综艺争相邀请的宠儿。';
+    }else if(hasCreative && (vocal > 50 || rap > 50)){
+        icon='✍️'; title='【创作才子】'; desc='你拥有出众的创作才华！你的音乐作品充满了个人风格和思想深度。你不仅是偶像，更是制作人。你的自作曲在粉丝中广为流传，你证明了偶像也可以拥有真正的音乐灵魂。';
+    }else if(vocal > 40 && dance > 40 && rap > 35 && visual > 40 && avg > 45){
+        icon='🌟'; title='【稳健出道组】'; desc='你没有短板，也没有绝对的长板，但你是组合最需要的"万能胶"。你以稳定的发挥和好人缘成功出道，成为团队中不可或缺的一员。你是队内的调解员，是粉丝心中的温暖存在。';
     }else{
-        icon='💫'; title='【自由逐梦】';
-        desc='你没能作为偶像出道，但这三年让你认清了自己的内心。你转作幕后制作人/独立歌手，你的音乐虽不大众，却深深打动了懂你的人。你找到了属于自己的音乐语言，你的作品在小众圈层获得极高评价。你证明了成功不只一条路，真正的幸福是忠于自我。你自由了，也成功了。';
+        icon='💫'; title='【自由逐梦】'; desc='你没能作为偶像出道，但这三年让你认清了自己的内心。你转作幕后制作人/独立歌手，你的音乐虽不大众，却深深打动了懂你的人。你找到了属于自己的音乐语言，你的作品在小众圈层获得极高评价。你证明了成功不只一条路，真正的幸福是忠于自我。';
     }
     var content=document.getElementById('endingContent');
     content.innerHTML='<div class="big-icon">'+icon+'</div><div class="ending-title">'+title+'</div><div class="ending-desc">'+desc+'</div><div class="ending-tags">🏷️ 标签：'+(state.flags.length?state.flags.join(' · '):'无')+'</div><button class="ending-btn" onclick="location.reload()">🔄 重新开始</button>';
     document.getElementById('endingModal').style.display='flex';
 }
 
-// ========== 启动（带光晕特效） ==========
+// ========================================================================
+//  启动与重置
+// ========================================================================
 function startGame(){
     var name=document.getElementById('nameInput').value.trim()||'林娜恩';
     state.name=name;
     document.getElementById('playerNameDisplay').textContent=name;
-    // 光晕特效
     var glow=document.getElementById('startGlow');
     glow.classList.add('active');
-    // 起名界面淡出
     var screen=document.getElementById('startScreen');
     screen.classList.add('hidden');
-    // 延迟显示游戏界面
     setTimeout(function(){
         var app=document.getElementById('gameApp');
         app.style.display='block';
-        // 使用requestAnimationFrame确保display生效后再加fade-in类
-        requestAnimationFrame(function(){
-            app.classList.add('fade-in');
-        });
-        // 重置状态
+        requestAnimationFrame(function(){ app.classList.add('fade-in'); });
         state.month=0;
         state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};
         state.flags=[];
@@ -565,22 +759,23 @@ function startGame(){
         state.phase='schedule';
         state.storyChosen=false;
         state.pendingStory=null;
-        // 重置里程碑
         milestoneTriggered = { vocal:false, dance:false, rap:false, visual:false, stamina:false, mental:false, popularity:false };
         milestoneQueue = [];
         isProcessingMilestone = false;
+        loveInterest = null;
+        chatCount = {};
+        isInLove = false;
+        loveCount = 0;
+        isLoveBroken = false;
         document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=false; });
         document.getElementById('storyOptions').innerHTML='';
         document.getElementById('storyText').textContent='👋 欢迎来到 DreamHaus！\n作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！';
         document.getElementById('feedbackToast').textContent='✨ 点击日程安排你的本月计划';
         document.getElementById('phaseBadge').textContent='📋 安排日程';
-        // 清除光晕
         setTimeout(function(){ glow.classList.remove('active'); }, 800);
         updateUI();
     }, 500);
 }
-
-// ========== 重置 ==========
 function resetGame(){
     document.getElementById('startScreen').classList.remove('hidden');
     document.getElementById('gameApp').style.display='none';
@@ -596,28 +791,24 @@ function resetGame(){
     milestoneTriggered = { vocal:false, dance:false, rap:false, visual:false, stamina:false, mental:false, popularity:false };
     milestoneQueue = [];
     isProcessingMilestone = false;
+    loveInterest = null;
+    chatCount = {};
+    isInLove = false;
+    loveCount = 0;
+    isLoveBroken = false;
     document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=false; });
     document.getElementById('storyOptions').innerHTML='';
     document.getElementById('storyText').textContent='👋 重新开始，输入名字后开始新旅程吧！';
     document.getElementById('feedbackToast').textContent='✨ 等待开始...';
     document.getElementById('endingModal').style.display='none';
     document.getElementById('milestoneModal').style.display='none';
-    // 清除光晕
     document.getElementById('startGlow').classList.remove('active');
 }
 
-// ========== 暴露全局 ==========
 window.startGame = startGame;
 window.handleSchedule = handleSchedule;
 window.resetGame = resetGame;
 window.closeMilestone = closeMilestone;
-
-// ========== 初始显示 ==========
-document.addEventListener('DOMContentLoaded', function(){
-    document.getElementById('startScreen').classList.remove('hidden');
-    document.getElementById('gameApp').style.display='none';
-    document.getElementById('nameInput').value='姓名';
-});
 </script>
 </body>
 </html>
