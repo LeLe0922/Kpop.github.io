@@ -3,26 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 KPOP练习生 · 三年之约</title>
+    <title>🌸 练习生 · 三年之约</title>
     <style>
-        /* ---------- 奶油风格 ---------- */
+        /* ---------- 全局重置 & 奶油韩系风格 ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', 'PingFang SC', 'Malgun Gothic', sans-serif;
             background: #fcf6f0;
             color: #4a3b3b;
-            padding: 20px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
+            padding: 20px;
         }
 
+        /* ---------- 起名界面 (启动弹窗) ---------- */
+        #startScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(252, 246, 240, 0.92);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: opacity 0.5s ease;
+        }
+        #startScreen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .start-card {
+            background: #fffcf9;
+            border-radius: 60px;
+            padding: 40px 50px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #f7e6df;
+            box-shadow: 0 30px 60px rgba(200, 170, 160, 0.25);
+        }
+        .start-card h1 {
+            font-size: 32px;
+            background: linear-gradient(145deg, #e8a99c, #d4877a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .start-card p {
+            color: #7f6b63;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+        .start-card input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #eedad2;
+            border-radius: 60px;
+            font-size: 18px;
+            text-align: center;
+            background: #fff5f0;
+            outline: none;
+            transition: 0.2s;
+            color: #4a3730;
+            font-weight: 600;
+        }
+        .start-card input:focus {
+            border-color: #dbaa9a;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px #f5ded6;
+        }
+        .start-card button {
+            margin-top: 20px;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 60px;
+            background: linear-gradient(145deg, #f0cdc0, #e0b8aa);
+            color: #4a3730;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+            border: 1px solid #eedad2;
+        }
+        .start-card button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(200, 150, 140, 0.3);
+        }
+
+        /* ---------- 主应用 ---------- */
         .app {
             max-width: 1100px;
             width: 100%;
@@ -42,16 +119,13 @@
             margin-bottom: 24px;
             flex-wrap: wrap;
         }
-
         .header h1 {
             font-size: 28px;
             font-weight: 700;
             background: linear-gradient(145deg, #e8a99c, #d4877a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
         }
-
         .header .meta-info {
             display: flex;
             gap: 18px;
@@ -63,7 +137,6 @@
             border-radius: 40px;
             border: 1px solid #f5ded6;
         }
-
         .header .meta-info span {
             color: #b07d70;
             font-weight: 600;
@@ -79,7 +152,6 @@
             padding: 20px 22px;
             border: 1px solid #f7e6df;
         }
-
         .profile-card {
             flex: 1.2;
             min-width: 200px;
@@ -87,33 +159,21 @@
             flex-direction: column;
             justify-content: center;
         }
-
         .profile-card .name-area {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 8px;
         }
-
-        .profile-card .name-area input {
-            border: none;
-            background: #fff5f0;
-            font-size: 22px;
+        .profile-card .name-area .name-display {
+            font-size: 26px;
             font-weight: 700;
             color: #4a3730;
-            padding: 6px 14px;
+            background: #fff5f0;
+            padding: 4px 18px;
             border-radius: 40px;
-            width: 160px;
             border: 1px solid #eedad2;
-            outline: none;
         }
-
-        .profile-card .name-area input:focus {
-            border-color: #dbaa9a;
-            background: #ffffff;
-            box-shadow: 0 0 0 3px #f5ded6;
-        }
-
         .profile-card .name-area .badge {
             background: #f0dbd4;
             color: #7a5c52;
@@ -122,7 +182,6 @@
             font-size: 13px;
             font-weight: 600;
         }
-
         .profile-detail {
             display: flex;
             flex-wrap: wrap;
@@ -131,7 +190,6 @@
             color: #6b554c;
             margin-top: 6px;
         }
-
         .profile-detail .tag {
             background: #f4e8e2;
             padding: 4px 14px;
@@ -151,7 +209,6 @@
             padding: 6px;
             border: 1px solid #f4e0d8;
         }
-
         #radarCanvas {
             width: 100%;
             height: 100%;
@@ -170,20 +227,17 @@
             border-radius: 28px;
             border: 1px solid #f7e6df;
         }
-
         .stat-item {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         .stat-item .label {
             font-weight: 600;
             font-size: 13px;
             color: #6b554c;
             min-width: 60px;
         }
-
         .stat-item .bar-bg {
             flex: 1;
             height: 8px;
@@ -191,14 +245,12 @@
             border-radius: 20px;
             overflow: hidden;
         }
-
         .stat-item .bar-fill {
             height: 100%;
             border-radius: 20px;
             transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
             background: linear-gradient(90deg, #f4b8a8, #dd9888);
         }
-
         .stat-item .val {
             font-size: 13px;
             font-weight: 700;
@@ -214,7 +266,6 @@
             border: 1px solid #f7e6df;
             margin-top: 8px;
         }
-
         .phase-title {
             font-size: 18px;
             font-weight: 700;
@@ -224,7 +275,6 @@
             align-items: center;
             gap: 12px;
         }
-
         .phase-title .month-badge {
             background: #e8cdc4;
             color: #4d332b;
@@ -239,11 +289,10 @@
             gap: 10px;
             margin-bottom: 18px;
         }
-
         .schedule-buttons button {
             background: #f5eae5;
             border: none;
-            padding: 8px 20px;
+            padding: 10px 22px;
             border-radius: 40px;
             font-weight: 600;
             font-size: 14px;
@@ -253,18 +302,15 @@
             border: 1px solid transparent;
             flex: 1 0 auto;
         }
-
-        .schedule-buttons button:hover {
+        .schedule-buttons button:hover:not(:disabled) {
             background: #eccec2;
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(200, 150, 140, 0.2);
             border-color: #dbb6aa;
         }
-
         .schedule-buttons button:disabled {
             opacity: 0.4;
             pointer-events: none;
-            transform: none;
         }
 
         .story-box {
@@ -275,21 +321,18 @@
             border-left: 6px solid #ecc6ba;
             min-height: 100px;
         }
-
         .story-text {
             font-size: 15px;
             line-height: 1.8;
             color: #4f3b33;
             white-space: pre-wrap;
         }
-
         .story-options {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             margin-top: 18px;
         }
-
         .story-options button {
             background: #fff;
             border: 1.5px solid #e5cdc2;
@@ -302,12 +345,10 @@
             transition: 0.2s;
             flex: 1 0 auto;
         }
-
-        .story-options button:hover {
+        .story-options button:hover:not(:disabled) {
             background: #f5ddd4;
             border-color: #caaaa0;
         }
-
         .story-options button:disabled {
             opacity: 0.3;
             pointer-events: none;
@@ -333,7 +374,6 @@
             margin-top: 20px;
             text-align: right;
         }
-
         .reset-btn {
             background: #eedbd2;
             border: none;
@@ -345,7 +385,6 @@
             transition: 0.2s;
             border: 1px solid #dcc2b6;
         }
-
         .reset-btn:hover {
             background: #e2c7bb;
         }
@@ -355,35 +394,35 @@
             font-weight: 800;
             color: #b07d70;
         }
-
         .ending-desc {
             font-size: 17px;
             line-height: 1.9;
         }
 
         @media (max-width: 700px) {
-            .app {
-                padding: 18px 14px;
-            }
-            .profile-radar-row {
-                flex-direction: column;
-            }
-            .radar-wrapper {
-                height: 200px;
-            }
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .app { padding: 18px 14px; }
+            .profile-radar-row { flex-direction: column; }
+            .radar-wrapper { height: 200px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .start-card { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="app" id="app">
+
+    <!-- ========== 起名界面 ========== -->
+    <div id="startScreen">
+        <div class="start-card">
+            <h1>🌸 练习生 · 三年之约</h1>
+            <p>请输入你的名字，开启专属偶像之旅</p>
+            <input type="text" id="nameInput" placeholder="输入你的名字" value="林娜恩" maxlength="10">
+            <button id="startBtn">🎤 开始</button>
+        </div>
+    </div>
+
+    <!-- ========== 主游戏 ========== -->
+    <div class="app" id="gameApp" style="display:none;">
         <div class="header">
             <h1>🌸 练习生 · 三年之约</h1>
             <div class="meta-info">
@@ -395,7 +434,7 @@
         <div class="profile-radar-row">
             <div class="profile-card">
                 <div class="name-area">
-                    <input type="text" id="playerName" value="林娜恩" placeholder="输入名字">
+                    <span class="name-display" id="playerNameDisplay">林娜恩</span>
                     <span class="badge">🎤 练习生</span>
                 </div>
                 <div class="profile-detail">
@@ -414,7 +453,7 @@
 
         <div class="stats-grid" id="statsGrid"></div>
 
-        <div class="interaction-area" id="interactionArea">
+        <div class="interaction-area">
             <div class="phase-title">
                 <span>🗓️ <span id="monthYear">第 1 年 · 1 月</span></span>
                 <span class="month-badge" id="phaseBadge">📋 安排日程</span>
@@ -430,20 +469,22 @@
                 <button data-action="mental">🧠 心理训练</button>
             </div>
 
-            <div class="story-box" id="storyBox">
+            <div class="story-box">
                 <div class="story-text" id="storyText">👋 欢迎来到 DreamHaus！<br>作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！</div>
                 <div class="story-options" id="storyOptions"></div>
             </div>
 
             <div class="feedback-toast" id="feedbackToast">✨ 点击日程安排你的本月计划</div>
             <div class="reset-area">
-                <button class="reset-btn" onclick="resetGame()">🔄 重新开始</button>
+                <button class="reset-btn" id="resetBtn">🔄 重新开始</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ---------- 核心状态 ----------
+        // ============================================================
+        //  核心状态
+        // ============================================================
         const STAT_KEYS = ['vocal', 'dance', 'rap', 'visual', 'stamina', 'mental', 'popularity'];
         const STAT_LABELS = {
             vocal: '唱功',
@@ -457,7 +498,7 @@
         const STAT_COLORS = ['#e8a99c', '#d4a0c0', '#aac0d4', '#f0c8b0', '#b5cfb0', '#d4b8c8', '#f0cfb0'];
 
         let state = {
-            name: '林娜恩',
+            name: '',
             month: 0,
             stats: {
                 vocal: 20,
@@ -475,7 +516,9 @@
             storyChosen: false,
         };
 
-        // ---------- 预置剧情 ----------
+        // ============================================================
+        //  剧情事件库 (仅保留关键月份)
+        // ============================================================
         const STORY_EVENTS = {
             0: {
                 text: '第一天踏入公司，你看到墙上挂满了前辈的海报。这时，负责你的经纪人走过来，问你最想成为哪种类型的艺人？',
@@ -563,12 +606,40 @@
             };
         }
 
-        // ---------- 辅助函数 ----------
+        // ============================================================
+        //  辅助函数
+        // ============================================================
         function getStatValue(key) {
             return Math.min(100, Math.max(0, state.stats[key] || 0));
         }
 
-        // ---------- 渲染：数值条 ----------
+        function applyEffects(effects) {
+            let msg = [];
+            for (let key in effects) {
+                if (state.stats.hasOwnProperty(key)) {
+                    const old = state.stats[key];
+                    const delta = effects[key];
+                    let newVal = Math.min(100, Math.max(0, old + delta));
+                    state.stats[key] = newVal;
+                    if (delta !== 0) {
+                        const sign = delta > 0 ? '+' : '';
+                        msg.push(`${STAT_LABELS[key]} ${sign}${delta}`);
+                    }
+                }
+            }
+            return msg.join(' · ');
+        }
+
+        function addFlag(flag) {
+            if (flag && !state.flags.includes(flag)) {
+                state.flags.push(flag);
+                if (state.flags.length > 5) state.flags.shift();
+            }
+        }
+
+        // ============================================================
+        //  渲染函数
+        // ============================================================
         function renderStats() {
             const grid = document.getElementById('statsGrid');
             grid.innerHTML = '';
@@ -597,14 +668,12 @@
             document.getElementById('rankDisplay').textContent = rank;
         }
 
-        // ---------- 渲染：雷达图 ----------
         function renderRadar() {
             try {
                 const canvas = document.getElementById('radarCanvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 if (!ctx) return;
-
                 const w = canvas.width,
                     h = canvas.height;
                 ctx.clearRect(0, 0, w, h);
@@ -630,7 +699,7 @@
                     ctx.closePath();
                     ctx.stroke();
                 }
-                // 轴线
+                // 轴线 + 标签
                 for (let i = 0; i < n; i++) {
                     const x = centerX + radius * Math.cos(angles[i]);
                     const y = centerY + radius * Math.sin(angles[i]);
@@ -639,7 +708,6 @@
                     ctx.lineTo(x, y);
                     ctx.strokeStyle = '#f0ddd5';
                     ctx.stroke();
-                    // 标签
                     const labelR = radius + 18;
                     const lx = centerX + labelR * Math.cos(angles[i]);
                     const ly = centerY + labelR * Math.sin(angles[i]);
@@ -675,11 +743,10 @@
                     ctx.fill();
                 }
             } catch (e) {
-                console.warn('雷达图绘制出错（不影响核心功能）:', e);
+                console.warn('雷达图绘制出错:', e);
             }
         }
 
-        // ---------- 更新UI ----------
         function updateUI() {
             renderStats();
             renderRadar();
@@ -689,37 +756,17 @@
             document.getElementById('monthDisplay').textContent = m;
             document.getElementById('monthYear').textContent = `第 ${year} 年 · ${mon} 月`;
             document.getElementById('flagDisplay').textContent = state.flags.length ? state.flags.slice(-1)[0] : '新人';
-            document.getElementById('playerName').value = state.name;
+            document.getElementById('playerNameDisplay').textContent = state.name;
         }
 
-        // ---------- 应用效果 ----------
-        function applyEffects(effects) {
-            let msg = [];
-            for (let key in effects) {
-                if (state.stats.hasOwnProperty(key)) {
-                    const old = state.stats[key];
-                    const delta = effects[key];
-                    let newVal = Math.min(100, Math.max(0, old + delta));
-                    state.stats[key] = newVal;
-                    if (delta !== 0) {
-                        const sign = delta > 0 ? '+' : '';
-                        msg.push(`${STAT_LABELS[key]} ${sign}${delta}`);
-                    }
-                }
-            }
-            return msg.join(' · ');
-        }
-
-        function addFlag(flag) {
-            if (flag && !state.flags.includes(flag)) {
-                state.flags.push(flag);
-                if (state.flags.length > 5) state.flags.shift();
-            }
-        }
-
-        // ---------- 核心交互 ----------
+        // ============================================================
+        //  核心流程
+        // ============================================================
         function handleSchedule(action) {
-            if (state.gameOver || state.phase !== 'schedule') return;
+            if (state.gameOver || state.phase !== 'schedule') {
+                console.log('当前状态不允许安排日程:', state.phase, state.gameOver);
+                return;
+            }
 
             let effects = {};
             let baseMsg = '';
@@ -766,6 +813,7 @@
             document.getElementById('feedbackToast').textContent = `✅ ${baseMsg} → ${feedback}`;
             updateUI();
 
+            // 切换至剧情阶段
             state.phase = 'story';
             document.getElementById('phaseBadge').textContent = '🎬 剧情选择';
             document.querySelectorAll('#scheduleButtons button').forEach(b => b.disabled = true);
@@ -840,69 +888,6 @@
 
             const randomMsg = ['🌈 新的一月，继续加油！', '☕ 公司咖啡厅出了新品～', '📈 上个月表现不错，继续努力！', '🌙 夜深了，但梦想还在发光。'];
             document.getElementById('storyText').textContent = randomMsg[Math.floor(Math.random() * randomMsg.length)] + '\n请选择本月的训练日程。';
-            document.getElementById('feedbackToast').textContent = '📅 新的一月，选择你的日程吧！';
-            updateUI();
-        }
-
-        // ---------- 结局系统 ----------
-        function showEnding() {
-            const s = state.stats;
-            const flags = state.flags;
-            const avg = (s.vocal + s.dance + s.rap + s.visual) / 4;
-            const pop = s.popularity;
-            const mental = s.mental;
-            const stamina = s.stamina;
-
-            let title = '🌱 练习生结束';
-            let desc = '三年的时光结束了...';
-            let icon = '🌸';
-
-            const isHighAvg = avg > 70;
-            const isLowMental = mental < 25;
-            const isLowStamina = stamina < 20;
-            const isPopStar = pop > 85;
-            const isVocalKing = s.vocal > 85 && s.vocal > s.dance && s.vocal > s.rap;
-            const isDanceKing = s.dance > 85 && s.dance > s.vocal && s.dance > s.rap;
-            const isRapKing = s.rap > 85 && s.rap > s.vocal && s.rap > s.dance;
-            const isVisual = s.visual > 85;
-            const hasHardwork = flags.includes('hard_worker') || flags.includes('humble');
-
-            if (isLowMental || isLowStamina) {
-                icon = '💔';
-                title = '【遗憾退场】';
-                desc = '三年的高压训练让你的身心不堪重负。在出道前夕，你选择了离开。但请记住，健康永远是第一位的。你回归普通生活，却拥有了更强大的内心。';
-            } else if (isPopStar && isHighAvg && flags.includes('legend')) {
-                icon = '👑';
-                title = '【传奇全能ACE】';
-                desc = '你以绝对的实力和超高人气断层出道！你不仅唱跳俱佳，更拥有极强的个人魅力。你注定要登上格莱美的舞台，成为K-pop历史的传奇。';
-            } else if (isVocalKing && pop > 60) {
-                icon = '🎤';
-                title = '【天籁主唱】';
-                desc = '你的嗓音是上天赐予的礼物。你以主唱身份出道，每一首高音part都成为经典。你是音源强者，抒情曲的王者。';
-            } else if (isDanceKing && pop > 60) {
-                icon = '💃';
-                title = '【舞蹈机器】';
-                desc = '你的舞蹈实力让所有练习生望尘莫及。你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，被称为“人间舞蹈家”。';
-            } else if (isRapKing && pop > 60) {
-                icon = '🎧';
-                title = '【嘻哈鬼才】';
-                desc = '你的说唱flow独树一帜，歌词充满态度。你不仅成功出道，更成为队内的rap担和制作人。你打破了偶像的边界，被誉为“偶像界的黑泡之光”。';
-            } else if (isVisual && pop > 70) {
-                icon = '✨';
-                title = '【神颜门面】';
-                desc = '你的美貌是公司的王牌。你以门面担当出道，广告代言接到手软。你不仅是偶像，更是时尚圈的宠儿。';
-            } else if (isHighAvg && hasHardwork) {
-                icon = '🔥';
-                title = '【努力黑马】';
-                desc = '你并非天赋异禀，但你是最努力的那一个。你用汗水和毅力弥补了所有不足，最终成功出道。你的故事激励了无数人，你是“努力终有回报”的最佳代言。';
-            } else if (avg > 50 && pop > 50) {
-                icon = '🌟';
-                title = '【稳健出道组】';
-                desc = '你没有短板，也没有绝对的长板，但你是组合最需要的“万能胶”。你以中间名次出道，凭借稳定的发挥和好人缘，成为团队中不可或缺的一员。';
-            } else {
-                icon = '💫';
-                title = '【自由逐梦】';
-                desc = '你没能作为偶像出道，但这三年让你认清了自己的内心。你转作幕后制作人/独立歌手，你的音乐虽不大众，却深深打动了懂你的人。另一种人生，同样精彩。';
-            }
-
-            document.getElementById('phaseBadge').textContent = '🏁 结局';
+            document.getElementById('feedbackToast').textC
+            
+            
