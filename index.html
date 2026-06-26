@@ -9,6 +9,9 @@
 body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:#fcf6f0;color:#4a3b3b;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
 #startScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(252,246,240,0.92);backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:center;z-index:999;transition:opacity .4s}
 #startScreen.hidden{opacity:0;pointer-events:none}
+/* 开始光晕特效 */
+#startGlow{position:fixed;top:50%;left:50%;width:0;height:0;background:radial-gradient(circle,rgba(232,169,156,0.6),rgba(212,135,122,0.2),transparent);border-radius:50%;transform:translate(-50%,-50%);z-index:998;pointer-events:none;transition:all .8s cubic-bezier(0.34,1.56,0.64,1);opacity:0}
+#startGlow.active{width:800px;height:800px;opacity:1}
 .start-card{background:#fffcf9;border-radius:60px;padding:40px 50px;max-width:420px;width:90%;text-align:center;border:1px solid #f7e6df;box-shadow:0 30px 60px rgba(200,170,160,0.25)}
 .start-card h1{font-size:32px;background:linear-gradient(145deg,#e8a99c,#d4877a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
 .start-card p{color:#7f6b63;margin-bottom:24px;font-size:15px}
@@ -16,7 +19,8 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 .start-card input:focus{border-color:#dbaa9a;background:#fff;box-shadow:0 0 0 4px #f5ded6}
 .start-card button{margin-top:20px;padding:14px 40px;border:none;border-radius:60px;background:linear-gradient(145deg,#f0cdc0,#e0b8aa);color:#4a3730;font-size:18px;font-weight:700;cursor:pointer;transition:.25s;border:1px solid #eedad2}
 .start-card button:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,150,140,0.3)}
-.app{max-width:1100px;width:100%;background:rgba(255,249,245,0.85);border-radius:48px;padding:28px 30px 40px;box-shadow:0 20px 60px rgba(210,170,160,0.25);border:1px solid #ffede8;display:none}
+.app{max-width:1100px;width:100%;background:rgba(255,249,245,0.85);border-radius:48px;padding:28px 30px 40px;box-shadow:0 20px 60px rgba(210,170,160,0.25);border:1px solid #ffede8;display:none;opacity:0;transition:opacity .8s ease}
+.app.fade-in{opacity:1}
 .header{display:flex;justify-content:space-between;flex-wrap:wrap;border-bottom:2px dashed #f0d9d0;padding-bottom:16px;margin-bottom:24px}
 .header h1{font-size:28px;background:linear-gradient(145deg,#e8a99c,#d4877a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .meta-info{display:flex;gap:18px;background:#fef6f2;padding:8px 18px;border-radius:40px;border:1px solid #f5ded6;font-weight:500;color:#7f6b63;font-size:14px}
@@ -54,24 +58,45 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 .reset-area{margin-top:20px;text-align:right}
 .reset-btn{background:#eedbd2;border:none;padding:8px 28px;border-radius:40px;font-weight:600;cursor:pointer;font-size:14px}
 .reset-btn:hover{background:#e2c7bb}
-#endingModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(20,15,15,0.7);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:1000;padding:30px}
-.ending-card{background:#fffcf9;border-radius:48px;padding:40px 50px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;text-align:center;border:1px solid #f7e6df;box-shadow:0 40px 80px rgba(0,0,0,0.5)}
+
+/* ===== 里程碑弹窗 ===== */
+#milestoneModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(20,15,15,0.6);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:center;z-index:1001;padding:30px}
+.milestone-card{background:#fffcf9;border-radius:40px;padding:30px 40px;max-width:480px;width:100%;text-align:center;border:1px solid #f7e6df;box-shadow:0 30px 60px rgba(0,0,0,0.3);animation:milestonePop .5s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes milestonePop{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
+.milestone-card .ms-icon{font-size:56px;display:block;margin-bottom:6px}
+.milestone-card .ms-title{font-size:22px;font-weight:800;color:#b07d70;margin-bottom:8px}
+.milestone-card .ms-desc{font-size:16px;line-height:1.8;color:#4a3b3b}
+.milestone-card .ms-btn{margin-top:16px;padding:8px 30px;border:none;border-radius:40px;background:linear-gradient(145deg,#f0cdc0,#e0b8aa);font-size:15px;font-weight:700;cursor:pointer;border:1px solid #eedad2}
+.milestone-card .ms-btn:hover{transform:scale(1.03)}
+
+/* ===== 结局聚光灯 ===== */
+#endingModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(20,15,15,0.7);display:none;justify-content:center;align-items:center;z-index:1000;padding:30px}
+#endingModal .spotlight{position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(ellipse,rgba(255,215,150,0.3),transparent 70%);border-radius:50%;pointer-events:none;animation:spotlightPulse 3s ease-in-out infinite}
+@keyframes spotlightPulse{0%,100%{transform:translateX(-50%) scale(0.8);opacity:0.6}50%{transform:translateX(-50%) scale(1.2);opacity:1}}
+.ending-card{position:relative;background:#fffcf9;border-radius:48px;padding:40px 50px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;text-align:center;border:1px solid #f7e6df;box-shadow:0 40px 80px rgba(0,0,0,0.5);z-index:1;animation:endingPop .6s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes endingPop{0%{transform:scale(0.5) rotate(-2deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
 .ending-card .big-icon{font-size:72px;display:block;margin-bottom:10px}
 .ending-card .ending-title{font-size:32px;font-weight:800;color:#b07d70;margin-bottom:12px}
 .ending-card .ending-desc{font-size:17px;line-height:2;color:#4a3b3b;text-align:left;margin:16px 0 20px}
 .ending-card .ending-tags{background:#f5eae5;padding:12px 20px;border-radius:30px;font-size:15px;margin:16px 0 24px}
 .ending-card .ending-btn{background:linear-gradient(145deg,#f0cdc0,#e0b8aa);border:none;padding:12px 40px;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:.25s;border:1px solid #eedad2}
 .ending-card .ending-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,150,140,0.3)}
-@media(max-width:700px){.app{padding:18px 14px}.profile-radar-row{flex-direction:column}.radar-wrapper{height:200px}.ending-card{padding:30px 20px}.start-card{padding:30px 20px}}
+
+@media(max-width:700px){.app{padding:18px 14px}.profile-radar-row{flex-direction:column}.radar-wrapper{height:200px}.ending-card{padding:30px 20px}.start-card{padding:30px 20px}.milestone-card{padding:24px 20px}}
 </style>
 </head>
 <body>
 
 <!-- 起名界面 -->
 <div id="startScreen"><div class="start-card"><h1>🌸 练习生 · 三年之约</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button onclick="window.startGame()">🎤 开始</button></div></div>
+<!-- 开始光晕 -->
+<div id="startGlow"></div>
+
+<!-- 里程碑弹窗 -->
+<div id="milestoneModal"><div class="milestone-card" id="milestoneContent"></div></div>
 
 <!-- 结局弹窗 -->
-<div id="endingModal"><div class="ending-card" id="endingContent"></div></div>
+<div id="endingModal"><div class="spotlight"></div><div class="ending-card" id="endingContent"></div></div>
 
 <!-- 主游戏 -->
 <div class="app" id="gameApp">
@@ -79,7 +104,7 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 <div class="profile-radar-row">
 <div class="profile-card">
 <div class="name-area"><span class="name-display" id="playerNameDisplay">林娜恩</span><span class="badge">🎤 练习生</span></div>
-<div class="profile-detail"><span class="tag">🏢 DreamHaus Ent.</span><span class="tag">🎂 17岁</span><span class="tag">⭐ <span id="rankDisplay">C</span> 级</span></div>
+<div class="profile-detail"><span class="tag">🏢 DreamHaus Ent.</span><span class="tag">🎂 <span id="ageDisplay">17</span>岁</span><span class="tag">⭐ <span id="rankDisplay">C</span> 级</span></div>
 <div class="extra-info"><span>人气: <span id="popularityLabel">0</span></span><span>体力: <span id="staminaLabel">50</span></span></div>
 </div>
 <div class="radar-wrapper"><canvas id="radarCanvas" width="300" height="260"></canvas></div>
@@ -110,8 +135,22 @@ var STAT_KEYS = ['vocal','dance','rap','visual','stamina','mental','popularity']
 var STAT_LABELS = {vocal:'唱功',dance:'舞蹈',rap:'说唱',visual:'外貌',stamina:'体力',mental:'心态',popularity:'人气'};
 var STAT_COLORS = ['#e8a99c','#d4a0c0','#aac0d4','#f0c8b0','#b5cfb0','#d4b8c8','#f0cfb0'];
 var state = { name:'', month:0, stats:{vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10}, flags:[], gameOver:false, phase:'schedule', pendingStory:null, storyChosen:false };
+var milestoneTriggered = { vocal:false, dance:false, rap:false, visual:false, stamina:false, mental:false, popularity:false };
+var milestoneQueue = [];
+var isProcessingMilestone = false;
 
-// ========== 36个月事件（每个4选项） ==========
+// ========== 里程碑剧情文案 ==========
+var MILESTONE_TEXTS = {
+    vocal: { icon:'🎤', title:'唱功突破70！', desc:'你的唱功达到70！声乐老师惊叹你有"天生歌喉"，练习生们开始叫你"小歌王"。你的高音让整个公司为之震动。' },
+    dance: { icon:'💃', title:'舞蹈突破70！', desc:'你的舞蹈达到70！你的动作被编舞老师当作示范，大家开始称你为"传奇练习生"。你的舞姿成为后辈模仿的对象。' },
+    rap: { icon:'🎧', title:'说唱突破70！', desc:'你的说唱达到70！你的flow让前辈都刮目相看，你被称作"黑泡新星"。你的歌词充满态度与思考。' },
+    visual: { icon:'✨', title:'外貌突破70！', desc:'你的外貌达到70！你被星探评价为"天生偶像脸"，公司开始重点培养你的形象。你成为练习生中的视觉代表。' },
+    stamina: { icon:'💪', title:'体力突破70！', desc:'你的体力达到70！你成为练习生中的"铁人"，别人休息时你还在加练。你的体能让人望尘莫及。' },
+    mental: { icon:'🧠', title:'心态突破70！', desc:'你的心态达到70！你被心理导师评为"最强心脏"，任何压力都打不倒你。你是团队中最稳定的支柱。' },
+    popularity: { icon:'🌟', title:'人气突破70！', desc:'你的人气达到70！你的粉丝俱乐部正式成立，你开始拥有自己的应援色。你成了公司的话题中心。' }
+};
+
+// ========== 36个月事件（保留完整） ==========
 var STORY_EVENTS = {
 0:{text:'第一天，经纪人问你最想成为哪种艺人？',options:[
 {text:'💪 全能实力派',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
@@ -300,6 +339,44 @@ function getStatValue(k){ return Math.min(100,Math.max(0,state.stats[k]||0)); }
 function applyEffects(effects){ var msg=[]; for(var k in effects){ if(state.stats.hasOwnProperty(k)){ var old=state.stats[k], delta=effects[k], nv=Math.min(100,Math.max(0,old+delta)); state.stats[k]=nv; if(delta!==0){ msg.push(STAT_LABELS[k]+' '+(delta>0?'+':'')+delta); } } } return msg.join(' · '); }
 function addFlag(flag){ if(flag && !state.flags.includes(flag)){ state.flags.push(flag); if(state.flags.length>5) state.flags.shift(); } }
 
+// ========== 里程碑检测 ==========
+function checkMilestones(){
+    var triggered = [];
+    STAT_KEYS.forEach(function(key){
+        if(!milestoneTriggered[key] && getStatValue(key) >= 70){
+            milestoneTriggered[key] = true;
+            triggered.push(key);
+        }
+    });
+    if(triggered.length > 0){
+        triggered.forEach(function(key){
+            milestoneQueue.push(key);
+        });
+        if(!isProcessingMilestone){
+            processMilestoneQueue();
+        }
+    }
+}
+function processMilestoneQueue(){
+    if(milestoneQueue.length === 0 || isProcessingMilestone){ return; }
+    isProcessingMilestone = true;
+    var key = milestoneQueue.shift();
+    var data = MILESTONE_TEXTS[key];
+    if(!data){ isProcessingMilestone=false; processMilestoneQueue(); return; }
+    var modal = document.getElementById('milestoneModal');
+    var content = document.getElementById('milestoneContent');
+    content.innerHTML = '<span class="ms-icon">'+data.icon+'</span><div class="ms-title">🎉 '+data.title+'</div><div class="ms-desc">'+data.desc+'</div><button class="ms-btn" onclick="window.closeMilestone()">继续</button>';
+    modal.style.display = 'flex';
+}
+function closeMilestone(){
+    document.getElementById('milestoneModal').style.display = 'none';
+    isProcessingMilestone = false;
+    // 检查是否还有更多里程碑在队列中
+    if(milestoneQueue.length > 0){
+        setTimeout(function(){ processMilestoneQueue(); }, 300);
+    }
+}
+
 // ========== 渲染 ==========
 function renderStats(){
     var grid=document.getElementById('statsGrid'); grid.innerHTML='';
@@ -337,6 +414,9 @@ function updateUI(){
     document.getElementById('monthYear').textContent='第 '+year+' 年 · '+mon+' 月';
     document.getElementById('flagDisplay').textContent=state.flags.length?state.flags.slice(-1)[0]:'新人';
     document.getElementById('playerNameDisplay').textContent=state.name;
+    // 年龄 = 17 + floor(month/12)
+    var age = 17 + Math.floor(state.month / 12);
+    document.getElementById('ageDisplay').textContent=age;
 }
 
 // ========== 核心流程 ==========
@@ -357,6 +437,8 @@ function handleSchedule(action){
     var feedback=applyEffects(effects);
     document.getElementById('feedbackToast').textContent='✅ '+baseMsg+' → '+feedback;
     updateUI();
+    // 检查里程碑
+    checkMilestones();
     state.phase='story';
     document.getElementById('phaseBadge').textContent='🎬 剧情选择';
     document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=true; });
@@ -392,11 +474,13 @@ function handleStoryChoice(idx){
     var story=state.pendingStory;
     if(!story || !story.options || !story.options[idx]) return;
     var choice=story.options[idx];
-    if(choice.effect){ for(var k in choice.effect){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+choice.effect[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } } }
+     if(choice.effect){ for(var k in choice.effect){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+choice.effect[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } } }
     if(choice.flag) addFlag(choice.flag);
     var feedback=choice.effect?applyEffects(choice.effect):'无属性变化';
     document.getElementById('feedbackToast').textContent='📖 剧情选择: '+choice.text+' → '+feedback;
     updateUI();
+    // 检查里程碑
+    checkMilestones();
     document.querySelectorAll('#storyOptions button').forEach(function(b){ b.disabled=true; });
     setTimeout(function(){ finishMonth(); },900);
 }
@@ -414,7 +498,7 @@ function finishMonth(){
     updateUI();
 }
 
-// ========== 结局弹窗 ==========
+// ========== 结局聚光灯弹窗 ==========
 function showEnding(){
     var s=state.stats, flags=state.flags, avg=(s.vocal+s.dance+s.rap+s.visual)/4, pop=s.popularity, mental=s.mental, stamina=s.stamina;
     var title='🌱 练习生结束', desc='三年的时光结束了...', icon='🌸';
@@ -456,13 +540,54 @@ function showEnding(){
     document.getElementById('endingModal').style.display='flex';
 }
 
-// ========== 启动与重置 ==========
+// ========== 启动（带光晕特效） ==========
 function startGame(){
     var name=document.getElementById('nameInput').value.trim()||'林娜恩';
     state.name=name;
     document.getElementById('playerNameDisplay').textContent=name;
-    document.getElementById('startScreen').classList.add('hidden');
-    document.getElementById('gameApp').style.display='block';
+    // 光晕特效
+    var glow=document.getElementById('startGlow');
+    glow.classList.add('active');
+    // 起名界面淡出
+    var screen=document.getElementById('startScreen');
+    screen.classList.add('hidden');
+    // 延迟显示游戏界面
+    setTimeout(function(){
+        var app=document.getElementById('gameApp');
+        app.style.display='block';
+        // 使用requestAnimationFrame确保display生效后再加fade-in类
+        requestAnimationFrame(function(){
+            app.classList.add('fade-in');
+        });
+        // 重置状态
+        state.month=0;
+        state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};
+        state.flags=[];
+        state.gameOver=false;
+        state.phase='schedule';
+        state.storyChosen=false;
+        state.pendingStory=null;
+        // 重置里程碑
+        milestoneTriggered = { vocal:false, dance:false, rap:false, visual:false, stamina:false, mental:false, popularity:false };
+        milestoneQueue = [];
+        isProcessingMilestone = false;
+        document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=false; });
+        document.getElementById('storyOptions').innerHTML='';
+        document.getElementById('storyText').textContent='👋 欢迎来到 DreamHaus！\n作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！';
+        document.getElementById('feedbackToast').textContent='✨ 点击日程安排你的本月计划';
+        document.getElementById('phaseBadge').textContent='📋 安排日程';
+        // 清除光晕
+        setTimeout(function(){ glow.classList.remove('active'); }, 800);
+        updateUI();
+    }, 500);
+}
+
+// ========== 重置 ==========
+function resetGame(){
+    document.getElementById('startScreen').classList.remove('hidden');
+    document.getElementById('gameApp').style.display='none';
+    document.getElementById('gameApp').classList.remove('fade-in');
+    document.getElementById('nameInput').value=state.name||'林娜恩';
     state.month=0;
     state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};
     state.flags=[];
@@ -470,17 +595,24 @@ function startGame(){
     state.phase='schedule';
     state.storyChosen=false;
     state.pendingStory=null;
+    milestoneTriggered = { vocal:false, dance:false, rap:false, visual:false, stamina:false, mental:false, popularity:false };
+    milestoneQueue = [];
+    isProcessingMilestone = false;
     document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=false; });
     document.getElementById('storyOptions').innerHTML='';
     document.getElementById('storyText').textContent='👋 重新开始，输入名字后开始新旅程吧！';
     document.getElementById('feedbackToast').textContent='✨ 等待开始...';
     document.getElementById('endingModal').style.display='none';
+    document.getElementById('milestoneModal').style.display='none';
+    // 清除光晕
+    document.getElementById('startGlow').classList.remove('active');
 }
 
 // ========== 暴露全局 ==========
 window.startGame = startGame;
 window.handleSchedule = handleSchedule;
 window.resetGame = resetGame;
+window.closeMilestone = closeMilestone;
 
 // ========== 初始显示 ==========
 document.addEventListener('DOMContentLoaded', function(){
