@@ -387,7 +387,7 @@ var STORY_EVENTS = {
 {text:'📚 回去练习',effect:{vocal:3,stamina:-2},flag:'persistent'}]},
 35:{text:'出道初舞台，你心中最强烈的念头是？',options:[
 {text:'🏆 我要成为kpop的传奇',effect:{popularity:3,mental:3},flag:'legend'},
-{text:'💖 感谢从练习生时期就陪伴自己的粉丝',effect:{popularity:3,mental:3},flag:'grateful'},
+{text:'💖 感谢陪伴自己的粉丝',effect:{popularity:3,mental:3},flag:'grateful'},
 {text:'🎭 享受舞台，心无旁骛',effect:{vocal:3,dance:3,visual:3},flag:'artist'},
 {text:'🌟 终于在这一刻梦想成真',effect:{popularity:3,mental:3},flag:'dreamer'}]}
 };
@@ -653,7 +653,7 @@ function handleSocialChoice(idx){
     document.getElementById('feedbackToast').textContent = '💬 与 ' + person.name + ' 的对话结束 → ' + feedback;
     
     // 检查是否触发恋爱（聊天2次且不是前辈且未恋爱）
-    if(!loveInterest && person.type === '练习生' && chatCount[person.name] >= 3){
+    if(!loveInterest && person.type === '练习生' && chatCount[person.name] >= 2){
         var loveOpt = confirm('💕 你与 ' + person.name + ' 心有灵犀，感觉很有默契。\n要开始恋爱吗？（确定=恋爱，取消=保持朋友）');
         if(loveOpt){
             loveInterest = person;
