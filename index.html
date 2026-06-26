@@ -149,7 +149,7 @@ var TRAINEES = [
 var SENIORS = [
     { name:'权尚宇', gender:'男', type:'前辈爱豆', personality:'野心大志', emoji:'🔥' },
     { name:'金建河', gender:'男', type:'前辈爱豆', personality:'佛系躺平', emoji:'💜' },
-    { name:'夏恩', gender:'女', type:'前辈爱豆', personality:'温柔包容', emoji:'🍃' }
+    { name:'尹夏美', gender:'女', type:'前辈爱豆', personality:'温柔包容', emoji:'🍃' }
 ];
 var SOCIAL_POOL = TRAINEES.concat(SENIORS);
 
@@ -171,12 +171,12 @@ var SOCIAL_SCENES = [
     { text: '你看到对方在角落独自练习，似乎遇到困难了。', options: [
         { text: '🤝 主动上前帮忙', type:'good', effect:{mental:2,popularity:2} },
         { text: '👀 默默观察，不打扰', type:'normal', effect:{mental:1} },
-        { text: '💪 告诉对方"你一定能行"', type:'good', effect:{mental:2,popularity:1} }
+        { text: '💪 告诉对方"一定能行"', type:'good', effect:{mental:2,popularity:1} }
     ]},
     { text: '对方邀请你一起去吃饭，你决定？', options: [
         { text: '🍜 一起去，聊聊日常', type:'good', effect:{stamina:2,popularity:2} },
         { text: '📚 婉拒，回去练习', type:'normal', effect:{vocal:1,dance:1,stamina:-1} },
-        { text: '😊 开心接受，请客拉近关系', type:'good', effect:{popularity:3,mental:1} }
+        { text: '😊 开心接受，拉近关系', type:'good', effect:{popularity:3,mental:1} }
     ]},
     { text: '对方心情低落，好像遇到了瓶颈。', options: [
         { text: '🤗 认真倾听，安慰对方', type:'good', effect:{mental:3,popularity:2} },
@@ -191,12 +191,12 @@ var SOCIAL_SCENES = [
     { text: '对方想和你一challenge，你？', options: [
         { text: '👍 爽快答应', type:'good', effect:{popularity:2,mental:2,dance:1} },
         { text: '🤔 考虑后婉拒', type:'bad', effect:{mental:1,popularity:-1} },
-        { text: '🎯 接受并制定详细计划', type:'good', effect:{dance:2,vocal:2,mental:1} }
+        { text: '🎯 接受并制定计划', type:'good', effect:{dance:2,vocal:2,mental:1} }
     ]},
     { text: '对方不小心弄坏了你的东西，你？', options: [
         { text: '😊 没关系，别在意', type:'good', effect:{mental:2,popularity:2} },
         { text: '😤 有点生气但原谅了', type:'normal', effect:{mental:-1,popularity:1} },
-        { text: '🤝 趁机拉近距离，关系反而变好', type:'good', effect:{popularity:3,mental:1} }
+        { text: '🤝 趁机拉近距离', type:'good', effect:{popularity:3,mental:1} }
     ]}
 ];
 
@@ -403,18 +403,18 @@ function addFlag(flag){ if(flag && !state.flags.includes(flag)){ state.flags.pus
 //  里程碑系统
 // ========================================================================
 var MILESTONE_TEXTS = {
-    vocal: { icon:'🎤', title:'唱功突破70！', desc:'你的唱功达到70！声乐老师惊叹你有"天生歌喉"，练习生们开始叫你"小歌王"。' },
-    dance: { icon:'💃', title:'舞蹈突破70！', desc:'你的舞蹈达到70！你的动作被编舞老师当作示范，大家开始称你为"传奇练习生"。' },
-    rap: { icon:'🎧', title:'说唱突破70！', desc:'你的说唱达到70！你的flow让前辈都刮目相看，你被称作"黑泡新星"。' },
-    visual: { icon:'✨', title:'外貌突破70！', desc:'你的外貌达到70！你被星探评价为"天生偶像脸"，公司开始重点培养你的形象。' },
-    stamina: { icon:'💪', title:'体力突破70！', desc:'你的体力达到70！你成为练习生中的"铁人"，别人休息时你还在加练。' },
-    mental: { icon:'🧠', title:'心态突破70！', desc:'你的心态达到70！你被心理导师评为"最强心脏"，任何压力都打不倒你。' },
-    popularity: { icon:'🌟', title:'人气突破70！', desc:'你的人气达到70！你的粉丝俱乐部正式成立，你开始拥有自己的应援色。' }
+    vocal: { icon:'🎤', title:'唱功突破80！', desc:'你的唱功达到80！声乐老师惊叹你有"天生歌喉"，练习生们开始叫你"歌王"。' },
+    dance: { icon:'💃', title:'舞蹈突破80！', desc:'你的舞蹈达到80！你的动作被编舞老师当作示范，大家开始称你为"传奇练习生"。' },
+    rap: { icon:'🎧', title:'说唱突破80！', desc:'你的说唱达到80！你的flow让前辈都刮目相看，你被称作"黑泡新星"。' },
+    visual: { icon:'✨', title:'外貌突破80！', desc:'你的外貌达到80！你被论坛评价为"脸蛋天才"，公司开始重点培养你的形象。' },
+    stamina: { icon:'💪', title:'体力突破80！', desc:'你的体力达到80！你成为练习生中的"铁人"，别人休息时你还在加练。' },
+    mental: { icon:'🧠', title:'心态突破80！', desc:'你的心态达到80！你被心理导师评为"最强心脏"，任何压力都打不倒你。' },
+    popularity: { icon:'🌟', title:'人气突破80！', desc:'你的人气达到80！你的粉丝俱乐部正式成立，你开始拥有自己的后援会。' }
 };
 function checkMilestones(){
     var triggered = [];
     STAT_KEYS.forEach(function(key){
-        if(!milestoneTriggered[key] && getStatValue(key) >= 70){
+        if(!milestoneTriggered[key] && getStatValue(key) >= 80){
             milestoneTriggered[key] = true;
             triggered.push(key);
         }
@@ -652,9 +652,9 @@ function handleSocialChoice(idx){
     var feedback = msg.join(' · ') || '无变化';
     document.getElementById('feedbackToast').textContent = '💬 与 ' + person.name + ' 的对话结束 → ' + feedback;
     
-    // 检查是否触发恋爱（聊天3次且不是前辈且未恋爱）
+    // 检查是否触发恋爱（聊天2次且不是前辈且未恋爱）
     if(!loveInterest && person.type === '练习生' && chatCount[person.name] >= 3){
-        var loveOpt = confirm('💕 你与 ' + person.name + ' 已经聊了3次，感觉很有默契。\n要开始恋爱吗？（确定=恋爱，取消=保持朋友）');
+        var loveOpt = confirm('💕 你与 ' + person.name + ' 心有灵犀，感觉很有默契。\n要开始恋爱吗？（确定=恋爱，取消=保持朋友）');
         if(loveOpt){
             loveInterest = person;
             isInLove = true;
@@ -716,7 +716,7 @@ function showEnding(){
     }else if(highest.key === 'vocal' && vocal - dance > 10 && vocal - rap > 10 && vocal > 55){
         icon='🎤'; title='【天籁主唱】'; desc='你的嗓音是上天赐予的礼物！你以绝对的主唱实力出道，每一首高音part都成为经典。你是音源强者，抒情曲的王者。你的歌声治愈了无数听众。';
     }else if(highest.key === 'dance' && dance - vocal > 10 && dance - rap > 10 && dance > 55){
-        icon='💃'; title='【舞蹈机器】'; desc='你的舞蹈实力让所有练习生望尘莫及！你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，被称为"人间舞蹈家"。你的舞蹈视频在网络上疯传。';
+        icon='💃'; title='【舞蹈机器】'; desc='你的舞蹈实力让所有练习生望尘莫及！你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，和最专业的舞者不相上下。你的舞蹈视频在网络上疯传。';
     }else if(highest.key === 'rap' && rap - vocal > 10 && rap - dance > 10 && rap > 55){
         icon='🎧'; title='【嘻哈鬼才】'; desc='你的说唱flow独树一帜，歌词充满态度！你不仅成功出道，更成为队内的rap担和制作人。你打破了偶像的边界，被誉为"偶像界的黑泡之光"。';
     }else if(highest.key === 'visual' && visual - avg > 15 && popularity > 40){
@@ -780,7 +780,7 @@ function resetGame(){
     document.getElementById('startScreen').classList.remove('hidden');
     document.getElementById('gameApp').style.display='none';
     document.getElementById('gameApp').classList.remove('fade-in');
-    document.getElementById('nameInput').value=state.name||'林娜恩';
+    document.getElementById('nameInput').value=state.name||'姓名';
     state.month=0;
     state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};
     state.flags=[];
