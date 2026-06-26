@@ -4,77 +4,369 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🌸 练习生 · 三年之约</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:#fcf6f0;color:#4a3b3b;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}#startScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(252,246,240,0.92);backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:center;z-index:999;transition:opacity 0.4s}#startScreen.hidden{opacity:0;pointer-events:none}.start-card{background:#fffcf9;border-radius:60px;padding:40px 50px;max-width:420px;width:90%;text-align:center;border:1px solid #f7e6df;box-shadow:0 30px 60px rgba(200,170,160,0.25)}.start-card h1{font-size:32px;background:linear-gradient(145deg,#e8a99c,#d4877a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}.start-card p{color:#7f6b63;margin-bottom:24px;font-size:15px}.start-card input{width:100%;padding:14px 20px;border:2px solid #eedad2;border-radius:60px;font-size:18px;text-align:center;background:#fff5f0;outline:none;transition:0.2s;color:#4a3730;font-weight:600}.start-card input:focus{border-color:#dbaa9a;background:#fff;box-shadow:0 0 0 4px #f5ded6}.start-card button{margin-top:20px;padding:14px 40px;border:none;border-radius:60px;background:linear-gradient(145deg,#f0cdc0,#e0b8aa);color:#4a3730;font-size:18px;font-weight:700;cursor:pointer;transition:0.25s;border:1px solid #eedad2}.start-card button:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,150,140,0.3)}.app{max-width:1100px;width:100%;background:rgba(255,249,245,0.85);border-radius:48px;padding:28px 30px 40px;box-shadow:0 20px 60px rgba(210,170,160,0.25);border:1px solid #ffede8;display:none}.header{display:flex;justify-content:space-between;flex-wrap:wrap;border-bottom:2px dashed #f0d9d0;padding-bottom:16px;margin-bottom:24px}.header h1{font-size:28px;background:linear-gradient(145deg,#e8a99c,#d4877a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.meta-info{display:flex;gap:18px;background:#fef6f2;padding:8px 18px;border-radius:40px;border:1px solid #f5ded6;font-weight:500;color:#7f6b63}.meta-info span{color:#b07d70;font-weight:600}.profile-radar-row{display:flex;flex-wrap:wrap;gap:24px;background:#fffcf9;border-radius:32px;padding:20px 22px;border:1px solid #f7e6df;margin-bottom:28px}.profile-card{flex:1.2;min-width:200px}.name-display{font-size:26px;font-weight:700;background:#fff5f0;padding:4px 18px;border-radius:40px;border:1px solid #eedad2}.badge{background:#f0dbd4;padding:4px 14px;border-radius:40px;font-size:13px;font-weight:600}.profile-detail .tag{background:#f4e8e2;padding:4px 14px;border-radius:30px}.radar-wrapper{flex:2.2;min-width:250px;height:240px;display:flex;justify-content:center;align-items:center;background:#fffaf7;border-radius:28px;border:1px solid #f4e0d8}#radarCanvas{max-width:280px;max-height:230px}.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px 18px;background:#fffcf9;padding:18px 20px;border-radius:28px;border:1px solid #f7e6df;margin:16px 0 22px}.stat-item{display:flex;align-items:center;gap:8px}.stat-item .label{min-width:60px;font-weight:600}.stat-item .bar-bg{flex:1;height:8px;background:#f2e3dc;border-radius:20px;overflow:hidden}.stat-item .bar-fill{height:100%;border-radius:20px;transition:width .45s;background:linear-gradient(90deg,#f4b8a8,#dd9888)}.interaction-area{background:#fffaf7;border-radius:32px;padding:24px 26px 30px;border:1px solid #f7e6df;margin-top:8px}.phase-title{font-size:18px;font-weight:700;display:flex;gap:12px;margin-bottom:14px}.month-badge{background:#e8cdc4;padding:2px 16px;border-radius:40px}.schedule-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}.schedule-buttons button{background:#f5eae5;border:none;padding:10px 22px;border-radius:40px;font-weight:600;cursor:pointer;transition:.2s;border:1px solid transparent;flex:1 0 auto}.schedule-buttons button:hover:not(:disabled){background:#eccec2;transform:translateY(-2px);border-color:#dbb6aa}.schedule-buttons button:disabled{opacity:.4;pointer-events:none}.story-box{background:#fff7f3;border-radius:24px;padding:20px 24px;margin:14px 0 10px;border-left:6px solid #ecc6ba;min-height:100px}.story-text{font-size:15px;line-height:1.8;white-space:pre-wrap}.story-options{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.story-options button{background:#fff;border:1.5px solid #e5cdc2;padding:8px 22px;border-radius:40px;font-weight:600;cursor:pointer;flex:1 0 auto}.story-options button:hover:not(:disabled){background:#f5ddd4;border-color:#caaaa0}.story-options button:disabled{opacity:.3;pointer-events:none}.feedback-toast{margin-top:16px;padding:10px 16px;background:#f3e3db;border-radius:30px;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;font-weight:500}.reset-area{margin-top:20px;text-align:right}.reset-btn{background:#eedbd2;border:none;padding:8px 28px;border-radius:40px;font-weight:600;cursor:pointer}.reset-btn:hover{background:#e2c7bb}.ending-title{font-size:28px;font-weight:800;color:#b07d70}.ending-desc{font-size:17px;line-height:1.9}@media(max-width:700px){.app{padding:18px 14px}.profile-radar-row{flex-direction:column}.radar-wrapper{height:200px}}</style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:#fcf6f0;color:#4a3b3b;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+#startScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(252,246,240,0.92);backdrop-filter:blur(6px);display:flex;justify-content:center;align-items:center;z-index:999;transition:opacity .4s}
+#startScreen.hidden{opacity:0;pointer-events:none}
+.start-card{background:#fffcf9;border-radius:60px;padding:40px 50px;max-width:420px;width:90%;text-align:center;border:1px solid #f7e6df;box-shadow:0 30px 60px rgba(200,170,160,0.25)}
+.start-card h1{font-size:32px;background:linear-gradient(145deg,#e8a99c,#d4877a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.start-card p{color:#7f6b63;margin-bottom:24px;font-size:15px}
+.start-card input{width:100%;padding:14px 20px;border:2px solid #eedad2;border-radius:60px;font-size:18px;text-align:center;background:#fff5f0;outline:none;transition:.2s;color:#4a3730;font-weight:600}
+.start-card input:focus{border-color:#dbaa9a;background:#fff;box-shadow:0 0 0 4px #f5ded6}
+.start-card button{margin-top:20px;padding:14px 40px;border:none;border-radius:60px;background:linear-gradient(145deg,#f0cdc0,#e0b8aa);color:#4a3730;font-size:18px;font-weight:700;cursor:pointer;transition:.25s;border:1px solid #eedad2}
+.start-card button:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,150,140,0.3)}
+.app{max-width:1100px;width:100%;background:rgba(255,249,245,0.85);border-radius:48px;padding:28px 30px 40px;box-shadow:0 20px 60px rgba(210,170,160,0.25);border:1px solid #ffede8;display:none}
+.header{display:flex;justify-content:space-between;flex-wrap:wrap;border-bottom:2px dashed #f0d9d0;padding-bottom:16px;margin-bottom:24px}
+.header h1{font-size:28px;background:linear-gradient(145deg,#e8a99c,#d4877a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.meta-info{display:flex;gap:18px;background:#fef6f2;padding:8px 18px;border-radius:40px;border:1px solid #f5ded6;font-weight:500;color:#7f6b63;font-size:14px}
+.meta-info span{color:#b07d70;font-weight:600}
+.profile-radar-row{display:flex;flex-wrap:wrap;gap:24px;background:#fffcf9;border-radius:32px;padding:24px 28px;border:1px solid #f7e6df;margin-bottom:28px}
+.profile-card{flex:1.2;min-width:220px;display:flex;flex-direction:column;gap:8px}
+.name-area{display:flex;align-items:center;gap:14px;margin-bottom:4px;flex-wrap:wrap}
+.name-display{font-size:28px;font-weight:700;background:#fff5f0;padding:4px 20px;border-radius:40px;border:1px solid #eedad2}
+.badge{background:#f0dbd4;padding:4px 16px;border-radius:40px;font-size:14px;font-weight:600}
+.profile-detail{display:flex;flex-wrap:wrap;gap:12px 20px;font-size:15px;color:#6b554c;margin-top:4px}
+.profile-detail .tag{background:#f4e8e2;padding:4px 16px;border-radius:30px}
+.extra-info{margin-top:8px;font-size:14px;color:#b29084;display:flex;gap:20px}
+.radar-wrapper{flex:2.2;min-width:250px;height:240px;display:flex;justify-content:center;align-items:center;background:#fffaf7;border-radius:28px;border:1px solid #f4e0d8}
+#radarCanvas{max-width:280px;max-height:230px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px 18px;background:#fffcf9;padding:18px 20px;border-radius:28px;border:1px solid #f7e6df;margin:16px 0 22px}
+.stat-item{display:flex;align-items:center;gap:10px}
+.stat-item .label{min-width:62px;font-weight:600;font-size:14px}
+.stat-item .bar-bg{flex:1;height:8px;background:#f2e3dc;border-radius:20px;overflow:hidden}
+.stat-item .bar-fill{height:100%;border-radius:20px;transition:width .45s;background:linear-gradient(90deg,#f4b8a8,#dd9888)}
+.stat-item .val{font-size:14px;font-weight:700;color:#b07d70;min-width:32px;text-align:right}
+.interaction-area{background:#fffaf7;border-radius:32px;padding:24px 26px 30px;border:1px solid #f7e6df;margin-top:8px}
+.phase-title{font-size:18px;font-weight:700;display:flex;gap:12px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+.month-badge{background:#e8cdc4;padding:2px 16px;border-radius:40px;font-size:15px}
+.schedule-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.schedule-buttons button{background:#f5eae5;border:none;padding:10px 22px;border-radius:40px;font-weight:600;cursor:pointer;transition:.2s;border:1px solid transparent;flex:1 0 auto;font-size:14px}
+.schedule-buttons button:hover:not(:disabled){background:#eccec2;transform:translateY(-2px);border-color:#dbb6aa}
+.schedule-buttons button:disabled{opacity:.4;pointer-events:none}
+.story-box{background:#fff7f3;border-radius:24px;padding:20px 24px;margin:14px 0 10px;border-left:6px solid #ecc6ba;min-height:100px}
+.story-text{font-size:15px;line-height:1.9;white-space:pre-wrap}
+.story-options{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.story-options button{background:#fff;border:1.5px solid #e5cdc2;padding:8px 22px;border-radius:40px;font-weight:600;cursor:pointer;flex:1 0 auto;font-size:14px}
+.story-options button:hover:not(:disabled){background:#f5ddd4;border-color:#caaaa0}
+.story-options button:disabled{opacity:.3;pointer-events:none}
+.feedback-toast{margin-top:16px;padding:10px 16px;background:#f3e3db;border-radius:30px;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:14px}
+.reset-area{margin-top:20px;text-align:right}
+.reset-btn{background:#eedbd2;border:none;padding:8px 28px;border-radius:40px;font-weight:600;cursor:pointer;font-size:14px}
+.reset-btn:hover{background:#e2c7bb}
+#endingModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(20,15,15,0.7);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:1000;padding:30px}
+.ending-card{background:#fffcf9;border-radius:48px;padding:40px 50px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;text-align:center;border:1px solid #f7e6df;box-shadow:0 40px 80px rgba(0,0,0,0.5)}
+.ending-card .big-icon{font-size:72px;display:block;margin-bottom:10px}
+.ending-card .ending-title{font-size:32px;font-weight:800;color:#b07d70;margin-bottom:12px}
+.ending-card .ending-desc{font-size:17px;line-height:2;color:#4a3b3b;text-align:left;margin:16px 0 20px}
+.ending-card .ending-tags{background:#f5eae5;padding:12px 20px;border-radius:30px;font-size:15px;margin:16px 0 24px}
+.ending-card .ending-btn{background:linear-gradient(145deg,#f0cdc0,#e0b8aa);border:none;padding:12px 40px;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:.25s;border:1px solid #eedad2}
+.ending-card .ending-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(200,150,140,0.3)}
+@media(max-width:700px){.app{padding:18px 14px}.profile-radar-row{flex-direction:column}.radar-wrapper{height:200px}.ending-card{padding:30px 20px}.start-card{padding:30px 20px}}
+</style>
 </head>
 <body>
+
+<!-- 起名界面 -->
 <div id="startScreen"><div class="start-card"><h1>🌸 练习生 · 三年之约</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button id="startBtn">🎤 开始</button></div></div>
+
+<!-- 结局弹窗 -->
+<div id="endingModal"><div class="ending-card" id="endingContent"></div></div>
+
+<!-- 主游戏 -->
 <div class="app" id="gameApp">
 <div class="header"><h1>🌸 练习生 · 三年之约</h1><div class="meta-info"><div>📆 <span id="monthDisplay">1</span> / 36</div><div>🏷️ <span id="flagDisplay">新人</span></div></div></div>
-<div class="profile-radar-row"><div class="profile-card"><div><span class="name-display" id="playerNameDisplay">林娜恩</span><span class="badge">🎤 练习生</span></div><div class="profile-detail"><span class="tag">🏢 DreamHaus Ent.</span><span class="tag">🎂 17岁</span><span class="tag">⭐ <span id="rankDisplay">C</span> 级</span></div><div style="margin-top:10px;font-size:13px;color:#b29084;">人气: <span id="popularityLabel">0</span> · 体力: <span id="staminaLabel">50</span></div></div><div class="radar-wrapper"><canvas id="radarCanvas" width="300" height="260"></canvas></div></div>
+<div class="profile-radar-row">
+<div class="profile-card">
+<div class="name-area"><span class="name-display" id="playerNameDisplay">林娜恩</span><span class="badge">🎤 练习生</span></div>
+<div class="profile-detail"><span class="tag">🏢 DreamHaus Ent.</span><span class="tag">🎂 17岁</span><span class="tag">⭐ <span id="rankDisplay">C</span> 级</span></div>
+<div class="extra-info"><span>人气: <span id="popularityLabel">0</span></span><span>体力: <span id="staminaLabel">50</span></span></div>
+</div>
+<div class="radar-wrapper"><canvas id="radarCanvas" width="300" height="260"></canvas></div>
+</div>
+
 <div class="stats-grid" id="statsGrid"></div>
-<div class="interaction-area"><div class="phase-title"><span>🗓️ <span id="monthYear">第 1 年 · 1 月</span></span><span class="month-badge" id="phaseBadge">📋 安排日程</span></div>
-<div class="schedule-buttons" id="scheduleButtons"><button data-action="dance">💃 舞蹈</button><button data-action="vocal">🎤 声乐</button><button data-action="rap">🎧 说唱</button><button data-action="visual">✨ 外貌管理</button><button data-action="rest">🧘 休息</button><button data-action="social">📱 社交/粉丝</button><button data-action="mental">🧠 心理训练</button></div>
+
+<div class="interaction-area">
+<div class="phase-title"><span>🗓️ <span id="monthYear">第 1 年 · 1 月</span></span><span class="month-badge" id="phaseBadge">📋 安排日程</span></div>
+<div class="schedule-buttons" id="scheduleButtons">
+<button data-action="dance">💃 舞蹈</button><button data-action="vocal">🎤 声乐</button><button data-action="rap">🎧 说唱</button>
+<button data-action="visual">✨ 外貌管理</button><button data-action="rest">🧘 休息</button>
+<button data-action="social">📱 社交</button><button data-action="mental">🧠 心理</button>
+</div>
 <div class="story-box"><div class="story-text" id="storyText">👋 欢迎来到 DreamHaus！<br>作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！</div><div class="story-options" id="storyOptions"></div></div>
 <div class="feedback-toast" id="feedbackToast">✨ 点击日程安排你的本月计划</div>
-<div class="reset-area"><button class="reset-btn" id="resetBtn">🔄 重新开始</button></div></div></div>
+<div class="reset-area"><button class="reset-btn" id="resetBtn">🔄 重新开始</button></div>
+</div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded',function(){
 const STAT_KEYS=['vocal','dance','rap','visual','stamina','mental','popularity'];
 const STAT_LABELS={vocal:'唱功',dance:'舞蹈',rap:'说唱',visual:'外貌',stamina:'体力',mental:'心态',popularity:'人气'};
 const STAT_COLORS=['#e8a99c','#d4a0c0','#aac0d4','#f0c8b0','#b5cfb0','#d4b8c8','#f0cfb0'];
 let state={name:'',month:0,stats:{vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10},flags:[],gameOver:false,phase:'schedule',pendingStory:null,storyChosen:false};
+
+// ============================================================
+//  全部36个月份的事件（每个4个选项）
+// ============================================================
 const STORY_EVENTS={
-0:{text:'第一天踏入公司，你看到墙上挂满了前辈的海报。这时，负责你的经纪人走过来，问你最想成为哪种类型的艺人？',options:[{text:'全能实力派',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},{text:'舞台表演者',effect:{dance:5,visual:2,stamina:2},flag:'performer'},{text:'创作型歌手',effect:{vocal:4,rap:4,mental:3},flag:'creator'}]},
-2:{text:'第一次月末评价！你需要在社长面前表演。你选择展示什么？',options:[{text:'高难度舞蹈',effect:{dance:6,stamina:-3,popularity:4},flag:'dance_master'},{text:'深情抒情曲',effect:{vocal:6,mental:2,popularity:3},flag:'vocal_soul'},{text:'自作曲rap',effect:{rap:6,vocal:2,popularity:2},flag:'rap_genius'}]},
-5:{text:'公司安排了小型粉丝见面会。现场粉丝很热情，但也有几个刁钻的问题。你怎么应对？',options:[{text:'真诚回答，展现真实自我',effect:{mental:5,popularity:6},flag:'honest'},{text:'用幽默感化解所有尴尬',effect:{mental:3,popularity:7,visual:2},flag:'funny'},{text:'高冷简洁，保持神秘',effect:{visual:5,popularity:2,mental:-2},flag:'mysterious'}]},
-8:{text:'公司内部举办“才艺之夜”，你需要上台表演一个非主打的特殊才艺，你选？',options:[{text:'乐器演奏（吉他/钢琴）',effect:{vocal:4,mental:4,popularity:3},flag:'musician'},{text:'即兴舞蹈battle',effect:{dance:6,stamina:-2,popularity:5},flag:'battle'},{text:'搞笑模仿秀',effect:{mental:5,popularity:6,visual:1},flag:'comedian'}]},
-11:{text:'年末庆典，你被选为特别舞台的候选人。但排练时间紧张，你选择？',options:[{text:'拼尽全力，争取C位',effect:{dance:8,vocal:5,stamina:-8,popularity:10},flag:'hard_worker'},{text:'稳扎稳打，保证不出错',effect:{vocal:4,dance:4,mental:5},flag:'stable'},{text:'和队友合作，设计亮点',effect:{visual:3,popularity:6,mental:4},flag:'teamplayer'}]},
-14:{text:'有娱乐公司代表来观摩练习，你被临时推举为代表表演，你选？',options:[{text:'展现最强唱功',effect:{vocal:8,popularity:6,mental:3},flag:'vocal_show'},{text:'展现全能舞技',effect:{dance:8,popularity:5,mental:3},flag:'dance_show'},{text:'展现创作能力',effect:{rap:6,vocal:4,popularity:7},flag:'producer'}]},
-17:{text:'中期考核，导师直言你的某项短板非常明显。你会如何回应？',options:[{text:'虚心接受，疯狂加练',effect:{stamina:-5,mental:5,dance:5,vocal:5},flag:'humble'},{text:'强调自己的优势，不惧短板',effect:{mental:8,popularity:3,visual:3},flag:'confident'},{text:'请求导师给予具体指导',effect:{vocal:3,dance:3,rap:3,mental:4},flag:'studious'}]},
-20:{text:'你突然获得一个广告代言机会，但需要牺牲一周训练时间，你选？',options:[{text:'接受代言，赚取人气和金钱',effect:{popularity:10,stamina:-3,mental:1},flag:'commercial'},{text:'拒绝代言，专心训练',effect:{vocal:4,dance:4,rap:4,mental:2},flag:'focus'},{text:'与公司协商，缩短时间',effect:{popularity:5,stamina:-1,mental:3},flag:'negotiator'}]},
-23:{text:'公司派你去海外研修一个月。面对陌生的环境和语言，你决定？',options:[{text:'疯狂吸收海外潮流文化',effect:{dance:6,rap:4,visual:5},flag:'global'},{text:'专注提升唱功，闭关修炼',effect:{vocal:8,mental:3,stamina:-3},flag:'vocal_focus'},{text:'结交当地音乐人，拓展人脉',effect:{popularity:6,mental:4,rap:3},flag:'networker'}]},
-26:{text:'网络上有关于你的负面谣言，公司问你如何处理？',options:[{text:'发声明澄清，法律维权',effect:{mental:-2,popularity:6},flag:'legal'},{text:'用舞台实力打脸',effect:{vocal:4,dance:4,popularity:5},flag:'prove'},{text:'无视谣言，专注自身',effect:{mental:8,popularity:-1},flag:'ignore'}]},
-29:{text:'终于到了决定出道组的时刻！社长告诉你，出道组名额有限。你的策略是？',options:[{text:'展现最强领导力，带动全场',effect:{dance:4,vocal:4,popularity:8},flag:'leader'},{text:'准备杀手锏个人技，惊艳全场',effect:{visual:6,vocal:5,rap:5},flag:'ace'},{text:'保持平常心，相信积累',effect:{mental:8,stamina:4},flag:'zen'}]},
-32:{text:'出道前最后一次大型公演，你希望呈现什么概念？',options:[{text:'霸气酷炫，展现王者风范',effect:{dance:6,popularity:8,mental:2},flag:'charisma'},{text:'清新治愈，展现温暖一面',effect:{vocal:6,mental:6,popularity:6},flag:'healing'},{text:'破格实验，展现艺术性',effect:{rap:5,vocal:5,visual:5,popularity:4},flag:'artistic'}]},
-35:{text:'最后一战！你站上决赛舞台，聚光灯下，你心中最强烈的念头是？',options:[{text:'我要成为这个时代的传奇',effect:{popularity:15,mental:10},flag:'legend'},{text:'感谢所有支持我的人',effect:{popularity:12,mental:15},flag:'grateful'},{text:'享受舞台，不留遗憾',effect:{vocal:8,dance:8,visual:8},flag:'artist'}]}
+0:{text:'第一天踏入公司，你看到墙上挂满了前辈的海报。这时，负责你的经纪人走过来，问你最想成为哪种类型的艺人？',options:[
+{text:'💪 全能实力派：唱跳拉全面发展',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
+{text:'🎭 舞台表演者：用视觉征服观众',effect:{dance:5,visual:2,stamina:2},flag:'performer'},
+{text:'✍️ 创作型歌手：用音乐表达自我',effect:{vocal:4,rap:4,mental:3},flag:'creator'},
+{text:'🤝 社交达人：先建立人脉再说',effect:{popularity:6,mental:1,stamina:-1},flag:'socialite'}]},
+1:{text:'第一周训练结束，你感觉身体有些吃不消。今晚你打算怎么度过？',options:[
+{text:'🏋️ 加练到深夜，笨鸟先飞',effect:{dance:3,vocal:3,stamina:-5,mental:1},flag:'hardworking'},
+{text:'🛁 泡个热水澡，早睡早起',effect:{stamina:6,mental:4},flag:'rested'},
+{text:'📱 刷社交媒体，研究粉丝喜好',effect:{popularity:5,visual:2,mental:-2},flag:'trendy'},
+{text:'🎵 写歌词，记录今天的心情',effect:{rap:4,mental:3,vocal:2},flag:'lyricist'}]},
+2:{text:'第一次月末评价！你需要在社长面前表演。你选择展示什么？',options:[
+{text:'💃 高难度舞蹈，展示身体控制力',effect:{dance:6,stamina:-3,popularity:4},flag:'dance_master'},
+{text:'🎤 深情抒情曲，用歌声打动人心',effect:{vocal:6,mental:2,popularity:3},flag:'vocal_soul'},
+{text:'🎧 自作曲rap，展现创作才华',effect:{rap:6,vocal:2,popularity:2},flag:'rap_genius'},
+{text:'🎭 综合舞台，唱跳结合秀',effect:{dance:3,vocal:3,visual:3,popularity:5},flag:'versatile'}]},
+3:{text:'你发现自己的体重增加了2kg，上镜效果变差。你决定怎么做？',options:[
+{text:'🍎 严格控制饮食，每天水煮菜',effect:{visual:5,stamina:-2,mental:-1},flag:'diet'},
+{text:'🏃 增加有氧运动，每天多跑30分钟',effect:{stamina:4,visual:3,dance:2},flag:'fit'},
+{text:'💄 研究化妆技巧，用妆容弥补',effect:{visual:4,popularity:2},flag:'makeup'},
+{text:'🧘 接受自己，健康才是美',effect:{mental:6,stamina:2},flag:'bodypositive'}]},
+4:{text:'公司安排你和几个练习生一起拍摄宣传物料。拍摄间隙，你选择做什么？',options:[
+{text:'📸 主动和摄影师交流，学习镜头感',effect:{visual:4,popularity:3},flag:'photogenic'},
+{text:'👥 和练习生们聊天，增进感情',effect:{mental:4,popularity:2},flag:'friendly'},
+{text:'🎶 哼唱歌曲，为即兴表演做准备',effect:{vocal:3,rap:3},flag:'practicer'},
+{text:'😴 找个角落休息，恢复体力',effect:{stamina:5,mental:1},flag:'energized'}]},
+5:{text:'公司安排了小型粉丝见面会。现场粉丝很热情，但也有几个刁钻的问题。你怎么应对？',options:[
+{text:'💬 真诚回答，展现真实自我',effect:{mental:5,popularity:6},flag:'honest'},
+{text:'😂 用幽默感化解所有尴尬',effect:{mental:3,popularity:7,visual:2},flag:'funny'},
+{text:'🧊 高冷简洁，保持神秘感',effect:{visual:5,popularity:2,mental:-2},flag:'mysterious'},
+{text:'🎁 准备小礼物，回馈粉丝的爱',effect:{popularity:8,mental:2,stamina:-1},flag:'grateful'}]},
+6:{text:'你偶然听到有练习生背后说你的坏话，你如何处理？',options:[
+{text:'🗣️ 当面沟通，化解误会',effect:{mental:5,popularity:2},flag:'communicator'},
+{text:'🤫 无视流言，用实力证明自己',effect:{vocal:3,dance:3,mental:3},flag:'focus'},
+{text:'📢 向经纪人报告，寻求帮助',effect:{mental:2,popularity:-1},flag:'reporter'},
+{text:'💔 暗自伤心，怀疑自己',effect:{mental:-5,stamina:-2},flag:'sensitive'}]},
+7:{text:'公司通知你参加一个综艺节目的录制，你希望展现什么形象？',options:[
+{text:'🎯 勤奋努力，刻苦练习的形象',effect:{popularity:5,mental:3},flag:'hardworker'},
+{text:'😄 开朗活泼，综艺感十足',effect:{popularity:7,mental:2,visual:2},flag:'variety'},
+{text:'🎨 才华横溢，创作型偶像',effect:{rap:4,vocal:4,popularity:4},flag:'talent'},
+{text:'💃 舞台王者，随时能表演',effect:{dance:5,popularity:5},flag:'performer'}]},
+8:{text:'公司内部举办"才艺之夜"，你需要上台表演一个非主打的特殊才艺，你选？',options:[
+{text:'🎸 乐器演奏（吉他/钢琴）',effect:{vocal:4,mental:4,popularity:3},flag:'musician'},
+{text:'💃 即兴舞蹈battle',effect:{dance:6,stamina:-2,popularity:5},flag:'battle'},
+{text:'😂 搞笑模仿秀',effect:{mental:5,popularity:6,visual:1},flag:'comedian'},
+{text:'✍️ 现场作诗或写歌词',effect:{rap:5,mental:5,popularity:3},flag:'poet'}]},
+9:{text:'你收到一封粉丝写的长信，信中表达了对你深深的喜爱。你决定？',options:[
+{text:'💌 手写回信，表达感谢',effect:{popularity:4,mental:4},flag:'kind'},
+{text:'📱 发一条动态，感谢所有粉丝',effect:{popularity:6,mental:2},flag:'appreciative'},
+{text:'📸 拍一张认证照，展示粉丝信',effect:{popularity:5,visual:2},flag:'caring'},
+{text:'📝 把信内容牢记，化为动力',effect:{mental:6,vocal:2,dance:2},flag:'inspired'}]},
+10:{text:'你发现自己的舞蹈基础不如其他练习生，你决定怎样追赶？',options:[
+{text:'⏰ 每天多练2小时，直到熟练',effect:{dance:6,stamina:-6,mental:1},flag:'persistent'},
+{text:'👨‍🏫 请教舞蹈老师，针对性改进',effect:{dance:5,mental:3},flag:'teachable'},
+{text:'📹 录制视频，反复对比调整',effect:{dance:4,visual:2,mental:2},flag:'selfcritic'},
+{text:'🤝 和舞蹈好的队友组队练习',effect:{dance:4,popularity:2,mental:2},flag:'cooperative'}]},
+11:{text:'年末庆典，你被选为特别舞台的候选人。但排练时间紧张，你选择？',options:[
+{text:'🔥 拼尽全力，争取C位',effect:{dance:8,vocal:5,stamina:-8,popularity:10},flag:'hard_worker'},
+{text:'⚖️ 稳扎稳打，保证不出错',effect:{vocal:4,dance:4,mental:5},flag:'stable'},
+{text:'🤝 和队友合作，设计亮点',effect:{visual:3,popularity:6,mental:4},flag:'teamplayer'},
+{text:'🎨 加入自己的创意，独特演绎',effect:{dance:5,visual:4,popularity:5},flag:'creative'}]},
+12:{text:'新年后，你制定年度目标。你最主要的提升方向是？',options:[
+{text:'🎤 唱功要再上一层楼',effect:{vocal:6,mental:2},flag:'vocalgoal'},
+{text:'💃 舞蹈要更有力度和美感',effect:{dance:6,stamina:2},flag:'dancegoal'},
+{text:'🎧 创作更多原创作品',effect:{rap:5,vocal:3},flag:'creategoal'},
+{text:'📱 增加粉丝互动，提升人气',effect:{popularity:6,visual:2},flag:'socialgoal'}]},
+13:{text:'你收到一个广告拍摄邀请，但需要连续三天请假。你怎么办？',options:[
+{text:'💰 接受邀请，赚取经验',effect:{popularity:6,stamina:-3,mental:1},flag:'commercial'},
+{text:'📚 拒绝邀请，专注训练',effect:{vocal:4,dance:4,mental:3},flag:'focused'},
+{text:'🗓️ 和公司协调，缩短拍摄时间',effect:{popularity:3,mental:3},flag:'negotiator'},
+{text:'📸 提议用休息日补拍',effect:{popularity:4,stamina:-2},flag:'flexible'}]},
+14:{text:'有娱乐公司代表来观摩练习，你被临时推举为代表表演，你选？',options:[
+{text:'🎤 展现最强唱功',effect:{vocal:8,popularity:6,mental:3},flag:'vocal_show'},
+{text:'💃 展现全能舞技',effect:{dance:8,popularity:5,mental:3},flag:'dance_show'},
+{text:'🎧 展现创作能力',effect:{rap:6,vocal:4,popularity:7},flag:'producer'},
+{text:'🎭 展现综合舞台魅力',effect:{dance:4,vocal:4,visual:4,popularity:6},flag:'allrounder_show'}]},
+15:{text:'你连续几周睡眠不足，脸色很差。你如何调整？',options:[
+{text:'💤 请假一天，彻底休息',effect:{stamina:8,mental:4},flag:'rested'},
+{text:'🧴 用护肤品急救，继续练习',effect:{visual:4,stamina:-2},flag:'skincare'},
+{text:'☕ 喝咖啡硬撑，不耽误训练',effect:{stamina:-3,mental:-2},flag:'caffeine'},
+{text:'🧘 调整作息，早睡早起',effect:{stamina:5,mental:5},flag:'balanced'}]},
+16:{text:'你和最好的练习生朋友因为出道名额产生分歧，你如何处理？',options:[
+{text:'💬 坦诚沟通，互相理解',effect:{mental:6,popularity:2},flag:'communicator'},
+{text:'🤝 良性竞争，共同进步',effect:{vocal:3,dance:3,mental:3},flag:'rival'},
+{text:'😔 选择退让，成全朋友',effect:{mental:4,popularity:-1},flag:'selfless'},
+{text:'🏆 全力以赴，公平竞争',effect:{dance:4,vocal:4,mental:2},flag:'competitive'}]},
+17:{text:'中期考核，导师直言你的某项短板非常明显。你会如何回应？',options:[
+{text:'🙇 虚心接受，疯狂加练',effect:{stamina:-5,mental:5,dance:5,vocal:5},flag:'humble'},
+{text:'💪 强调自己的优势，不惧短板',effect:{mental:8,popularity:3,visual:3},flag:'confident'},
+{text:'📚 请求导师给予具体指导',effect:{vocal:3,dance:3,rap:3,mental:4},flag:'studious'},
+{text:'📝 制定详细改进计划，逐步提升',effect:{mental:5,vocal:4,dance:4},flag:'planner'}]},
+18:{text:'你发现网上有人盗用你的照片骗钱，你如何处理？',options:[
+{text:'⚖️ 发声明澄清，法律维权',effect:{mental:-2,popularity:6},flag:'legal'},
+{text:'😤 用实力作品打脸骗子',effect:{vocal:4,dance:4,popularity:4},flag:'prove'},
+{text:'🙈 无视谣言，专注自身',effect:{mental:5,popularity:-1},flag:'ignore'},
+{text:'📢 向粉丝说明情况，请求帮助',effect:{popularity:5,mental:2},flag:'transparent'}]},
+19:{text:'你偶然获得了一个音乐节目的面试机会，你决定？',options:[
+{text:'🎤 全力以赴，准备惊艳舞台',effect:{vocal:6,dance:4,popularity:8},flag:'daredevil'},
+{text:'🧘 保持平常心，正常发挥',effect:{mental:6,vocal:3},flag:'calm'},
+{text:'👥 邀请朋友一起合作表演',effect:{popularity:5,mental:3},flag:'collaborator'},
+{text:'🎨 展示原创歌曲，突出个性',effect:{rap:5,vocal:4,popularity:6},flag:'original'}]},
+20:{text:'你突然获得一个广告代言机会，但需要牺牲一周训练时间，你选？',options:[
+{text:'💰 接受代言，赚取人气和金钱',effect:{popularity:10,stamina:-3,mental:1},flag:'commercial'},
+{text:'📚 拒绝代言，专心训练',effect:{vocal:4,dance:4,rap:4,mental:2},flag:'focus'},
+{text:'🗓️ 与公司协商，缩短时间',effect:{popularity:5,stamina:-1,mental:3},flag:'negotiator'},
+{text:'📸 代言同时，利用休息时间补训练',effect:{popularity:7,stamina:-5,mental:2},flag:'multitasker'}]},
+21:{text:'你感觉最近进步变慢，进入了瓶颈期。你打算？',options:[
+{text:'🧘 暂停一下，反思调整',effect:{mental:6,stamina:2},flag:'reflective'},
+{text:'🏋️ 加大强度，突破极限',effect:{dance:4,vocal:4,stamina:-6},flag:'intense'},
+{text:'👨‍🏫 寻求外部导师指导',effect:{vocal:3,dance:3,mental:4},flag:'mentee'},
+{text:'🎨 尝试新的艺术风格',effect:{rap:4,visual:3,mental:3},flag:'experimental'}]},
+22:{text:'你为粉丝准备了一次线上直播，你打算分享什么内容？',options:[
+{text:'🎤 现场演唱，展示练习成果',effect:{vocal:4,popularity:6},flag:'singerlive'},
+{text:'💃 跳舞挑战，和粉丝互动',effect:{dance:4,popularity:5},flag:'dancelive'},
+{text:'🗣️ 聊天谈心，拉近距离',effect:{popularity:6,mental:3},flag:'chatty'},
+{text:'🎁 进行抽奖，回馈粉丝',effect:{popularity:7,mental:2},flag:'generous'}]},
+23:{text:'公司派你去海外研修一个月。面对陌生的环境和语言，你决定？',options:[
+{text:'🌍 疯狂吸收海外潮流文化',effect:{dance:6,rap:4,visual:5},flag:'global'},
+{text:'🎤 专注提升唱功，闭关修炼',effect:{vocal:8,mental:3,stamina:-3},flag:'vocal_focus'},
+{text:'🤝 结交当地音乐人，拓展人脉',effect:{popularity:6,mental:4,rap:3},flag:'networker'},
+{text:'📸 记录日常，制作vlog',effect:{popularity:5,visual:3,mental:2},flag:'vlogger'}]},
+24:{text:'回国后，你发现自己的风格和公司现有组合不太符合，你怎么办？',options:[
+{text:'🎨 坚持自己的风格，争取创新',effect:{rap:4,vocal:4,popularity:3},flag:'individualist'},
+{text:'🤝 主动沟通，尝试融合',effect:{mental:5,popularity:3},flag:'adaptable'},
+{text:'📚 学习公司前辈的成功经验',effect:{dance:3,vocal:3,mental:3},flag:'observer'},
+{text:'💪 加倍努力，证明自己价值',effect:{dance:5,vocal:5,stamina:-5},flag:'overcomer'}]},
+25:{text:'你被选为某品牌大使，需要拍摄一系列宣传照。你希望呈现什么风格？',options:[
+{text:'🧊 冷酷高级，展现时尚感',effect:{visual:6,popularity:5},flag:'chic'},
+{text:'☀️ 阳光清新，展现亲和力',effect:{popularity:6,mental:3},flag:'fresh'},
+{text:'🎭 艺术实验，突出个性',effect:{visual:5,rap:3,mental:3},flag:'artsy'},
+{text:'💪 运动活力，展示力量感',effect:{dance:4,visual:4,popularity:4},flag:'athletic'}]},
+26:{text:'网络上有关于你的负面谣言，公司问你如何处理？',options:[
+{text:'⚖️ 发声明澄清，法律维权',effect:{mental:-2,popularity:6},flag:'legal'},
+{text:'🎤 用舞台实力打脸',effect:{vocal:4,dance:4,popularity:5},flag:'prove'},
+{text:'🙈 无视谣言，专注自身',effect:{mental:8,popularity:-1},flag:'ignore'},
+{text:'😢 在直播中解释，博取同情',effect:{popularity:4,mental:-3},flag:'vulnerable'}]},
+27:{text:'你收到了一首非常好听的demo，很适合你的声线。你打算？',options:[
+{text:'🎤 争取拿下这首歌，作为自己的代表作',effect:{vocal:6,popularity:5},flag:'powergrab'},
+{text:'🤝 推荐给更适合的朋友',effect:{popularity:3,mental:4},flag:'selfless'},
+{text:'✍️ 改编成自己的风格',effect:{rap:4,vocal:4,mental:3},flag:'remix'},
+{text:'📱 发一小段试听，测试粉丝反应',effect:{popularity:5,mental:2},flag:'teaser'}]},
+28:{text:'你和队友一起拍摄团综，你希望担任什么角色？',options:[
+{text:'👑 队长，带领大家完成任务',effect:{mental:5,popularity:4},flag:'leader'},
+{text:'😂 搞笑担当，制造笑点',effect:{popularity:6,mental:3},flag:'funny'},
+{text:'🎨 创意担当，设计环节',effect:{rap:3,visual:3,mental:4},flag:'creator'},
+{text:'🧘 倾听者，照顾队友情绪',effect:{mental:6,popularity:2},flag:'caring'}]},
+29:{text:'终于到了决定出道组的时刻！社长告诉你，出道组名额有限。你的策略是？',options:[
+{text:'👑 展现最强领导力，带动全场',effect:{dance:4,vocal:4,popularity:8},flag:'leader'},
+{text:'🎯 准备杀手锏个人技，惊艳全场',effect:{visual:6,vocal:5,rap:5},flag:'ace'},
+{text:'🧘 保持平常心，相信积累',effect:{mental:8,stamina:4},flag:'zen'},
+{text:'🤝 和队友协作，展现团队精神',effect:{popularity:6,mental:4},flag:'team'}]},
+30:{text:'出道组名单公布前夕，你紧张得睡不着。你会？',options:[
+{text:'😴 强迫自己入睡，养足精神',effect:{stamina:5,mental:3},flag:'restful'},
+{text:'📱 和粉丝互动，缓解压力',effect:{popularity:4,mental:2},flag:'connected'},
+{text:'🎵 听音乐，放空自己',effect:{mental:5,vocal:1},flag:'musiclover'},
+{text:'✍️ 写日记，整理情绪',effect:{mental:6},flag:'writer'}]},
+31:{text:'你成功入选出道组，但需要和另一个成员竞争中心位置。你如何？',options:[
+{text:'💪 公平竞争，用实力说话',effect:{dance:5,vocal:5,mental:3},flag:'competitor'},
+{text:'🤝 主动沟通，寻求双赢方案',effect:{mental:6,popularity:3},flag:'diplomat'},
+{text:'😌 退让一步，选择副位',effect:{mental:4,popularity:-1},flag:'humble'},
+{text:'🎤 展现独特魅力，争取粉丝支持',effect:{popularity:6,visual:3},flag:'charismatic'}]},
+32:{text:'出道前最后一次大型公演，你希望呈现什么概念？',options:[
+{text:'🔥 霸气酷炫，展现王者风范',effect:{dance:6,popularity:8,mental:2},flag:'charisma'},
+{text:'☀️ 清新治愈，展现温暖一面',effect:{vocal:6,mental:6,popularity:6},flag:'healing'},
+{text:'🎨 破格实验，展现艺术性',effect:{rap:5,vocal:5,visual:5,popularity:4},flag:'artistic'},
+{text:'💖 深情告白，感谢粉丝',effect:{popularity:9,mental:5},flag:'heartfelt'}]},
+33:{text:'出道在即，你的身体却发出了警告信号。你如何平衡？',options:[
+{text:'💊 咬紧牙关，坚持到底',effect:{stamina:-6,mental:4},flag:'tough'},
+{text:'🧘 调整强度，注重恢复',effect:{stamina:5,mental:5},flag:'wise'},
+{text:'👨‍⚕️ 去看医生，接受专业建议',effect:{stamina:4,mental:3},flag:'prudent'},
+{text:'📱 发动态让粉丝知道你的状态',effect:{popularity:4,mental:2},flag:'open'}]},
+34:{text:'出道曲录制中，制作人对你的表现不满意。你怎么办？',options:[
+{text:'🎤 虚心请教，反复录制',effect:{vocal:5,mental:3},flag:'perfectionist'},
+{text:'💪 提出自己的见解，共同探讨',effect:{rap:4,mental:4},flag:'collaborative'},
+{text:'😤 坚持自己的风格，不妥协',effect:{mental:3,popularity:-1},flag:'stubborn'},
+{text:'📚 回去练习，明天再来',effect:{vocal:4,stamina:-2},flag:'persistent'}]},
+35:{text:'最后一战！你站上决赛舞台，聚光灯下，你心中最强烈的念头是？',options:[
+{text:'🏆 我要成为这个时代的传奇',effect:{popularity:15,mental:10},flag:'legend'},
+{text:'💖 感谢所有支持我的人',effect:{popularity:12,mental:15},flag:'grateful'},
+{text:'🎭 享受舞台，不留遗憾',effect:{vocal:8,dance:8,visual:8},flag:'artist'},
+{text:'🌟 这一刻，梦想成真',effect:{popularity:10,mental:10},flag:'dreamer'}]}
 };
-function getDefaultStory(month){const m=month+1,year=Math.ceil(m/12),mon=((m-1)%12)+1;const pool=[
-`📅 第${year}年 · ${mon}月\n这个月训练强度适中，你决定如何度过？`,
-`🌟 又过了一个月，你感觉自己在慢慢进步。今天在练习室遇到了前辈，你选择？`,
-`🍃 平淡的一月。除了日常训练，你注意到社交媒体上有了一些关于你的讨论。`,
-`💪 公司内部传闻即将有选秀节目来挑人，你开始加倍努力。`,
-`🎶 这个月你突然灵感爆发，写了一首小样，你要怎么处理？`,
-`🤝 和同期练习生关系变得微妙，你选择？`,
-`📈 月度测评成绩公布，你名列前茅，接下来？`,
-`🎯 你发现自己的某个技能遇到了瓶颈，你决定？`
-];
-const text=pool[month%pool.length]+`\n(选择一项行动来提升自己吧)`;
-return {text:text,options:[
-{text:'加练到深夜',effect:{dance:2,vocal:2,stamina:-3,mental:1},flag:'hardworking'},
-{text:'调整状态，劳逸结合',effect:{stamina:4,mental:4,visual:1},flag:'balanced'},
-{text:'研究市场，讨好粉丝',effect:{popularity:5,visual:2,mental:-1},flag:'fan_lover'}
-]};}
+
+// ----- 辅助函数 -----
 function getStatValue(k){return Math.min(100,Math.max(0,state.stats[k]||0));}
 function applyEffects(effects){let msg=[];for(let k in effects){if(state.stats.hasOwnProperty(k)){let old=state.stats[k],delta=effects[k],nv=Math.min(100,Math.max(0,old+delta));state.stats[k]=nv;if(delta!==0){msg.push(STAT_LABELS[k]+' '+(delta>0?'+':'')+delta);}}}return msg.join(' · ');}
 function addFlag(flag){if(flag&&!state.flags.includes(flag)){state.flags.push(flag);if(state.flags.length>5)state.flags.shift();}}
-function renderStats(){const grid=document.getElementById('statsGrid');grid.innerHTML='';STAT_KEYS.forEach(key=>{const val=getStatValue(key);const div=document.createElement('div');div.className='stat-item';div.innerHTML='<span class="label">'+STAT_LABELS[key]+'</span><div class="bar-bg"><div class="bar-fill" style="width:'+val+'%;background:'+STAT_COLORS[STAT_KEYS.indexOf(key)]+';"></div></div><span class="val">'+Math.round(val)+'</span>';grid.appendChild(div);});document.getElementById('popularityLabel').textContent=Math.round(getStatValue('popularity'));document.getElementById('staminaLabel').textContent=Math.round(getStatValue('stamina'));const avg=STAT_KEYS.filter(k=>k!=='popularity'&&k!=='stamina'&&k!=='mental').reduce((s,k)=>s+getStatValue(k),0)/4;let rank='F';if(avg>80)rank='A';else if(avg>65)rank='B';else if(avg>50)rank='C';else if(avg>35)rank='D';else rank='E';document.getElementById('rankDisplay').textContent=rank;}
+
+function renderStats(){
+const grid=document.getElementById('statsGrid');grid.innerHTML='';
+STAT_KEYS.forEach(key=>{const val=getStatValue(key);const div=document.createElement('div');div.className='stat-item';div.innerHTML='<span class="label">'+STAT_LABELS[key]+'</span><div class="bar-bg"><div class="bar-fill" style="width:'+val+'%;background:'+STAT_COLORS[STAT_KEYS.indexOf(key)]+';"></div></div><span class="val">'+Math.round(val)+'</span>';grid.appendChild(div);});
+document.getElementById('popularityLabel').textContent=Math.round(getStatValue('popularity'));
+document.getElementById('staminaLabel').textContent=Math.round(getStatValue('stamina'));
+const avg=STAT_KEYS.filter(k=>k!=='popularity'&&k!=='stamina'&&k!=='mental').reduce((s,k)=>s+getStatValue(k),0)/4;
+let rank='F';if(avg>80)rank='A';else if(avg>65)rank='B';else if(avg>50)rank='C';else if(avg>35)rank='D';else rank='E';
+document.getElementById('rankDisplay').textContent=rank;
+}
+
 function renderRadar(){try{const canvas=document.getElementById('radarCanvas');if(!canvas)return;const ctx=canvas.getContext('2d');if(!ctx)return;const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const cx=w/2,cy=h/2+6,radius=Math.min(w,h)*0.38,keys=STAT_KEYS,n=keys.length,angles=keys.map((_,i)=>(i/n)*2*Math.PI-Math.PI/2);ctx.strokeStyle='#f0ddd5';ctx.lineWidth=1.2;for(let level=1;level<=5;level++){const r=radius/5*level;ctx.beginPath();for(let i=0;i<n;i++){const x=cx+r*Math.cos(angles[i]),y=cy+r*Math.sin(angles[i]);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.stroke();}for(let i=0;i<n;i++){const x=cx+radius*Math.cos(angles[i]),y=cy+radius*Math.sin(angles[i]);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.strokeStyle='#f0ddd5';ctx.stroke();const lr=radius+18,lx=cx+lr*Math.cos(angles[i]),ly=cy+lr*Math.sin(angles[i]);ctx.fillStyle='#b29084';ctx.font='11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(STAT_LABELS[keys[i]],lx,ly);}const values=keys.map(k=>getStatValue(k)/100);ctx.beginPath();for(let i=0;i<n;i++){const r=radius*values[i],x=cx+r*Math.cos(angles[i]),y=cy+r*Math.sin(angles[i]);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.closePath();ctx.fillStyle='rgba(221,160,145,0.35)';ctx.fill();ctx.strokeStyle='#d4877a';ctx.lineWidth=2.5;ctx.stroke();for(let i=0;i<n;i++){const r=radius*values[i],x=cx+r*Math.cos(angles[i]),y=cy+r*Math.sin(angles[i]);ctx.beginPath();ctx.arc(x,y,5,0,2*Math.PI);ctx.fillStyle='#d4877a';ctx.fill();}}catch(e){console.warn('雷达图出错',e);}}
 function updateUI(){renderStats();renderRadar();const m=state.month+1,year=Math.ceil(m/12),mon=((m-1)%12)+1;document.getElementById('monthDisplay').textContent=m;document.getElementById('monthYear').textContent='第 '+year+' 年 · '+mon+' 月';document.getElementById('flagDisplay').textContent=state.flags.length?state.flags.slice(-1)[0]:'新人';document.getElementById('playerNameDisplay').textContent=state.name;}
-function handleSchedule(action){if(state.gameOver||state.phase!=='schedule')return;let effects={},baseMsg='';switch(action){case'dance':effects={dance:6+Math.floor(Math.random()*4),stamina:-4,mental:1};baseMsg='💃 练舞';break;case'vocal':effects={vocal:6+Math.floor(Math.random()*4),stamina:-3,mental:1};baseMsg='🎤 练声';break;case'rap':effects={rap:6+Math.floor(Math.random()*4),stamina:-3,mental:1};baseMsg='🎧 说唱';break;case'visual':effects={visual:7+Math.floor(Math.random()*3),popularity:2};baseMsg='✨ 外貌管理';break;case'rest':effects={stamina:10+Math.floor(Math.random()*5),mental:6,popularity:-1};baseMsg='🧘 休息';break;case'social':effects={popularity:8+Math.floor(Math.random()*5),mental:-3,visual:2};baseMsg='📱 社交';break;case'mental':effects={mental:10+Math.floor(Math.random()*5),stamina:-2};baseMsg='🧠 心理训练';break;default:return;}for(let k in effects){if(state.stats.hasOwnProperty(k)){let v=state.stats[k]+effects[k];state.stats[k]=Math.min(100,Math.max(0,v));}}const feedback=applyEffects(effects);document.getElementById('feedbackToast').textContent='✅ '+baseMsg+' → '+feedback;updateUI();state.phase='story';document.getElementById('phaseBadge').textContent='🎬 剧情选择';document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=true);triggerStory();}
-function triggerStory(){const month=state.month;let story;if(STORY_EVENTS[month]){story=STORY_EVENTS[month];}else{story=getDefaultStory(month);}state.pendingStory=story;document.getElementById('storyText').textContent=story.text||'发生了一些事...';const optContainer=document.getElementById('storyOptions');optContainer.innerHTML='';if(story.options&&story.options.length>0){story.options.forEach((opt,idx)=>{const btn=document.createElement('button');btn.textContent=opt.text||'选项 '+(idx+1);btn.onclick=()=>handleStoryChoice(idx);optContainer.appendChild(btn);});}else{setTimeout(()=>{finishMonth();},800);}}
+
+// ----- 核心流程 -----
+function handleSchedule(action){if(state.gameOver||state.phase!=='schedule')return;let effects={},baseMsg='';switch(action){case'dance':effects={dance:6+Math.floor(Math.random()*4),stamina:-4,mental:1};baseMsg='💃 练舞';break;case'vocal':effects={vocal:6+Math.floor(Math.random()*4),stamina:-3,mental:1};baseMsg='🎤 练声';break;case'rap':effects={rap:6+Math.floor(Math.random()*4),stamina:-3,mental:1};baseMsg='🎧 说唱';break;case'visual':effects={visual:7+Math.floor(Math.random()*3),popularity:2};baseMsg='✨ 外貌管理';break;case'rest':effects={stamina:10+Math.floor(Math.random()*5),mental:6,popularity:-1};baseMsg='🧘 休息';break;case'social':effects={popularity:8+Math.floor(Math.random()*5),mental:-3,visual:2};baseMsg='📱 社交';break;case'mental':effects={mental:10+Math.floor(Math.random()*5),stamina:-2};baseMsg='🧠 心理';break;default:return;}for(let k in effects){if(state.stats.hasOwnProperty(k)){let v=state.stats[k]+effects[k];state.stats[k]=Math.min(100,Math.max(0,v));}}const feedback=applyEffects(effects);document.getElementById('feedbackToast').textContent='✅ '+baseMsg+' → '+feedback;updateUI();state.phase='story';document.getElementById('phaseBadge').textContent='🎬 剧情选择';document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=true);triggerStory();}
+
+function triggerStory(){const month=state.month;let story=STORY_EVENTS[month];if(!story){story={text:'这个月你专注于基础训练。',options:[
+{text:'🎯 巩固基本功',effect:{vocal:2,dance:2,stamina:-1},flag:'basic'},
+{text:'📈 挑战高难度动作',effect:{dance:3,stamina:-2,mental:1},flag:'challenger'},
+{text:'🧘 放松身心，调整状态',effect:{stamina:3,mental:3},flag:'relax'},
+{text:'🎵 练习新曲目',effect:{vocal:3,rap:2},flag:'newmusic'}]};}
+state.pendingStory=story;document.getElementById('storyText').textContent=story.text||'发生了一些事...';const optContainer=document.getElementById('storyOptions');optContainer.innerHTML='';if(story.options&&story.options.length>0){story.options.forEach((opt,idx)=>{const btn=document.createElement('button');btn.textContent=opt.text||'选项 '+(idx+1);btn.onclick=()=>handleStoryChoice(idx);optContainer.appendChild(btn);});}else{setTimeout(()=>{finishMonth();},800);}}
+
 function handleStoryChoice(idx){if(state.storyChosen||state.gameOver)return;state.storyChosen=true;const story=state.pendingStory;if(!story||!story.options||!story.options[idx])return;const choice=story.options[idx];if(choice.effect){for(let k in choice.effect){if(state.stats.hasOwnProperty(k)){let v=state.stats[k]+choice.effect[k];state.stats[k]=Math.min(100,Math.max(0,v));}}}if(choice.flag)addFlag(choice.flag);const feedback=choice.effect?applyEffects(choice.effect):'无属性变化';document.getElementById('feedbackToast').textContent='📖 剧情选择: '+choice.text+' → '+feedback;updateUI();document.querySelectorAll('#storyOptions button').forEach(b=>b.disabled=true);setTimeout(()=>{finishMonth();},900);}
-function finishMonth(){state.month++;state.storyChosen=false;state.phase='schedule';document.getElementById('phaseBadge').textContent='📋 安排日程';document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=false);document.getElementById('storyOptions').innerHTML='';if(state.month>=36){state.gameOver=true;showEnding();return;}const msgs=['🌈 新的一月，继续加油！','☕ 公司咖啡厅出了新品～','📈 上个月表现不错，继续努力！','🌙 夜深了，但梦想还在发光。','🎵 这个月有新的编舞老师加入！','📱 你的粉丝数稳步增长。','💪 体能训练又加量了。'];document.getElementById('storyText').textContent=msgs[state.month%msgs.length]+'\n请选择本月的训练日程。';document.getElementById('feedbackToast').textContent='📅 新的一月，选择你的日程吧！';updateUI();}
-function showEnding(){const s=state.stats,flags=state.flags,avg=(s.vocal+s.dance+s.rap+s.visual)/4,pop=s.popularity,mental=s.mental,stamina=s.stamina;let title='🌱 练习生结束',desc='三年的时光结束了...',icon='🌸';const isHighAvg=avg>70,isLowMental=mental<25,isLowStamina=stamina<20,isPopStar=pop>85,isVocalKing=s.vocal>85&&s.vocal>s.dance&&s.vocal>s.rap,isDanceKing=s.dance>85&&s.dance>s.vocal&&s.dance>s.rap,isRapKing=s.rap>85&&s.rap>s.vocal&&s.rap>s.dance,isVisual=s.visual>85,hasHardwork=flags.includes('hard_worker')||flags.includes('humble');if(isLowMental||isLowStamina){icon='💔';title='【遗憾退场】';desc='三年的高压训练让你的身心不堪重负。在出道前夕，你选择了离开。但请记住，健康永远是第一位的。你回归普通生活，却拥有了更强大的内心。';}else if(isPopStar&&isHighAvg&&flags.includes('legend')){icon='👑';title='【传奇全能ACE】';desc='你以绝对的实力和超高人气断层出道！你不仅唱跳俱佳，更拥有极强的个人魅力。你注定要登上格莱美的舞台，成为K-pop历史的传奇。';}else if(isVocalKing&&pop>60){icon='🎤';title='【天籁主唱】';desc='你的嗓音是上天赐予的礼物。你以主唱身份出道，每一首高音part都成为经典。你是音源强者，抒情曲的王者。';}else if(isDanceKing&&pop>60){icon='💃';title='【舞蹈机器】';desc='你的舞蹈实力让所有练习生望尘莫及。你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，被称为“人间舞蹈家”。';}else if(isRapKing&&pop>60){icon='🎧';title='【嘻哈鬼才】';desc='你的说唱flow独树一帜，歌词充满态度。你不仅成功出道，更成为队内的rap担和制作人。你打破了偶像的边界，被誉为“偶像界的黑泡之光”。';}else if(isVisual&&pop>70){icon='✨';title='【神颜门面】';desc='你的美貌是公司的王牌。你以门面担当出道，广告代言接到手软。你不仅是偶像，更是时尚圈的宠儿。';}else if(isHighAvg&&hasHardwork){icon='🔥';title='【努力黑马】';desc='你并非天赋异禀，但你是最努力的那一个。你用汗水和毅力弥补了所有不足，最终成功出道。你的故事激励了无数人，你是“努力终有回报”的最佳代言。';}else if(avg>50&&pop>50){icon='🌟';title='【稳健出道组】';desc='你没有短板，也没有绝对的长板，但你是组合最需要的“万能胶”。你以中间名次出道，凭借稳定的发挥和好人缘，成为团队中不可或缺的一员。';}else{icon='💫';title='【自由逐梦】';desc='你没能作为偶像出道，但这三年让你认清了自己的内心。你转作幕后制作人/独立歌手，你的音乐虽不大众，却深深打动了懂你的人。另一种人生，同样精彩。';}document.getElementById('phaseBadge').textContent='🏁 结局';document.getElementById('storyText').innerHTML='<div style="text-align:center;padding:10px 0;"><div style="font-size:60px;">'+icon+'</div><div class="ending-title">'+title+'</div><div class="ending-desc" style="margin-top:14px;">'+desc+'</div><div style="margin-top:16px;font-size:14px;background:#f5eae5;padding:12px;border-radius:30px;">🏷️ 你的标签: '+(state.flags.length?state.flags.join(' · '):'无')+'</div></div>';document.getElementById('storyOptions').innerHTML='';document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=true);document.getElementById('feedbackToast').textContent='🎉 三年旅程结束！感谢你的坚持。';updateUI();}
-function startGame(){const name=document.getElementById('nameInput').value.trim()||'林娜恩';state.name=name;document.getElementById('playerNameDisplay').textContent=name;document.getElementById('startScreen').classList.add('hidden');document.getElementById('gameApp').style.display='block';state.month=0;state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};state.flags=[];state.gameOver=false;state.phase='schedule';state.storyChosen=false;state.pendingStory=null;document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=false);document.getElementById('storyOptions').innerHTML='';document.getElementById('storyText').textContent='👋 欢迎来到 DreamHaus！\n作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！';document.getElementById('feedbackToast').textContent='✨ 点击日程安排你的本月计划';document.getElementById('phaseBadge').textContent='📋 安排日程';updateUI();}
-function resetGame(){document.getElementById('startScreen').classList.remove('hidden');document.getElementById('gameApp').style.display='none';document.getElementById('nameInput').value=state.name||'林娜恩';state.month=0;state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};state.flags=[];state.gameOver=false;state.phase='schedule';state.storyChosen=false;state.pendingStory=null;document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=false);document.getElementById('storyOptions').innerHTML='';document.getElementById('storyText').textContent='👋 重新开始，输入名字后开始新旅程吧！';document.getElementById('feedbackToast').textContent='✨ 等待开始...';}
-document.getElementById('startBtn').addEventListener('click',startGame);
-document.getElementById('nameInput').addEventListener('keypress',function(e){if(e.key==='Enter')startGame();});
-document.getElementById('resetBtn').addEventListener('click',resetGame);
-document.getElementById('scheduleButtons').addEventListener('click',function(e){const btn=e.target.closest('button');if(!btn)return;const action=btn.dataset.action;if(action)handleSchedule(action);});
-document.getElementById('startScreen').classList.remove('hidden');
-document.getElementById('gameApp').style.display='none';
-document.getElementById('nameInput').value='林娜恩';
-});
-</script>
-</body>
-</html>
+
+function finishMonth(){state.month++;state.storyChosen=false;state.phase='schedule';document.getElementById('phaseBadge').textContent='📋 安排日程';document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=false);document.getElementById('storyOptions').innerHTML='';if(state.month>=36){state.gameOver=true;showEnding();return;}const msgs=['🌈 新的一月，继续加油！','☕ 公司咖啡厅出了新品～','📈 上个月表现不错！','🌙 夜深了，梦想还在发光。','🎵 新编舞老师加入！','📱 粉丝数稳步增长。','💪 体能训练加量了。'];document.getElementById('storyText').textContent=msgs[state.month%msgs.length]+'\n请选择本月的训练日程。';document.getElementById('feedbackToast').textContent='📅 新的一月，选择你的日程吧！';updateUI();}
+
+// ----- 结局弹窗 -----
+function showEnding(){
+const s=state.stats,flags=state.flags,avg=(s.vocal+s.dance+s.rap+s.visual)/4,pop=s.popularity,mental=s.mental,stamina=s.stamina;
+let title='🌱 练习生结束',desc='三年的时光结束了...',icon='🌸';
+const isHighAvg=avg>70,isLowMental=mental<25,isLowStamina=stamina<20,isPopStar=pop>85,
+isVocalKing=s.vocal>85&&s.vocal>s.dance&&s.vocal>s.rap,
+isDanceKing=s.dance>85&&s.dance>s.vocal&&s.dance>s.rap,
+isRapKing=s.rap>85&&s.rap>s.vocal&&s.rap>s.dance,
+isVisual=s.visual>85,hasHardwork=flags.includes('hard_worker')||flags.includes('humble');
+
+if(isLowMental||isLowStamina){
+icon='💔';title='【遗憾退场】';
+desc='三年的高压训练让你的身心不堪重负。在出道前夕，你选择了离开。但请记住，健康永远是第一位的。你回归普通生活，却拥有了更强大的内心。你的故事告诉我们，有时候放弃也是一种勇气，你找到了属于自己的平静。';
+}else if(isPopStar&&isHighAvg&&flags.includes('legend')){
+icon='👑';title='【传奇全能ACE】';
+desc='你以绝对的实力和超高人气断层出道！你不仅唱跳俱佳，更拥有极强的个人魅力。你的舞台表现力让整个业界震惊，你被媒体称为"下一个时代的天后"。你注定要登上格莱美的舞台，成为K-pop历史的传奇。你的名字将永远刻在偶像产业的丰碑上。';
+}else if(isVocalKing&&pop>60){
+icon='🎤';title='【天籁主唱】';
+desc='你的嗓音是上天赐予的礼物。你以主唱身份出道，每一首高音part都成为经典。你是音源强者，抒情曲的王者。你的歌声治愈了无数听众，你不仅是偶像，更是艺术家。你的演唱会被誉为"耳朵的盛宴"，你成为新生代vocal的代表人物。';
+}else if(isDanceKing&&pop>60){
+icon='💃';title='【舞蹈机器】';
+desc='你的舞蹈实力让所有练习生望尘莫及。你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，被称为"人间舞蹈家"。你的舞蹈视频在全球疯传，你开创了新的舞蹈风格，成为无数后辈模仿的对象。你是舞台上的王者，用身体讲述故事。';
+}else if(isRapKing&&pop>60){
+icon='🎧';title='【嘻哈鬼才】';
+desc='你的说唱flow独树一帜，歌词充满态度。你不仅成功出道，更成为队内的rap担和制作人。你打破了偶像的边界，被誉为"偶像界的黑泡之光"。你的音乐充满社会思考，你成为青年文化的代言人，你的专辑销量和口碑双丰收。';
+}else if(isVisual&&pop>70){
+icon='✨';title='【神颜门面】';
+desc='你的美貌是公司的王牌。你以门面担当出道，广告代言接到手软。你不仅是偶像，更是时尚圈的宠儿。你登上各大杂志封面，你的妆容和穿搭成为潮流风向标。你证明了美貌本身就是一种实力，但你从未停止努力，你的多才多艺同样令人赞叹。';
+}else if(isHighAvg&&hasHardwork){
+icon='🔥';title='【努力黑马】';
+desc='你并非天赋异禀，但你是最努力的那一个。你用汗水和毅力弥补了所有不足，最终成功出道。你的故事激励了无数人，你是"努力终有回报"的最佳代言。你从默默无闻到万众瞩目，你的每一步都踏实地踩出了自己的道路。你是所有练习生的榜样。';
+}else if(avg>50&&pop>50){
+icon='🌟';title='【稳健出道组】';
+desc='你没有短板，也没有绝对的长板，但你是组合最需要的"万能胶"。你以中间名次出道，凭借稳定的发挥和好人缘，成为团队中不可或缺的一员。你是队内的调解员，是粉丝心中的温暖存在。你的存在让团队更加完整，你证明了"平衡"也是一种强大的力量。';
+}else{
+icon='💫';title='【自由逐梦】';
+desc='你没能作为偶像出道，但这三年让你认清了自己的内心。你转作幕后制作人/独立歌手，你的音乐虽不大众，却深深打动了懂你的人。你找到了属于自己的音乐语言，你的作品在小众圈层获得极高评价。你证明了成功不只一条路，真正的幸福是忠于自我。你自由了，也成功了。';
+}
+const content=document.getElementById('endingContent');
+content.innerHTML='<div class="big-icon">'+icon+'</div><div class="ending-title">'+title+'</div><div class="ending-desc">'+desc+'</div><div class="ending-tags">🏷️ 你获得的标签：'+(state.flags.length?state.flags.join(' · '):'无')+'</div><button class="ending-btn" onclick="location.reload()">🔄 重新开始</button>';
+document.getElementById('endingModal').style.display='flex';
+}
+
+// ----- 启动与重置 -----
+function startGame(){const name=document.getElementById('nameInput').value.trim()||'林娜恩';state.name=name;document.getElementById('playerNameDisplay').textContent=name;document.getElementById('startScreen').classList.add('hidden');document.getElementById('gameApp').style.display='block';state.month=0;state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};state.flags=[];state.gameOver=false;state.phase='schedule';state.storyChosen=false;state.pendingStory=null;document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=false);document.getElementById('storyOptions').innerHTML='';document.getElementById('storyText').textContent='👋 欢迎来到 DreamHaus！\n作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！';document.getElementById('feedbackToast').textContent='✨ 点击日程安排你的本月计划';document.getEl
