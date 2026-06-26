@@ -68,7 +68,7 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 <body>
 
 <!-- 起名界面 -->
-<div id="startScreen"><div class="start-card"><h1>🌸 练习生 · 三年之约</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button onclick="startGame()">🎤 开始</button></div></div>
+<div id="startScreen"><div class="start-card"><h1>🌸 练习生 · 三年之约</h1><p>请输入你的名字，开启专属偶像之旅</p><input type="text" id="nameInput" placeholder="输入名字" value="林娜恩" maxlength="10"><button onclick="window.startGame()">🎤 开始</button></div></div>
 
 <!-- 结局弹窗 -->
 <div id="endingModal"><div class="ending-card" id="endingContent"></div></div>
@@ -89,25 +89,29 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 
 <div class="interaction-area">
 <div class="phase-title"><span>🗓️ <span id="monthYear">第 1 年 · 1 月</span></span><span class="month-badge" id="phaseBadge">📋 安排日程</span></div>
-<div class="schedule-buttons" id="scheduleButtons">
-<button data-action="dance">💃 舞蹈</button><button data-action="vocal">🎤 声乐</button><button data-action="rap">🎧 说唱</button>
-<button data-action="visual">✨ 外貌</button><button data-action="rest">🧘 休息</button>
-<button data-action="social">📱 社交</button><button data-action="mental">🧠 心理</button>
+<div class="schedule-buttons">
+<button onclick="window.handleSchedule('dance')">💃 舞蹈</button>
+<button onclick="window.handleSchedule('vocal')">🎤 声乐</button>
+<button onclick="window.handleSchedule('rap')">🎧 说唱</button>
+<button onclick="window.handleSchedule('visual')">✨ 外貌</button>
+<button onclick="window.handleSchedule('rest')">🧘 休息</button>
+<button onclick="window.handleSchedule('social')">📱 社交</button>
+<button onclick="window.handleSchedule('mental')">🧠 心理</button>
 </div>
 <div class="story-box"><div class="story-text" id="storyText">👋 欢迎来到 DreamHaus！<br>作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！</div><div class="story-options" id="storyOptions"></div></div>
 <div class="feedback-toast" id="feedbackToast">✨ 点击日程安排你的本月计划</div>
-<div class="reset-area"><button class="reset-btn" onclick="resetGame()">🔄 重新开始</button></div>
+<div class="reset-area"><button class="reset-btn" onclick="window.resetGame()">🔄 重新开始</button></div>
 </div>
 </div>
 
 <script>
 // ========== 全局状态 ==========
-const STAT_KEYS = ['vocal','dance','rap','visual','stamina','mental','popularity'];
-const STAT_LABELS = {vocal:'唱功',dance:'舞蹈',rap:'说唱',visual:'外貌',stamina:'体力',mental:'心态',popularity:'人气'};
-const STAT_COLORS = ['#e8a99c','#d4a0c0','#aac0d4','#f0c8b0','#b5cfb0','#d4b8c8','#f0cfb0'];
+var STAT_KEYS = ['vocal','dance','rap','visual','stamina','mental','popularity'];
+var STAT_LABELS = {vocal:'唱功',dance:'舞蹈',rap:'说唱',visual:'外貌',stamina:'体力',mental:'心态',popularity:'人气'};
+var STAT_COLORS = ['#e8a99c','#d4a0c0','#aac0d4','#f0c8b0','#b5cfb0','#d4b8c8','#f0cfb0'];
 var state = { name:'', month:0, stats:{vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10}, flags:[], gameOver:false, phase:'schedule', pendingStory:null, storyChosen:false };
 
-// ========== 36个月事件（每个4选项，精简文本） ==========
+// ========== 36个月事件（每个4选项） ==========
 var STORY_EVENTS = {
 0:{text:'第一天，经纪人问你最想成为哪种艺人？',options:[
 {text:'💪 全能实力派',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
@@ -355,7 +359,7 @@ function handleSchedule(action){
     updateUI();
     state.phase='story';
     document.getElementById('phaseBadge').textContent='🎬 剧情选择';
-    document.querySelectorAll('#scheduleButtons button').forEach(function(b){ b.disabled=true; });
+    document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=true; });
     triggerStory();
 }
 function triggerStory(){
@@ -401,7 +405,7 @@ function finishMonth(){
     state.storyChosen=false;
     state.phase='schedule';
     document.getElementById('phaseBadge').textContent='📋 安排日程';
-    document.querySelectorAll('#scheduleButtons button').forEach(function(b){ b.disabled=false; });
+    document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=false; });
     document.getElementById('storyOptions').innerHTML='';
     if(state.month>=36){ state.gameOver=true; showEnding(); return; }
     var msgs=['🌈 新的一月！','☕ 咖啡厅新品～','📈 表现不错！','🌙 梦想发光。','🎵 新编舞老师！','📱 粉丝增长。','💪 体能加量。'];
@@ -466,12 +470,8 @@ function startGame(){
     state.phase='schedule';
     state.storyChosen=false;
     state.pendingStory=null;
-    document.querySelectorAll('#scheduleButtons button').forEach(function(b){ b.disabled=false; });
+    document.querySelectorAll('.schedule-buttons button').forEach(function(b){ b.disabled=false; });
     document.getElementById('storyOptions').innerHTML='';
     document.getElementById('storyText').textContent='👋 欢迎来到 DreamHaus！\n作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！';
     document.getElementById('feedbackToast').textContent='✨ 点击日程安排你的本月计划';
-    document.getElementById('phaseBadge').textContent='📋 安排日程';
-    updateUI();
-}
-function resetGame(){
-    document.getElementById('startScreen').classList.rem
+    document.getElementBy
