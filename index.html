@@ -101,24 +101,20 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 </div>
 
 <script>
-// ============================================================
-//  全局变量与状态
-// ============================================================
+// ========== 全局状态 ==========
 const STAT_KEYS = ['vocal','dance','rap','visual','stamina','mental','popularity'];
 const STAT_LABELS = {vocal:'唱功',dance:'舞蹈',rap:'说唱',visual:'外貌',stamina:'体力',mental:'心态',popularity:'人气'};
 const STAT_COLORS = ['#e8a99c','#d4a0c0','#aac0d4','#f0c8b0','#b5cfb0','#d4b8c8','#f0cfb0'];
-let state = { name:'', month:0, stats:{vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10}, flags:[], gameOver:false, phase:'schedule', pendingStory:null, storyChosen:false };
+var state = { name:'', month:0, stats:{vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10}, flags:[], gameOver:false, phase:'schedule', pendingStory:null, storyChosen:false };
 
-// ============================================================
-//  全部36个月份事件（每个4个选项，文本简练）
-// ============================================================
-const STORY_EVENTS = {
-0:{text:'第一天踏入公司，经纪人问你最想成为哪种艺人？',options:[
+// ========== 36个月事件（每个4选项，精简文本） ==========
+var STORY_EVENTS = {
+0:{text:'第一天，经纪人问你最想成为哪种艺人？',options:[
 {text:'💪 全能实力派',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
 {text:'🎭 舞台表演者',effect:{dance:5,visual:2,stamina:2},flag:'performer'},
 {text:'✍️ 创作型歌手',effect:{vocal:4,rap:4,mental:3},flag:'creator'},
 {text:'🤝 社交达人',effect:{popularity:6,mental:1,stamina:-1},flag:'socialite'}]},
-1:{text:'第一周训练结束，身体有些吃不消。今晚怎么过？',options:[
+1:{text:'第一周训练结束，身体吃不消。今晚怎么过？',options:[
 {text:'🏋️ 加练到深夜',effect:{dance:3,vocal:3,stamina:-5,mental:1},flag:'hardworking'},
 {text:'🛁 泡澡早睡',effect:{stamina:6,mental:4},flag:'rested'},
 {text:'📱 刷社交媒体',effect:{popularity:5,visual:2,mental:-2},flag:'trendy'},
@@ -128,22 +124,22 @@ const STORY_EVENTS = {
 {text:'🎤 深情抒情曲',effect:{vocal:6,mental:2,popularity:3},flag:'vocal_soul'},
 {text:'🎧 自作曲rap',effect:{rap:6,vocal:2,popularity:2},flag:'rap_genius'},
 {text:'🎭 综合舞台',effect:{dance:3,vocal:3,visual:3,popularity:5},flag:'versatile'}]},
-3:{text:'体重增加，上镜效果变差。你决定？',options:[
+3:{text:'体重增加，上镜变差。你决定？',options:[
 {text:'🍎 严格控制饮食',effect:{visual:5,stamina:-2,mental:-1},flag:'diet'},
 {text:'🏃 增加有氧运动',effect:{stamina:4,visual:3,dance:2},flag:'fit'},
 {text:'💄 研究化妆技巧',effect:{visual:4,popularity:2},flag:'makeup'},
 {text:'🧘 接受自己',effect:{mental:6,stamina:2},flag:'bodypositive'}]},
-4:{text:'拍摄宣传物料，休息时你选择做什么？',options:[
+4:{text:'拍摄宣传物料，休息时你做什么？',options:[
 {text:'📸 和摄影师交流',effect:{visual:4,popularity:3},flag:'photogenic'},
 {text:'👥 和队友聊天',effect:{mental:4,popularity:2},flag:'friendly'},
 {text:'🎶 哼唱歌曲',effect:{vocal:3,rap:3},flag:'practicer'},
 {text:'😴 角落休息',effect:{stamina:5,mental:1},flag:'energized'}]},
-5:{text:'粉丝见面会，遇到刁钻问题。你怎么应对？',options:[
+5:{text:'粉丝见面会，遇到刁钻问题。你？',options:[
 {text:'💬 真诚回答',effect:{mental:5,popularity:6},flag:'honest'},
 {text:'😂 幽默化解',effect:{mental:3,popularity:7,visual:2},flag:'funny'},
 {text:'🧊 高冷神秘',effect:{visual:5,popularity:2,mental:-2},flag:'mysterious'},
 {text:'🎁 准备小礼物',effect:{popularity:8,mental:2,stamina:-1},flag:'grateful'}]},
-6:{text:'听到练习生背后说你坏话，你如何？',options:[
+6:{text:'听到练习生背后说你坏话，你？',options:[
 {text:'🗣️ 当面沟通',effect:{mental:5,popularity:2},flag:'communicator'},
 {text:'🤫 无视流言',effect:{vocal:3,dance:3,mental:3},flag:'focus'},
 {text:'📢 报告经纪人',effect:{mental:2,popularity:-1},flag:'reporter'},
@@ -153,7 +149,7 @@ const STORY_EVENTS = {
 {text:'😄 开朗活泼',effect:{popularity:7,mental:2,visual:2},flag:'variety'},
 {text:'🎨 才华横溢',effect:{rap:4,vocal:4,popularity:4},flag:'talent'},
 {text:'💃 舞台王者',effect:{dance:5,popularity:5},flag:'performer'}]},
-8:{text:'才艺之夜，你表演什么特殊才艺？',options:[
+8:{text:'才艺之夜，你表演什么？',options:[
 {text:'🎸 乐器演奏',effect:{vocal:4,mental:4,popularity:3},flag:'musician'},
 {text:'💃 即兴battle',effect:{dance:6,stamina:-2,popularity:5},flag:'battle'},
 {text:'😂 搞笑模仿',effect:{mental:5,popularity:6,visual:1},flag:'comedian'},
@@ -163,12 +159,12 @@ const STORY_EVENTS = {
 {text:'📱 发动态感谢',effect:{popularity:6,mental:2},flag:'appreciative'},
 {text:'📸 认证照展示',effect:{popularity:5,visual:2},flag:'caring'},
 {text:'📝 化为动力',effect:{mental:6,vocal:2,dance:2},flag:'inspired'}]},
-10:{text:'舞蹈基础落后，你决定怎样追赶？',options:[
+10:{text:'舞蹈基础落后，你决定？',options:[
 {text:'⏰ 每天多练2小时',effect:{dance:6,stamina:-6,mental:1},flag:'persistent'},
 {text:'👨‍🏫 请教老师',effect:{dance:5,mental:3},flag:'teachable'},
 {text:'📹 录视频对比',effect:{dance:4,visual:2,mental:2},flag:'selfcritic'},
 {text:'🤝 组队练习',effect:{dance:4,popularity:2,mental:2},flag:'cooperative'}]},
-11:{text:'年末庆典，排练时间紧张。你选择？',options:[
+11:{text:'年末庆典，排练紧张。你选择？',options:[
 {text:'🔥 拼尽全力争C位',effect:{dance:8,vocal:5,stamina:-8,popularity:10},flag:'hard_worker'},
 {text:'⚖️ 稳扎稳打',effect:{vocal:4,dance:4,mental:5},flag:'stable'},
 {text:'🤝 合作设计亮点',effect:{visual:3,popularity:6,mental:4},flag:'teamplayer'},
@@ -183,7 +179,7 @@ const STORY_EVENTS = {
 {text:'📚 拒绝邀请',effect:{vocal:4,dance:4,mental:3},flag:'focused'},
 {text:'🗓️ 协商缩短',effect:{popularity:3,mental:3},flag:'negotiator'},
 {text:'📸 休息日补拍',effect:{popularity:4,stamina:-2},flag:'flexible'}]},
-14:{text:'娱乐公司代表观摩，你被临时推举表演。你选？',options:[
+14:{text:'娱乐公司代表观摩，你被推举表演。你选？',options:[
 {text:'🎤 最强唱功',effect:{vocal:8,popularity:6,mental:3},flag:'vocal_show'},
 {text:'💃 全能舞技',effect:{dance:8,popularity:5,mental:3},flag:'dance_show'},
 {text:'🎧 创作能力',effect:{rap:6,vocal:4,popularity:7},flag:'producer'},
@@ -193,27 +189,27 @@ const STORY_EVENTS = {
 {text:'🧴 护肤品急救',effect:{visual:4,stamina:-2},flag:'skincare'},
 {text:'☕ 咖啡硬撑',effect:{stamina:-3,mental:-2},flag:'caffeine'},
 {text:'🧘 调整作息',effect:{stamina:5,mental:5},flag:'balanced'}]},
-16:{text:'和朋友因出道名额分歧，你如何处理？',options:[
+16:{text:'和朋友因出道名额分歧，你？',options:[
 {text:'💬 坦诚沟通',effect:{mental:6,popularity:2},flag:'communicator'},
 {text:'🤝 良性竞争',effect:{vocal:3,dance:3,mental:3},flag:'rival'},
 {text:'😔 选择退让',effect:{mental:4,popularity:-1},flag:'selfless'},
 {text:'🏆 全力以赴',effect:{dance:4,vocal:4,mental:2},flag:'competitive'}]},
-17:{text:'中期考核，导师指出短板。你如何回应？',options:[
+17:{text:'中期考核，导师指出短板。你？',options:[
 {text:'🙇 虚心加练',effect:{stamina:-5,mental:5,dance:5,vocal:5},flag:'humble'},
 {text:'💪 强调优势',effect:{mental:8,popularity:3,visual:3},flag:'confident'},
 {text:'📚 请求指导',effect:{vocal:3,dance:3,rap:3,mental:4},flag:'studious'},
 {text:'📝 制定计划',effect:{mental:5,vocal:4,dance:4},flag:'planner'}]},
-18:{text:'网上有人盗用照片骗钱，你如何处理？',options:[
+18:{text:'网上有人盗用照片骗钱，你？',options:[
 {text:'⚖️ 声明维权',effect:{mental:-2,popularity:6},flag:'legal'},
 {text:'😤 作品打脸',effect:{vocal:4,dance:4,popularity:4},flag:'prove'},
 {text:'🙈 无视',effect:{mental:5,popularity:-1},flag:'ignore'},
 {text:'📢 向粉丝说明',effect:{popularity:5,mental:2},flag:'transparent'}]},
-19:{text:'获得音乐节目面试机会，你决定？',options:[
+19:{text:'获得音乐节目面试机会，你？',options:[
 {text:'🎤 全力以赴',effect:{vocal:6,dance:4,popularity:8},flag:'daredevil'},
 {text:'🧘 平常心',effect:{mental:6,vocal:3},flag:'calm'},
 {text:'👥 邀请朋友合作',effect:{popularity:5,mental:3},flag:'collaborator'},
 {text:'🎨 原创歌曲',effect:{rap:5,vocal:4,popularity:6},flag:'original'}]},
-20:{text:'广告代言机会，需牺牲一周训练。你选？',options:[
+20:{text:'广告代言机会，牺牲一周训练。你？',options:[
 {text:'💰 接受代言',effect:{popularity:10,stamina:-3,mental:1},flag:'commercial'},
 {text:'📚 拒绝专注',effect:{vocal:4,dance:4,rap:4,mental:2},flag:'focus'},
 {text:'🗓️ 协商时间',effect:{popularity:5,stamina:-1,mental:3},flag:'negotiator'},
@@ -233,7 +229,7 @@ const STORY_EVENTS = {
 {text:'🎤 闭关练唱功',effect:{vocal:8,mental:3,stamina:-3},flag:'vocal_focus'},
 {text:'🤝 结交音乐人',effect:{popularity:6,mental:4,rap:3},flag:'networker'},
 {text:'📸 拍vlog',effect:{popularity:5,visual:3,mental:2},flag:'vlogger'}]},
-24:{text:'回国后发现风格不符，你怎么办？',options:[
+24:{text:'回国后发现风格不符，你？',options:[
 {text:'🎨 坚持自我',effect:{rap:4,vocal:4,popularity:3},flag:'individualist'},
 {text:'🤝 主动融合',effect:{mental:5,popularity:3},flag:'adaptable'},
 {text:'📚 学习前辈',effect:{dance:3,vocal:3,mental:3},flag:'observer'},
@@ -248,7 +244,7 @@ const STORY_EVENTS = {
 {text:'🎤 舞台打脸',effect:{vocal:4,dance:4,popularity:5},flag:'prove'},
 {text:'🙈 无视',effect:{mental:8,popularity:-1},flag:'ignore'},
 {text:'😢 直播解释',effect:{popularity:4,mental:-3},flag:'vulnerable'}]},
-27:{text:'收到好听的demo，很适合你。你打算？',options:[
+27:{text:'收到好听的demo，很适合你。你？',options:[
 {text:'🎤 争取拿下',effect:{vocal:6,popularity:5},flag:'powergrab'},
 {text:'🤝 推荐朋友',effect:{popularity:3,mental:4},flag:'selfless'},
 {text:'✍️ 改编风格',effect:{rap:4,vocal:4,mental:3},flag:'remix'},
@@ -268,7 +264,7 @@ const STORY_EVENTS = {
 {text:'📱 和粉丝互动',effect:{popularity:4,mental:2},flag:'connected'},
 {text:'🎵 听音乐放空',effect:{mental:5,vocal:1},flag:'musiclover'},
 {text:'✍️ 写日记',effect:{mental:6},flag:'writer'}]},
-31:{text:'成功入选出道组，需竞争中心位置。你如何？',options:[
+31:{text:'成功入选出道组，需竞争中心位置。你？',options:[
 {text:'💪 公平竞争',effect:{dance:5,vocal:5,mental:3},flag:'competitor'},
 {text:'🤝 双赢方案',effect:{mental:6,popularity:3},flag:'diplomat'},
 {text:'😌 退让副位',effect:{mental:4,popularity:-1},flag:'humble'},
@@ -283,7 +279,7 @@ const STORY_EVENTS = {
 {text:'🧘 调整恢复',effect:{stamina:5,mental:5},flag:'wise'},
 {text:'👨‍⚕️ 看医生',effect:{stamina:4,mental:3},flag:'prudent'},
 {text:'📱 发动态',effect:{popularity:4,mental:2},flag:'open'}]},
-34:{text:'出道曲录制，制作人不满意。你怎么办？',options:[
+34:{text:'出道曲录制，制作人不满意。你？',options:[
 {text:'🎤 虚心反复录',effect:{vocal:5,mental:3},flag:'perfectionist'},
 {text:'💪 提出见解',effect:{rap:4,mental:4},flag:'collaborative'},
 {text:'😤 坚持不妥协',effect:{mental:3,popularity:-1},flag:'stubborn'},
@@ -295,60 +291,54 @@ const STORY_EVENTS = {
 {text:'🌟 梦想成真',effect:{popularity:10,mental:10},flag:'dreamer'}]}
 };
 
-// ============================================================
-//  辅助函数
-// ============================================================
+// ========== 辅助函数 ==========
 function getStatValue(k){ return Math.min(100,Math.max(0,state.stats[k]||0)); }
-function applyEffects(effects){ let msg=[]; for(let k in effects){ if(state.stats.hasOwnProperty(k)){ let old=state.stats[k], delta=effects[k], nv=Math.min(100,Math.max(0,old+delta)); state.stats[k]=nv; if(delta!==0){ msg.push(STAT_LABELS[k]+' '+(delta>0?'+':'')+delta); } } } return msg.join(' · '); }
+function applyEffects(effects){ var msg=[]; for(var k in effects){ if(state.stats.hasOwnProperty(k)){ var old=state.stats[k], delta=effects[k], nv=Math.min(100,Math.max(0,old+delta)); state.stats[k]=nv; if(delta!==0){ msg.push(STAT_LABELS[k]+' '+(delta>0?'+':'')+delta); } } } return msg.join(' · '); }
 function addFlag(flag){ if(flag && !state.flags.includes(flag)){ state.flags.push(flag); if(state.flags.length>5) state.flags.shift(); } }
 
-// ============================================================
-//  渲染函数
-// ============================================================
+// ========== 渲染 ==========
 function renderStats(){
-    const grid=document.getElementById('statsGrid'); grid.innerHTML='';
-    STAT_KEYS.forEach(key=>{
-        const val=getStatValue(key);
-        const div=document.createElement('div'); div.className='stat-item';
+    var grid=document.getElementById('statsGrid'); grid.innerHTML='';
+    STAT_KEYS.forEach(function(key){
+        var val=getStatValue(key);
+        var div=document.createElement('div'); div.className='stat-item';
         div.innerHTML='<span class="label">'+STAT_LABELS[key]+'</span><div class="bar-bg"><div class="bar-fill" style="width:'+val+'%;background:'+STAT_COLORS[STAT_KEYS.indexOf(key)]+';"></div></div><span class="val">'+Math.round(val)+'</span>';
         grid.appendChild(div);
     });
     document.getElementById('popularityLabel').textContent=Math.round(getStatValue('popularity'));
     document.getElementById('staminaLabel').textContent=Math.round(getStatValue('stamina'));
-    const avg=STAT_KEYS.filter(k=>k!=='popularity'&&k!=='stamina'&&k!=='mental').reduce((s,k)=>s+getStatValue(k),0)/4;
-    let rank='F'; if(avg>80) rank='A'; else if(avg>65) rank='B'; else if(avg>50) rank='C'; else if(avg>35) rank='D'; else rank='E';
+    var avg=STAT_KEYS.filter(function(k){return k!=='popularity'&&k!=='stamina'&&k!=='mental';}).reduce(function(s,k){return s+getStatValue(k);},0)/4;
+    var rank='F'; if(avg>80) rank='A'; else if(avg>65) rank='B'; else if(avg>50) rank='C'; else if(avg>35) rank='D'; else rank='E';
     document.getElementById('rankDisplay').textContent=rank;
 }
 function renderRadar(){
     try{
-        const canvas=document.getElementById('radarCanvas'); if(!canvas) return;
-        const ctx=canvas.getContext('2d'); if(!ctx) return;
-        const w=canvas.width, h=canvas.height;
+        var canvas=document.getElementById('radarCanvas'); if(!canvas) return;
+        var ctx=canvas.getContext('2d'); if(!ctx) return;
+        var w=canvas.width, h=canvas.height;
         ctx.clearRect(0,0,w,h);
-        const cx=w/2, cy=h/2+6, radius=Math.min(w,h)*0.38, keys=STAT_KEYS, n=keys.length;
-        const angles=keys.map((_,i)=> (i/n)*2*Math.PI - Math.PI/2);
+        var cx=w/2, cy=h/2+6, radius=Math.min(w,h)*0.38, keys=STAT_KEYS, n=keys.length;
+        var angles=keys.map(function(_,i){ return (i/n)*2*Math.PI - Math.PI/2; });
         ctx.strokeStyle='#f0ddd5'; ctx.lineWidth=1.2;
-        for(let level=1; level<=5; level++){ const r=radius/5*level; ctx.beginPath(); for(let i=0;i<n;i++){ const x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.closePath(); ctx.stroke(); }
-        for(let i=0;i<n;i++){ const x=cx+radius*Math.cos(angles[i]), y=cy+radius*Math.sin(angles[i]); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.strokeStyle='#f0ddd5'; ctx.stroke(); const lr=radius+18, lx=cx+lr*Math.cos(angles[i]), ly=cy+lr*Math.sin(angles[i]); ctx.fillStyle='#b29084'; ctx.font='11px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(STAT_LABELS[keys[i]],lx,ly); }
-        const values=keys.map(k=>getStatValue(k)/100);
-        ctx.beginPath(); for(let i=0;i<n;i++){ const r=radius*values[i], x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.closePath(); ctx.fillStyle='rgba(221,160,145,0.35)'; ctx.fill(); ctx.strokeStyle='#d4877a'; ctx.lineWidth=2.5; ctx.stroke(); for(let i=0;i<n;i++){ const r=radius*values[i], x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); ctx.beginPath(); ctx.arc(x,y,5,0,2*Math.PI); ctx.fillStyle='#d4877a'; ctx.fill(); }
+        for(var level=1; level<=5; level++){ var r=radius/5*level; ctx.beginPath(); for(var i=0;i<n;i++){ var x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.closePath(); ctx.stroke(); }
+        for(var i=0;i<n;i++){ var x=cx+radius*Math.cos(angles[i]), y=cy+radius*Math.sin(angles[i]); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.strokeStyle='#f0ddd5'; ctx.stroke(); var lr=radius+18, lx=cx+lr*Math.cos(angles[i]), ly=cy+lr*Math.sin(angles[i]); ctx.fillStyle='#b29084'; ctx.font='11px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(STAT_LABELS[keys[i]],lx,ly); }
+        var values=keys.map(function(k){ return getStatValue(k)/100; });
+        ctx.beginPath(); for(var i=0;i<n;i++){ var r=radius*values[i], x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.closePath(); ctx.fillStyle='rgba(221,160,145,0.35)'; ctx.fill(); ctx.strokeStyle='#d4877a'; ctx.lineWidth=2.5; ctx.stroke(); for(var i=0;i<n;i++){ var r=radius*values[i], x=cx+r*Math.cos(angles[i]), y=cy+r*Math.sin(angles[i]); ctx.beginPath(); ctx.arc(x,y,5,0,2*Math.PI); ctx.fillStyle='#d4877a'; ctx.fill(); }
     }catch(e){ console.warn('雷达图出错',e); }
 }
 function updateUI(){
     renderStats(); renderRadar();
-    const m=state.month+1, year=Math.ceil(m/12), mon=((m-1)%12)+1;
+    var m=state.month+1, year=Math.ceil(m/12), mon=((m-1)%12)+1;
     document.getElementById('monthDisplay').textContent=m;
     document.getElementById('monthYear').textContent='第 '+year+' 年 · '+mon+' 月';
     document.getElementById('flagDisplay').textContent=state.flags.length?state.flags.slice(-1)[0]:'新人';
     document.getElementById('playerNameDisplay').textContent=state.name;
 }
 
-// ============================================================
-//  核心流程
-// ============================================================
+// ========== 核心流程 ==========
 function handleSchedule(action){
     if(state.gameOver || state.phase!=='schedule') return;
-    let effects={}, baseMsg='';
+    var effects={}, baseMsg='';
     switch(action){
         case'dance': effects={dance:6+Math.floor(Math.random()*4), stamina:-4, mental:1}; baseMsg='💃 练舞'; break;
         case'vocal': effects={vocal:6+Math.floor(Math.random()*4), stamina:-3, mental:1}; baseMsg='🎤 练声'; break;
@@ -359,18 +349,18 @@ function handleSchedule(action){
         case'mental': effects={mental:10+Math.floor(Math.random()*5), stamina:-2}; baseMsg='🧠 心理'; break;
         default: return;
     }
-    for(let k in effects){ if(state.stats.hasOwnProperty(k)){ let v=state.stats[k]+effects[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } }
-    const feedback=applyEffects(effects);
+    for(var k in effects){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+effects[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } }
+    var feedback=applyEffects(effects);
     document.getElementById('feedbackToast').textContent='✅ '+baseMsg+' → '+feedback;
     updateUI();
     state.phase='story';
     document.getElementById('phaseBadge').textContent='🎬 剧情选择';
-    document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=true);
+    document.querySelectorAll('#scheduleButtons button').forEach(function(b){ b.disabled=true; });
     triggerStory();
 }
 function triggerStory(){
-    const month=state.month;
-    let story=STORY_EVENTS[month];
+    var month=state.month;
+    var story=STORY_EVENTS[month];
     if(!story){
         story={text:'本月训练平稳。', options:[
             {text:'🎯 基本功', effect:{vocal:2,dance:2,stamina:-1}, flag:'basic'},
@@ -381,52 +371,50 @@ function triggerStory(){
     }
     state.pendingStory=story;
     document.getElementById('storyText').textContent=story.text||'发生了一些事...';
-    const optContainer=document.getElementById('storyOptions');
+    var optContainer=document.getElementById('storyOptions');
     optContainer.innerHTML='';
     if(story.options && story.options.length>0){
-        story.options.forEach((opt,idx)=>{
-            const btn=document.createElement('button');
+        story.options.forEach(function(opt,idx){
+            var btn=document.createElement('button');
             btn.textContent=opt.text||'选项 '+(idx+1);
             btn.onclick=function(){ handleStoryChoice(idx); };
             optContainer.appendChild(btn);
         });
-    } else { setTimeout(()=>{ finishMonth(); },800); }
+    } else { setTimeout(function(){ finishMonth(); },800); }
 }
 function handleStoryChoice(idx){
     if(state.storyChosen || state.gameOver) return;
     state.storyChosen=true;
-    const story=state.pendingStory;
+    var story=state.pendingStory;
     if(!story || !story.options || !story.options[idx]) return;
-    const choice=story.options[idx];
-    if(choice.effect){ for(let k in choice.effect){ if(state.stats.hasOwnProperty(k)){ let v=state.stats[k]+choice.effect[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } } }
+    var choice=story.options[idx];
+    if(choice.effect){ for(var k in choice.effect){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+choice.effect[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } } }
     if(choice.flag) addFlag(choice.flag);
-    const feedback=choice.effect?applyEffects(choice.effect):'无属性变化';
+    var feedback=choice.effect?applyEffects(choice.effect):'无属性变化';
     document.getElementById('feedbackToast').textContent='📖 剧情选择: '+choice.text+' → '+feedback;
     updateUI();
-    document.querySelectorAll('#storyOptions button').forEach(b=>b.disabled=true);
-    setTimeout(()=>{ finishMonth(); },900);
+    document.querySelectorAll('#storyOptions button').forEach(function(b){ b.disabled=true; });
+    setTimeout(function(){ finishMonth(); },900);
 }
 function finishMonth(){
     state.month++;
     state.storyChosen=false;
     state.phase='schedule';
     document.getElementById('phaseBadge').textContent='📋 安排日程';
-    document.querySelectorAll('#scheduleButtons button').forEach(b=>b.disabled=false);
+    document.querySelectorAll('#scheduleButtons button').forEach(function(b){ b.disabled=false; });
     document.getElementById('storyOptions').innerHTML='';
     if(state.month>=36){ state.gameOver=true; showEnding(); return; }
-    const msgs=['🌈 新的一月！','☕ 咖啡厅新品～','📈 表现不错！','🌙 梦想发光。','🎵 新编舞老师！','📱 粉丝增长。','💪 体能加量。'];
+    var msgs=['🌈 新的一月！','☕ 咖啡厅新品～','📈 表现不错！','🌙 梦想发光。','🎵 新编舞老师！','📱 粉丝增长。','💪 体能加量。'];
     document.getElementById('storyText').textContent=msgs[state.month%msgs.length]+'\n请选择本月的训练日程。';
     document.getElementById('feedbackToast').textContent='📅 新的一月，选择日程！';
     updateUI();
 }
 
-// ============================================================
-//  结局弹窗
-// ============================================================
+// ========== 结局弹窗 ==========
 function showEnding(){
-    const s=state.stats, flags=state.flags, avg=(s.vocal+s.dance+s.rap+s.visual)/4, pop=s.popularity, mental=s.mental, stamina=s.stamina;
-    let title='🌱 练习生结束', desc='三年的时光结束了...', icon='🌸';
-    const isHighAvg=avg>70, isLowMental=mental<25, isLowStamina=stamina<20, isPopStar=pop>85,
+    var s=state.stats, flags=state.flags, avg=(s.vocal+s.dance+s.rap+s.visual)/4, pop=s.popularity, mental=s.mental, stamina=s.stamina;
+    var title='🌱 练习生结束', desc='三年的时光结束了...', icon='🌸';
+    var isHighAvg=avg>70, isLowMental=mental<25, isLowStamina=stamina<20, isPopStar=pop>85,
         isVocalKing=s.vocal>85&&s.vocal>s.dance&&s.vocal>s.rap,
         isDanceKing=s.dance>85&&s.dance>s.vocal&&s.dance>s.rap,
         isRapKing=s.rap>85&&s.rap>s.vocal&&s.rap>s.dance,
@@ -459,18 +447,31 @@ function showEnding(){
         icon='💫'; title='【自由逐梦】';
         desc='你没能作为偶像出道，但这三年让你认清了自己的内心。你转作幕后制作人/独立歌手，你的音乐虽不大众，却深深打动了懂你的人。你找到了属于自己的音乐语言，你的作品在小众圈层获得极高评价。你证明了成功不只一条路，真正的幸福是忠于自我。你自由了，也成功了。';
     }
-    const content=document.getElementById('endingContent');
+    var content=document.getElementById('endingContent');
     content.innerHTML='<div class="big-icon">'+icon+'</div><div class="ending-title">'+title+'</div><div class="ending-desc">'+desc+'</div><div class="ending-tags">🏷️ 标签：'+(state.flags.length?state.flags.join(' · '):'无')+'</div><button class="ending-btn" onclick="location.reload()">🔄 重新开始</button>';
     document.getElementById('endingModal').style.display='flex';
 }
 
-// ============================================================
-//  启动与重置 (全局函数)
-// ============================================================
+// ========== 启动与重置 ==========
 function startGame(){
-    const name=document.getElementById('nameInput').value.trim()||'林娜恩';
+    var name=document.getElementById('nameInput').value.trim()||'林娜恩';
     state.name=name;
     document.getElementById('playerNameDisplay').textContent=name;
     document.getElementById('startScreen').classList.add('hidden');
     document.getElementById('gameApp').style.display='block';
-    state
+    state.month=0;
+    state.stats={vocal:20,dance:20,rap:15,visual:25,stamina:50,mental:45,popularity:10};
+    state.flags=[];
+    state.gameOver=false;
+    state.phase='schedule';
+    state.storyChosen=false;
+    state.pendingStory=null;
+    document.querySelectorAll('#scheduleButtons button').forEach(function(b){ b.disabled=false; });
+    document.getElementById('storyOptions').innerHTML='';
+    document.getElementById('storyText').textContent='👋 欢迎来到 DreamHaus！\n作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！';
+    document.getElementById('feedbackToast').textContent='✨ 点击日程安排你的本月计划';
+    document.getElementById('phaseBadge').textContent='📋 安排日程';
+    updateUI();
+}
+function resetGame(){
+    document.getElementById('startScreen').classList.rem
