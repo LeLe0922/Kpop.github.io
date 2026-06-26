@@ -141,138 +141,138 @@ var isProcessingMilestone = false;
 
 // ========== 里程碑剧情文案 ==========
 var MILESTONE_TEXTS = {
-    vocal: { icon:'🎤', title:'唱功突破70！', desc:'你的唱功达到70！声乐老师惊叹你有"天生歌喉"，练习生们开始叫你"小歌王"。你的高音让整个公司为之震动。' },
+    vocal: { icon:'🎤', title:'唱功突破70！', desc:'你的唱功达到70！声乐老师惊叹你有"天生歌喉"，练习生们开始不敢在你面前开嗓。你已经可以发出震撼世界的高音。' },
     dance: { icon:'💃', title:'舞蹈突破70！', desc:'你的舞蹈达到70！你的动作被编舞老师当作示范，大家开始称你为"传奇练习生"。你的舞姿成为后辈模仿的对象。' },
     rap: { icon:'🎧', title:'说唱突破70！', desc:'你的说唱达到70！你的flow让前辈都刮目相看，你被称作"黑泡新星"。你的歌词充满态度与思考。' },
-    visual: { icon:'✨', title:'外貌突破70！', desc:'你的外貌达到70！你被星探评价为"天生偶像脸"，公司开始重点培养你的形象。你成为练习生中的视觉代表。' },
+    visual: { icon:'✨', title:'外貌突破70！', desc:'你的外貌达到70！你被评价为"脸蛋天才"，公司开始重点培养你的形象。你成为练习生中的视觉代表。' },
     stamina: { icon:'💪', title:'体力突破70！', desc:'你的体力达到70！你成为练习生中的"铁人"，别人休息时你还在加练。你的体能让人望尘莫及。' },
     mental: { icon:'🧠', title:'心态突破70！', desc:'你的心态达到70！你被心理导师评为"最强心脏"，任何压力都打不倒你。你是团队中最稳定的支柱。' },
-    popularity: { icon:'🌟', title:'人气突破70！', desc:'你的人气达到70！你的粉丝俱乐部正式成立，你开始拥有自己的应援色。你成了公司的话题中心。' }
+    popularity: { icon:'🌟', title:'人气突破70！', desc:'你的人气达到70！你的后援会和大吧正式成立，你开始拥有自己的应援色。你成了公司的话题中心。' }
 };
 
 // ========== 36个月事件（保留完整） ==========
 var STORY_EVENTS = {
 0:{text:'第一天，经纪人问你最想成为哪种艺人？',options:[
-{text:'💪 全能实力派',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
-{text:'🎭 舞台表演者',effect:{dance:5,visual:2,stamina:2},flag:'performer'},
-{text:'✍️ 创作型歌手',effect:{vocal:4,rap:4,mental:3},flag:'creator'},
-{text:'🤝 社交达人',effect:{popularity:6,mental:1,stamina:-1},flag:'socialite'}]},
+{text:'💪 全能实力派，我要当ACE',effect:{vocal:3,dance:3,rap:3,mental:2},flag:'allrounder'},
+{text:'🎭 舞台表演者，dance才是王道',effect:{dance:3,visual:2,stamina:2},flag:'performer'},
+{text:'✍️ 创作型歌手，我只想创造自己的音乐',effect:{vocal:2,rap:2,mental:3},flag:'creator'},
+{text:'🤝 社交达人，成为人脉最广的爱豆',effect:{popularity:3,mental:1,stamina:-1},flag:'socialite'}]},
 1:{text:'第一周训练结束，身体吃不消。今晚怎么过？',options:[
-{text:'🏋️ 加练到深夜',effect:{dance:3,vocal:3,stamina:-5,mental:1},flag:'hardworking'},
-{text:'🛁 泡澡早睡',effect:{stamina:6,mental:4},flag:'rested'},
-{text:'📱 刷社交媒体',effect:{popularity:5,visual:2,mental:-2},flag:'trendy'},
-{text:'🎵 写歌词',effect:{rap:4,mental:3,vocal:2},flag:'lyricist'}]},
+{text:'🏋️ 加练到深夜当卷王',effect:{dance:3,vocal:3,stamina:-5,mental:1},flag:'hardworking'},
+{text:'🛁 泡澡早睡美容养颜',effect:{stamina:3,mental:3},flag:'rested'},
+{text:'📱 视奸粉圈看最近流行趋势',effect:{popularity:2,visual:2,mental:-2},flag:'trendy'},
+{text:'🎵 创作歌词为当制作人铺垫',effect:{rap:3,mental:3,vocal:2},flag:'lyricist'}]},
 2:{text:'第一次月末评价！你选择展示什么？',options:[
-{text:'💃 高难度舞蹈',effect:{dance:6,stamina:-3,popularity:4},flag:'dance_master'},
-{text:'🎤 深情抒情曲',effect:{vocal:6,mental:2,popularity:3},flag:'vocal_soul'},
-{text:'🎧 自作曲rap',effect:{rap:6,vocal:2,popularity:2},flag:'rap_genius'},
-{text:'🎭 综合舞台',effect:{dance:3,vocal:3,visual:3,popularity:5},flag:'versatile'}]},
+{text:'💃 高难度舞蹈',effect:{dance:4,stamina:-3,popularity:2},flag:'dance_master'},
+{text:'🎤 深情抒情曲',effect:{vocal:4,mental:2,popularity:3},flag:'vocal_soul'},
+{text:'🎧 自作曲rap',effect:{rap:4,vocal:2,popularity:2},flag:'rap_genius'},
+{text:'🎭 综合ace舞台',effect:{dance:3,vocal:3,visual:3,popularity:5},flag:'versatile'}]},
 3:{text:'体重增加，上镜变差。你决定？',options:[
-{text:'🍎 严格控制饮食',effect:{visual:5,stamina:-2,mental:-1},flag:'diet'},
-{text:'🏃 增加有氧运动',effect:{stamina:4,visual:3,dance:2},flag:'fit'},
-{text:'💄 研究化妆技巧',effect:{visual:4,popularity:2},flag:'makeup'},
-{text:'🧘 接受自己',effect:{mental:6,stamina:2},flag:'bodypositive'}]},
+{text:'🍎 严格控制饮食，不吃高热量食物',effect:{visual:2,stamina:-2,mental:-1},flag:'diet'},
+{text:'🏃 增加有氧运动，塑形减脂',effect:{stamina:3,visual:3,dance:2},flag:'fit'},
+{text:'💄 研究化妆技巧，脸好看就行了',effect:{visual:2,popularity:2},flag:'makeup'},
+{text:'🧘 接受自己，我无论怎样都很美',effect:{mental:3,stamina:2},flag:'bodypositive'}]},
 4:{text:'拍摄宣传物料，休息时你做什么？',options:[
-{text:'📸 和摄影师交流',effect:{visual:4,popularity:3},flag:'photogenic'},
-{text:'👥 和队友聊天',effect:{mental:4,popularity:2},flag:'friendly'},
+{text:'📸 和摄影师交流八卦',effect:{visual:2,popularity:3},flag:'photogenic'},
+{text:'👥 和其他练习生聊天',effect:{mental:2,popularity:2},flag:'friendly'},
 {text:'🎶 哼唱歌曲',effect:{vocal:3,rap:3},flag:'practicer'},
-{text:'😴 角落休息',effect:{stamina:5,mental:1},flag:'energized'}]},
+{text:'😴 角落休息',effect:{stamina:3,mental:1},flag:'energized'}]},
 5:{text:'粉丝见面会，遇到刁钻问题。你？',options:[
-{text:'💬 真诚回答',effect:{mental:5,popularity:6},flag:'honest'},
-{text:'😂 幽默化解',effect:{mental:3,popularity:7,visual:2},flag:'funny'},
-{text:'🧊 高冷神秘',effect:{visual:5,popularity:2,mental:-2},flag:'mysterious'},
-{text:'🎁 准备小礼物',effect:{popularity:8,mental:2,stamina:-1},flag:'grateful'}]},
+{text:'💬 真诚回答',effect:{mental:4,popularity:3},flag:'honest'},
+{text:'😂 幽默化解',effect:{mental:3,popularity:4,visual:2},flag:'funny'},
+{text:'🧊 不说话装高冷',effect:{visual:5,popularity:2,mental:-2},flag:'mysterious'},
+{text:'🙄 翻白眼我很slay',effect:{popularity:-5,mental:2,stamina:-1},flag:'grateful'}]},
 6:{text:'听到练习生背后说你坏话，你？',options:[
-{text:'🗣️ 当面沟通',effect:{mental:5,popularity:2},flag:'communicator'},
+{text:'🗣️ 当面沟通',effect:{mental:3,popularity:2},flag:'communicator'},
 {text:'🤫 无视流言',effect:{vocal:3,dance:3,mental:3},flag:'focus'},
 {text:'📢 报告经纪人',effect:{mental:2,popularity:-1},flag:'reporter'},
 {text:'💔 暗自伤心',effect:{mental:-5,stamina:-2},flag:'sensitive'}]},
 7:{text:'综艺录制，你希望展现什么形象？',options:[
-{text:'🎯 勤奋努力',effect:{popularity:5,mental:3},flag:'hardworker'},
-{text:'😄 开朗活泼',effect:{popularity:7,mental:2,visual:2},flag:'variety'},
-{text:'🎨 才华横溢',effect:{rap:4,vocal:4,popularity:4},flag:'talent'},
-{text:'💃 舞台王者',effect:{dance:5,popularity:5},flag:'performer'}]},
-8:{text:'才艺之夜，你表演什么？',options:[
-{text:'🎸 乐器演奏',effect:{vocal:4,mental:4,popularity:3},flag:'musician'},
-{text:'💃 即兴battle',effect:{dance:6,stamina:-2,popularity:5},flag:'battle'},
-{text:'😂 搞笑模仿',effect:{mental:5,popularity:6,visual:1},flag:'comedian'},
-{text:'✍️ 现场作诗',effect:{rap:5,mental:5,popularity:3},flag:'poet'}]},
+{text:'🎯 勤奋努力',effect:{popularity:3,mental:3},flag:'hardworker'},
+{text:'😄 开朗活泼',effect:{popularity:4,mental:2,visual:2},flag:'variety'},
+{text:'🎨 才华横溢',effect:{rap:3,vocal:3,popularity:3},flag:'talent'},
+{text:'💃 舞台王者',effect:{dance:4,popularity:3},flag:'performer'}]},
+8:{text:'练习生内部才艺表演，你表演什么？',options:[
+{text:'🎸 乐器演奏',effect:{vocal:3,mental:3,popularity:3},flag:'musician'},
+{text:'💃 即兴battle',effect:{dance:3,stamina:-2,popularity:3},flag:'battle'},
+{text:'😂 搞笑模仿',effect:{mental:3,popularity:3,visual:1},flag:'comedian'},
+{text:'✍️ 现场作诗',effect:{rap:3,mental:3,popularity:3},flag:'poet'}]},
 9:{text:'收到粉丝长信，你决定？',options:[
-{text:'💌 手写回信',effect:{popularity:4,mental:4},flag:'kind'},
-{text:'📱 发动态感谢',effect:{popularity:6,mental:2},flag:'appreciative'},
+{text:'💌 手写回信',effect:{popularity:2,mental:2},flag:'kind'},
+{text:'📱 发动态感谢',effect:{popularity:3,mental:2},flag:'appreciative'},
 {text:'📸 认证照展示',effect:{popularity:5,visual:2},flag:'caring'},
-{text:'📝 化为动力',effect:{mental:6,vocal:2,dance:2},flag:'inspired'}]},
+{text:'📝 化为动力',effect:{mental:3,vocal:2,dance:2},flag:'inspired'}]},
 10:{text:'舞蹈基础落后，你决定？',options:[
-{text:'⏰ 每天多练2小时',effect:{dance:6,stamina:-6,mental:1},flag:'persistent'},
-{text:'👨‍🏫 请教老师',effect:{dance:5,mental:3},flag:'teachable'},
+{text:'⏰ 每天多练2小时',effect:{dance:3,stamina:-6,mental:1},flag:'persistent'},
+{text:'👨‍🏫 请教老师',effect:{dance:3,mental:3},flag:'teachable'},
 {text:'📹 录视频对比',effect:{dance:4,visual:2,mental:2},flag:'selfcritic'},
 {text:'🤝 组队练习',effect:{dance:4,popularity:2,mental:2},flag:'cooperative'}]},
 11:{text:'年末庆典，排练紧张。你选择？',options:[
-{text:'🔥 拼尽全力争C位',effect:{dance:8,vocal:5,stamina:-8,popularity:10},flag:'hard_worker'},
-{text:'⚖️ 稳扎稳打',effect:{vocal:4,dance:4,mental:5},flag:'stable'},
-{text:'🤝 合作设计亮点',effect:{visual:3,popularity:6,mental:4},flag:'teamplayer'},
-{text:'🎨 加入创意',effect:{dance:5,visual:4,popularity:5},flag:'creative'}]},
+{text:'🔥 拼尽全力争C位',effect:{dance:4,vocal:3,stamina:-8,popularity:10},flag:'hard_worker'},
+{text:'⚖️ 稳扎稳打不出错',effect:{vocal:4,dance:4,mental:5},flag:'stable'},
+{text:'🤝 合作设计亮点',effect:{visual:3,popularity:3,mental:4},flag:'teamplayer'},
+{text:'🎨 加入自己的创意',effect:{dance:5,visual:4,popularity:5},flag:'creative'}]},
 12:{text:'新年目标，你最想提升什么？',options:[
-{text:'🎤 唱功',effect:{vocal:6,mental:2},flag:'vocalgoal'},
-{text:'💃 舞蹈',effect:{dance:6,stamina:2},flag:'dancegoal'},
-{text:'🎧 创作',effect:{rap:5,vocal:3},flag:'creategoal'},
-{text:'📱 人气',effect:{popularity:6,visual:2},flag:'socialgoal'}]},
-13:{text:'广告拍摄邀请，需请假三天。你？',options:[
-{text:'💰 接受邀请',effect:{popularity:6,stamina:-3,mental:1},flag:'commercial'},
-{text:'📚 拒绝邀请',effect:{vocal:4,dance:4,mental:3},flag:'focused'},
+{text:'🎤 唱功',effect:{vocal:3,mental:2},flag:'vocalgoal'},
+{text:'💃 舞蹈',effect:{dance:3,stamina:2},flag:'dancegoal'},
+{text:'🎧 创作',effect:{rap:3,vocal:3},flag:'creategoal'},
+{text:'📱 人气',effect:{popularity:3,visual:2},flag:'socialgoal'}]},
+13:{text:'广告拍摄邀请，需请假三天。可能耽误练习，你？',options:[
+{text:'💰 接受邀请',effect:{popularity:3,stamina:-3,mental:1},flag:'commercial'},
+{text:'📚 拒绝邀请',effect:{vocal:2,dance:2,mental:3},flag:'focused'},
 {text:'🗓️ 协商缩短',effect:{popularity:3,mental:3},flag:'negotiator'},
-{text:'📸 休息日补拍',effect:{popularity:4,stamina:-2},flag:'flexible'}]},
+{text:'📸 休息日补拍',effect:{popularity:2,stamina:-2},flag:'flexible'}]},
 14:{text:'娱乐公司代表观摩，你被推举表演。你选？',options:[
-{text:'🎤 最强唱功',effect:{vocal:8,popularity:6,mental:3},flag:'vocal_show'},
-{text:'💃 全能舞技',effect:{dance:8,popularity:5,mental:3},flag:'dance_show'},
-{text:'🎧 创作能力',effect:{rap:6,vocal:4,popularity:7},flag:'producer'},
+{text:'🎤 最强唱功',effect:{vocal:4,popularity:3,mental:3},flag:'vocal_show'},
+{text:'💃 全能舞技',effect:{dance:4,popularity:5,mental:3},flag:'dance_show'},
+{text:'🎧 创作能力',effect:{rap:3,vocal:4,popularity:4},flag:'producer'},
 {text:'🎭 综合魅力',effect:{dance:4,vocal:4,visual:4,popularity:6},flag:'allrounder_show'}]},
 15:{text:'连续睡眠不足，脸色差。如何调整？',options:[
-{text:'💤 请假休息',effect:{stamina:8,mental:4},flag:'rested'},
+{text:'💤 请假休息',effect:{stamina:4,mental:2},flag:'rested'},
 {text:'🧴 护肤品急救',effect:{visual:4,stamina:-2},flag:'skincare'},
 {text:'☕ 咖啡硬撑',effect:{stamina:-3,mental:-2},flag:'caffeine'},
-{text:'🧘 调整作息',effect:{stamina:5,mental:5},flag:'balanced'}]},
+{text:'🧘 调整作息',effect:{stamina:2,mental:3},flag:'balanced'}]},
 16:{text:'和朋友因出道名额分歧，你？',options:[
-{text:'💬 坦诚沟通',effect:{mental:6,popularity:2},flag:'communicator'},
+{text:'💬 坦诚沟通',effect:{mental:3,popularity:2},flag:'communicator'},
 {text:'🤝 良性竞争',effect:{vocal:3,dance:3,mental:3},flag:'rival'},
-{text:'😔 选择退让',effect:{mental:4,popularity:-1},flag:'selfless'},
-{text:'🏆 全力以赴',effect:{dance:4,vocal:4,mental:2},flag:'competitive'}]},
+{text:'😔 选择退让',effect:{mental:2,popularity:-1},flag:'selfless'},
+{text:'🏆 全力以赴',effect:{dance:2,vocal:4,mental:2},flag:'competitive'}]},
 17:{text:'中期考核，导师指出短板。你？',options:[
 {text:'🙇 虚心加练',effect:{stamina:-5,mental:5,dance:5,vocal:5},flag:'humble'},
-{text:'💪 强调优势',effect:{mental:8,popularity:3,visual:3},flag:'confident'},
+{text:'💪 强化优点',effect:{mental:4,popularity:3,visual:3},flag:'confident'},
 {text:'📚 请求指导',effect:{vocal:3,dance:3,rap:3,mental:4},flag:'studious'},
 {text:'📝 制定计划',effect:{mental:5,vocal:4,dance:4},flag:'planner'}]},
-18:{text:'网上有人盗用照片骗钱，你？',options:[
+18:{text:'网上有人盗用你的照片骗钱，你？',options:[
 {text:'⚖️ 声明维权',effect:{mental:-2,popularity:6},flag:'legal'},
 {text:'😤 作品打脸',effect:{vocal:4,dance:4,popularity:4},flag:'prove'},
 {text:'🙈 无视',effect:{mental:5,popularity:-1},flag:'ignore'},
 {text:'📢 向粉丝说明',effect:{popularity:5,mental:2},flag:'transparent'}]},
-19:{text:'获得音乐节目面试机会，你？',options:[
+19:{text:'获得音乐节目mc面试机会，你？',options:[
 {text:'🎤 全力以赴',effect:{vocal:6,dance:4,popularity:8},flag:'daredevil'},
 {text:'🧘 平常心',effect:{mental:6,vocal:3},flag:'calm'},
-{text:'👥 邀请朋友合作',effect:{popularity:5,mental:3},flag:'collaborator'},
-{text:'🎨 原创歌曲',effect:{rap:5,vocal:4,popularity:6},flag:'original'}]},
+{text:'👥 邀请朋友同去',effect:{popularity:5,mental:3},flag:'collaborator'},
+{text:'🎨 研究之前的mc前辈',effect:{rap:5,vocal:4,popularity:6},flag:'original'}]},
 20:{text:'广告代言机会，牺牲一周训练。你？',options:[
-{text:'💰 接受代言',effect:{popularity:10,stamina:-3,mental:1},flag:'commercial'},
+{text:'💰 接受代言',effect:{popularity:6,stamina:-3,mental:1},flag:'commercial'},
 {text:'📚 拒绝专注',effect:{vocal:4,dance:4,rap:4,mental:2},flag:'focus'},
 {text:'🗓️ 协商时间',effect:{popularity:5,stamina:-1,mental:3},flag:'negotiator'},
-{text:'📸 代言+补训练',effect:{popularity:7,stamina:-5,mental:2},flag:'multitasker'}]},
+{text:'📸 代言+补训练',effect:{popularity:5,stamina:-5,mental:2},flag:'multitasker'}]},
 21:{text:'感觉进入瓶颈期，你打算？',options:[
 {text:'🧘 暂停反思',effect:{mental:6,stamina:2},flag:'reflective'},
 {text:'🏋️ 加大强度',effect:{dance:4,vocal:4,stamina:-6},flag:'intense'},
-{text:'👨‍🏫 外部导师',effect:{vocal:3,dance:3,mental:4},flag:'mentee'},
-{text:'🎨 新艺术风格',effect:{rap:4,visual:3,mental:3},flag:'experimental'}]},
-22:{text:'为粉丝做线上直播，你分享什么？',options:[
+{text:'👨‍🏫 寻找外部导师',effect:{vocal:3,dance:3,mental:4},flag:'mentee'},
+{text:'🎨 尝试新风格',effect:{rap:4,visual:3,mental:3},flag:'experimental'}]},
+22:{text:'为粉丝做线上直播，你准备做什么？',options:[
 {text:'🎤 现场演唱',effect:{vocal:4,popularity:6},flag:'singerlive'},
 {text:'💃 跳舞挑战',effect:{dance:4,popularity:5},flag:'dancelive'},
 {text:'🗣️ 聊天谈心',effect:{popularity:6,mental:3},flag:'chatty'},
 {text:'🎁 抽奖回馈',effect:{popularity:7,mental:2},flag:'generous'}]},
-23:{text:'海外研修一个月，你决定？',options:[
+23:{text:'公司安排你海外研修一个月，你决定？',options:[
 {text:'🌍 吸收潮流文化',effect:{dance:6,rap:4,visual:5},flag:'global'},
 {text:'🎤 闭关练唱功',effect:{vocal:8,mental:3,stamina:-3},flag:'vocal_focus'},
 {text:'🤝 结交音乐人',effect:{popularity:6,mental:4,rap:3},flag:'networker'},
 {text:'📸 拍vlog',effect:{popularity:5,visual:3,mental:2},flag:'vlogger'}]},
-24:{text:'回国后发现风格不符，你？',options:[
+24:{text:'回国后发现海外和国内风格不符，你？',options:[
 {text:'🎨 坚持自我',effect:{rap:4,vocal:4,popularity:3},flag:'individualist'},
 {text:'🤝 主动融合',effect:{mental:5,popularity:3},flag:'adaptable'},
 {text:'📚 学习前辈',effect:{dance:3,vocal:3,mental:3},flag:'observer'},
@@ -292,46 +292,46 @@ var STORY_EVENTS = {
 {text:'🤝 推荐朋友',effect:{popularity:3,mental:4},flag:'selfless'},
 {text:'✍️ 改编风格',effect:{rap:4,vocal:4,mental:3},flag:'remix'},
 {text:'📱 发试听测反应',effect:{popularity:5,mental:2},flag:'teaser'}]},
-28:{text:'团综拍摄，你希望担任什么角色？',options:[
-{text:'👑 队长',effect:{mental:5,popularity:4},flag:'leader'},
+28:{text:'公开练习生综艺拍摄，你希望担任什么角色？',options:[
+{text:'👑 leader',effect:{mental:5,popularity:4},flag:'leader'},
 {text:'😂 搞笑担当',effect:{popularity:6,mental:3},flag:'funny'},
 {text:'🎨 创意担当',effect:{rap:3,visual:3,mental:4},flag:'creator'},
 {text:'🧘 倾听者',effect:{mental:6,popularity:2},flag:'caring'}]},
 29:{text:'出道组选拔，名额有限。你的策略？',options:[
-{text:'👑 领导力',effect:{dance:4,vocal:4,popularity:8},flag:'leader'},
-{text:'🎯 杀手锏',effect:{visual:6,vocal:5,rap:5},flag:'ace'},
-{text:'🧘 平常心',effect:{mental:8,stamina:4},flag:'zen'},
-{text:'🤝 团队协作',effect:{popularity:6,mental:4},flag:'team'}]},
+{text:'👑 展示领导力',effect:{dance:4,vocal:4,popularity:8},flag:'leader'},
+{text:'🎯 努力提高实力',effect:{visual:6,vocal:5,rap:5},flag:'ace'},
+{text:'🧘 放平心态',effect:{mental:8,stamina:4},flag:'zen'},
+{text:'🤝 和关系好的练习生协作',effect:{popularity:6,mental:4},flag:'team'}]},
 30:{text:'出道组名单公布前夕，紧张失眠。你？',options:[
 {text:'😴 强迫入睡',effect:{stamina:5,mental:3},flag:'restful'},
 {text:'📱 和粉丝互动',effect:{popularity:4,mental:2},flag:'connected'},
 {text:'🎵 听音乐放空',effect:{mental:5,vocal:1},flag:'musiclover'},
 {text:'✍️ 写日记',effect:{mental:6},flag:'writer'}]},
-31:{text:'成功入选出道组，需竞争中心位置。你？',options:[
+31:{text:'成功入选出道组，需竞争center位置。你？',options:[
 {text:'💪 公平竞争',effect:{dance:5,vocal:5,mental:3},flag:'competitor'},
-{text:'🤝 双赢方案',effect:{mental:6,popularity:3},flag:'diplomat'},
+{text:'🤝 双c方案',effect:{mental:6,popularity:3},flag:'diplomat'},
 {text:'😌 退让副位',effect:{mental:4,popularity:-1},flag:'humble'},
-{text:'🎤 魅力争取',effect:{popularity:6,visual:3},flag:'charismatic'}]},
+{text:'🎤 投票选举',effect:{popularity:6,visual:3},flag:'charismatic'}]},
 32:{text:'出道前最后公演，你希望什么概念？',options:[
-{text:'🔥 霸气酷炫',effect:{dance:6,popularity:8,mental:2},flag:'charisma'},
-{text:'☀️ 清新治愈',effect:{vocal:6,mental:6,popularity:6},flag:'healing'},
+{text:'🔥 girlcrush',effect:{dance:6,popularity:8,mental:2},flag:'charisma'},
+{text:'☀️ 温柔治愈',effect:{vocal:6,mental:6,popularity:6},flag:'healing'},
 {text:'🎨 破格实验',effect:{rap:5,vocal:5,visual:5,popularity:4},flag:'artistic'},
-{text:'💖 深情告白',effect:{popularity:9,mental:5},flag:'heartfelt'}]},
+{text:'💖 甜美少女',effect:{popularity:9,mental:5},flag:'heartfelt'}]},
 33:{text:'出道在即，身体发出警告。你如何平衡？',options:[
 {text:'💊 咬牙坚持',effect:{stamina:-6,mental:4},flag:'tough'},
 {text:'🧘 调整恢复',effect:{stamina:5,mental:5},flag:'wise'},
 {text:'👨‍⚕️ 看医生',effect:{stamina:4,mental:3},flag:'prudent'},
-{text:'📱 发动态',effect:{popularity:4,mental:2},flag:'open'}]},
-34:{text:'出道曲录制，制作人不满意。你？',options:[
+{text:'📱 发ig卖惨',effect:{popularity:4,mental:2},flag:'open'}]},
+34:{text:'出道曲反复录制，制作人还是不满意。你？',options:[
 {text:'🎤 虚心反复录',effect:{vocal:5,mental:3},flag:'perfectionist'},
 {text:'💪 提出见解',effect:{rap:4,mental:4},flag:'collaborative'},
 {text:'😤 坚持不妥协',effect:{mental:3,popularity:-1},flag:'stubborn'},
 {text:'📚 回去练习',effect:{vocal:4,stamina:-2},flag:'persistent'}]},
-35:{text:'决赛舞台，你心中最强烈的念头是？',options:[
-{text:'🏆 成为传奇',effect:{popularity:15,mental:10},flag:'legend'},
-{text:'💖 感谢粉丝',effect:{popularity:12,mental:15},flag:'grateful'},
-{text:'🎭 享受舞台',effect:{vocal:8,dance:8,visual:8},flag:'artist'},
-{text:'🌟 梦想成真',effect:{popularity:10,mental:10},flag:'dreamer'}]}
+35:{text:'出道初舞台，你心中最强烈的念头是？',options:[
+{text:'🏆 我要成为kpop的传奇',effect:{popularity:8,mental:8},flag:'legend'},
+{text:'💖 感谢从练习生时期就陪伴自己的粉丝',effect:{popularity:6,mental:7},flag:'grateful'},
+{text:'🎭 享受舞台，心无旁骛',effect:{vocal:8,dance:8,visual:8},flag:'artist'},
+{text:'🌟 终于在这一刻梦想成真',effect:{popularity:8,mental:8},flag:'dreamer'}]}
 };
 
 // ========== 辅助函数 ==========
