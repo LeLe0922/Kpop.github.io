@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 KPOP练习生 · 三年之约</title>
+    <title>🌸 韩系练习生 · 三年之约</title>
     <style>
-        /* ---------- 全局重置 & 奶油风格 ---------- */
+        /* ---------- 奶油韩系风格 ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Segoe UI', 'PingFang SC', 'Malgun Gothic', sans-serif;
-            background: #fcf6f0; /* 奶油基底 */
+            background: #fcf6f0;
             color: #4a3b3b;
             padding: 20px;
             min-height: 100vh;
@@ -23,20 +23,16 @@
             align-items: flex-start;
         }
 
-        /* 主容器 — 卡片 */
         .app {
             max-width: 1100px;
             width: 100%;
             background: rgba(255, 249, 245, 0.85);
-            backdrop-filter: blur(2px);
             border-radius: 48px 48px 32px 32px;
             padding: 28px 30px 40px;
-            box-shadow: 0 20px 60px rgba(210, 170, 160, 0.25), 0 4px 20px rgba(255, 220, 210, 0.3);
+            box-shadow: 0 20px 60px rgba(210, 170, 160, 0.25);
             border: 1px solid #ffede8;
-            transition: all 0.3s;
         }
 
-        /* 顶部标题 */
         .header {
             display: flex;
             justify-content: space-between;
@@ -73,7 +69,6 @@
             font-weight: 600;
         }
 
-        /* 个人信息 + 雷达图 双栏布局 */
         .profile-radar-row {
             display: flex;
             flex-wrap: wrap;
@@ -83,7 +78,6 @@
             border-radius: 32px;
             padding: 20px 22px;
             border: 1px solid #f7e6df;
-            box-shadow: inset 0 1px 8px rgba(255, 235, 225, 0.6);
         }
 
         .profile-card {
@@ -112,7 +106,6 @@
             width: 160px;
             border: 1px solid #eedad2;
             outline: none;
-            transition: 0.2s;
         }
 
         .profile-card .name-area input:focus {
@@ -167,7 +160,6 @@
             display: block;
         }
 
-        /* 数值条区域 */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -215,14 +207,12 @@
             text-align: right;
         }
 
-        /* 主要交互区 (日程安排 + 剧情) */
         .interaction-area {
             background: #fffaf7;
             border-radius: 32px;
             padding: 24px 26px 30px;
             border: 1px solid #f7e6df;
             margin-top: 8px;
-            box-shadow: 0 4px 20px rgba(200, 170, 160, 0.1);
         }
 
         .phase-title {
@@ -243,7 +233,6 @@
             font-size: 15px;
         }
 
-        /* 日程按钮组 */
         .schedule-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -278,7 +267,6 @@
             transform: none;
         }
 
-        /* 剧情文本 & 选项 */
         .story-box {
             background: #fff7f3;
             border-radius: 24px;
@@ -318,7 +306,6 @@
         .story-options button:hover {
             background: #f5ddd4;
             border-color: #caaaa0;
-            transform: scale(1.02);
         }
 
         .story-options button:disabled {
@@ -363,7 +350,6 @@
             background: #e2c7bb;
         }
 
-        /* 结局特别样式 */
         .ending-title {
             font-size: 28px;
             font-weight: 800;
@@ -375,7 +361,6 @@
             line-height: 1.9;
         }
 
-        /* 响应式 */
         @media (max-width: 700px) {
             .app {
                 padding: 18px 14px;
@@ -399,7 +384,6 @@
 </head>
 <body>
     <div class="app" id="app">
-        <!-- 头部 -->
         <div class="header">
             <h1>🌸 练习生 · 三年之约</h1>
             <div class="meta-info">
@@ -408,7 +392,6 @@
             </div>
         </div>
 
-        <!-- 个人信息 + 雷达图 -->
         <div class="profile-radar-row">
             <div class="profile-card">
                 <div class="name-area">
@@ -429,19 +412,14 @@
             </div>
         </div>
 
-        <!-- 数值条 -->
-        <div class="stats-grid" id="statsGrid">
-            <!-- 由 JS 动态生成，便于维护 -->
-        </div>
+        <div class="stats-grid" id="statsGrid"></div>
 
-        <!-- 交互区 -->
         <div class="interaction-area" id="interactionArea">
             <div class="phase-title">
                 <span>🗓️ <span id="monthYear">第 1 年 · 1 月</span></span>
                 <span class="month-badge" id="phaseBadge">📋 安排日程</span>
             </div>
 
-            <!-- 日程按钮 -->
             <div class="schedule-buttons" id="scheduleButtons">
                 <button data-action="dance">💃 舞蹈</button>
                 <button data-action="vocal">🎤 声乐</button>
@@ -452,13 +430,11 @@
                 <button data-action="mental">🧠 心理训练</button>
             </div>
 
-            <!-- 剧情区域 -->
             <div class="story-box" id="storyBox">
                 <div class="story-text" id="storyText">👋 欢迎来到 DreamHaus！<br>作为新入社的练习生，你即将开始为期三年的逐梦之旅。请先安排你第一个月的训练计划吧！</div>
                 <div class="story-options" id="storyOptions"></div>
             </div>
 
-            <!-- 反馈 -->
             <div class="feedback-toast" id="feedbackToast">✨ 点击日程安排你的本月计划</div>
             <div class="reset-area">
                 <button class="reset-btn" onclick="resetGame()">🔄 重新开始</button>
@@ -467,9 +443,7 @@
     </div>
 
     <script>
-        // ============================================================
-        //  1. 状态定义
-        // ============================================================
+        // ---------- 核心状态 ----------
         const STAT_KEYS = ['vocal', 'dance', 'rap', 'visual', 'stamina', 'mental', 'popularity'];
         const STAT_LABELS = {
             vocal: '唱功',
@@ -484,7 +458,7 @@
 
         let state = {
             name: '林娜恩',
-            month: 0, // 0 ~ 35
+            month: 0,
             stats: {
                 vocal: 20,
                 dance: 20,
@@ -494,17 +468,16 @@
                 mental: 45,
                 popularity: 10
             },
-            flags: [], // 隐藏标签
+            flags: [],
             gameOver: false,
             phase: 'schedule', // 'schedule' | 'story' | 'ending'
-            pendingStory: null, // 存储即将触发的故事
+            pendingStory: null,
             storyChosen: false,
         };
 
-        // ----- 预置剧情事件 (按月触发) -----
+        // ---------- 预置剧情 ----------
         const STORY_EVENTS = {
-            0: { // 1月
-                title: '入社初印象',
+            0: {
                 text: '第一天踏入公司，你看到墙上挂满了前辈的海报。这时，负责你的经纪人走过来，问你最想成为哪种类型的艺人？',
                 options: [
                     { text: '全能实力派', effect: { vocal: 3, dance: 3, rap: 3, mental: 2 }, flag: 'allrounder' },
@@ -512,7 +485,7 @@
                     { text: '创作型歌手', effect: { vocal: 4, rap: 4, mental: 3 }, flag: 'creator' },
                 ]
             },
-            2: { // 3月 第一次月评
+            2: {
                 text: '第一次月末评价！你需要在社长面前表演。你选择展示什么？',
                 options: [
                     { text: '高难度舞蹈', effect: { dance: 6, stamina: -3, popularity: 4 }, flag: 'dance_master' },
@@ -520,7 +493,7 @@
                     { text: '自作曲rap', effect: { rap: 6, vocal: 2, popularity: 2 }, flag: 'rap_genius' },
                 ]
             },
-            5: { // 6月 粉丝见面会
+            5: {
                 text: '公司安排了小型粉丝见面会。现场粉丝很热情，但也有几个刁钻的问题。你怎么应对？',
                 options: [
                     { text: '真诚回答，展现真实自我', effect: { mental: 5, popularity: 6 }, flag: 'honest' },
@@ -528,7 +501,7 @@
                     { text: '高冷简洁，保持神秘', effect: { visual: 5, popularity: 2, mental: -2 }, flag: 'mysterious' },
                 ]
             },
-            11: { // 12月 年末特别舞台
+            11: {
                 text: '年末庆典，你被选为特别舞台的候选人。但排练时间紧张，你选择？',
                 options: [
                     { text: '拼尽全力，争取C位', effect: { dance: 8, vocal: 5, stamina: -8, popularity: 10 }, flag: 'hard_worker' },
@@ -536,7 +509,7 @@
                     { text: '和队友合作，设计亮点', effect: { visual: 3, popularity: 6, mental: 4 }, flag: 'teamplayer' },
                 ]
             },
-            17: { // 18月 中间评价
+            17: {
                 text: '中期考核，导师直言你的某项短板非常明显。你会如何回应？',
                 options: [
                     { text: '虚心接受，疯狂加练', effect: { stamina: -5, mental: 5, dance: 5, vocal: 5 }, flag: 'humble' },
@@ -544,7 +517,7 @@
                     { text: '请求导师给予具体指导', effect: { vocal: 3, dance: 3, rap: 3, mental: 4 }, flag: 'studious' },
                 ]
             },
-            23: { // 24月 海外研修
+            23: {
                 text: '公司派你去海外研修一个月。面对陌生的环境和语言，你决定？',
                 options: [
                     { text: '疯狂吸收海外潮流文化', effect: { dance: 6, rap: 4, visual: 5 }, flag: 'global' },
@@ -552,7 +525,7 @@
                     { text: '结交当地音乐人，拓展人脉', effect: { popularity: 6, mental: 4, rap: 3 }, flag: 'networker' },
                 ]
             },
-            29: { // 30月 出道预备组选拔
+            29: {
                 text: '终于到了决定出道组的时刻！社长告诉你，出道组名额有限。你的策略是？',
                 options: [
                     { text: '展现最强领导力，带动全场', effect: { dance: 4, vocal: 4, popularity: 8 }, flag: 'leader' },
@@ -560,7 +533,7 @@
                     { text: '保持平常心，相信积累', effect: { mental: 8, stamina: 4 }, flag: 'zen' },
                 ]
             },
-            35: { // 36月 最终决赛夜
+            35: {
                 text: '最后一战！你站上决赛舞台，聚光灯下，你心中最强烈的念头是？',
                 options: [
                     { text: '我要成为这个时代的传奇', effect: { popularity: 15, mental: 10 }, flag: 'legend' },
@@ -570,7 +543,6 @@
             }
         };
 
-        // ----- 每个月默认剧情（如果没有特殊事件） -----
         function getDefaultStory(month) {
             const m = month + 1;
             const year = Math.ceil(m / 12);
@@ -591,30 +563,29 @@
             };
         }
 
-        // ============================================================
-        //  2. UI 渲染函数
-        // ============================================================
-        function getStatValue(key) { return Math.min(100, Math.max(0, state.stats[key] || 0)); }
+        // ---------- 辅助函数 ----------
+        function getStatValue(key) {
+            return Math.min(100, Math.max(0, state.stats[key] || 0));
+        }
 
+        // ---------- 渲染：数值条 ----------
         function renderStats() {
             const grid = document.getElementById('statsGrid');
             grid.innerHTML = '';
             STAT_KEYS.forEach(key => {
                 const val = getStatValue(key);
-                const pct = val;
                 const div = document.createElement('div');
                 div.className = 'stat-item';
                 div.innerHTML = `
                     <span class="label">${STAT_LABELS[key]}</span>
-                    <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${STAT_COLORS[STAT_KEYS.indexOf(key)]};"></div></div>
+                    <div class="bar-bg"><div class="bar-fill" style="width:${val}%;background:${STAT_COLORS[STAT_KEYS.indexOf(key)]};"></div></div>
                     <span class="val">${Math.round(val)}</span>
                 `;
                 grid.appendChild(div);
             });
-            // 更新人气和体力标签
             document.getElementById('popularityLabel').textContent = Math.round(getStatValue('popularity'));
             document.getElementById('staminaLabel').textContent = Math.round(getStatValue('stamina'));
-            // 更新等级
+
             const avg = STAT_KEYS.filter(k => k !== 'popularity' && k !== 'stamina' && k !== 'mental')
                 .reduce((s, k) => s + getStatValue(k), 0) / 4;
             let rank = 'F';
@@ -626,84 +597,89 @@
             document.getElementById('rankDisplay').textContent = rank;
         }
 
+        // ---------- 渲染：雷达图 ----------
         function renderRadar() {
-            const canvas = document.getElementById('radarCanvas');
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width,
-                h = canvas.height;
-            ctx.clearRect(0, 0, w, h);
+            try {
+                const canvas = document.getElementById('radarCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
 
-            const centerX = w / 2,
-                centerY = h / 2 + 6;
-            const radius = Math.min(w, h) * 0.38;
-            const keys = ['vocal', 'dance', 'rap', 'visual', 'stamina', 'mental', 'popularity'];
-            const n = keys.length;
-            const angles = keys.map((_, i) => (i / n) * 2 * Math.PI - Math.PI / 2);
+                const w = canvas.width,
+                    h = canvas.height;
+                ctx.clearRect(0, 0, w, h);
 
-            // 绘制网格
-            ctx.strokeStyle = '#f0ddd5';
-            ctx.lineWidth = 1.2;
-            for (let level = 1; level <= 5; level++) {
-                const r = (radius / 5) * level;
+                const centerX = w / 2,
+                    centerY = h / 2 + 6;
+                const radius = Math.min(w, h) * 0.38;
+                const keys = STAT_KEYS;
+                const n = keys.length;
+                const angles = keys.map((_, i) => (i / n) * 2 * Math.PI - Math.PI / 2);
+
+                // 网格
+                ctx.strokeStyle = '#f0ddd5';
+                ctx.lineWidth = 1.2;
+                for (let level = 1; level <= 5; level++) {
+                    const r = (radius / 5) * level;
+                    ctx.beginPath();
+                    for (let i = 0; i < n; i++) {
+                        const x = centerX + r * Math.cos(angles[i]);
+                        const y = centerY + r * Math.sin(angles[i]);
+                        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+                // 轴线
+                for (let i = 0; i < n; i++) {
+                    const x = centerX + radius * Math.cos(angles[i]);
+                    const y = centerY + radius * Math.sin(angles[i]);
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.lineTo(x, y);
+                    ctx.strokeStyle = '#f0ddd5';
+                    ctx.stroke();
+                    // 标签
+                    const labelR = radius + 18;
+                    const lx = centerX + labelR * Math.cos(angles[i]);
+                    const ly = centerY + labelR * Math.sin(angles[i]);
+                    ctx.fillStyle = '#b29084';
+                    ctx.font = '11px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(STAT_LABELS[keys[i]], lx, ly);
+                }
+
+                // 数据
+                const values = keys.map(k => getStatValue(k) / 100);
                 ctx.beginPath();
                 for (let i = 0; i < n; i++) {
+                    const r = radius * values[i];
                     const x = centerX + r * Math.cos(angles[i]);
                     const y = centerY + r * Math.sin(angles[i]);
                     i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
                 }
                 ctx.closePath();
-                ctx.stroke();
-            }
-            // 轴线
-            for (let i = 0; i < n; i++) {
-                const x = centerX + radius * Math.cos(angles[i]);
-                const y = centerY + radius * Math.sin(angles[i]);
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.lineTo(x, y);
-                ctx.strokeStyle = '#f0ddd5';
-                ctx.stroke();
-                // 标签
-                const labelR = radius + 18;
-                const lx = centerX + labelR * Math.cos(angles[i]);
-                const ly = centerY + labelR * Math.sin(angles[i]);
-                ctx.fillStyle = '#b29084';
-                ctx.font = '11px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(STAT_LABELS[keys[i]], lx, ly);
-            }
-
-            // 绘制数据
-            const values = keys.map(k => Math.min(100, getStatValue(k)) / 100);
-            ctx.beginPath();
-            for (let i = 0; i < n; i++) {
-                const r = radius * values[i];
-                const x = centerX + r * Math.cos(angles[i]);
-                const y = centerY + r * Math.sin(angles[i]);
-                i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-            }
-            ctx.closePath();
-            ctx.fillStyle = 'rgba(221, 160, 145, 0.35)';
-            ctx.fill();
-            ctx.strokeStyle = '#d4877a';
-            ctx.lineWidth = 2.5;
-            ctx.stroke();
-            // 描点
-            for (let i = 0; i < n; i++) {
-                const r = radius * values[i];
-                const x = centerX + r * Math.cos(angles[i]);
-                const y = centerY + r * Math.sin(angles[i]);
-                ctx.beginPath();
-                ctx.arc(x, y, 5, 0, 2 * Math.PI);
-                ctx.fillStyle = '#d4877a';
+                ctx.fillStyle = 'rgba(221, 160, 145, 0.35)';
                 ctx.fill();
-                ctx.shadowBlur = 6;
-                ctx.shadowColor = '#ecc6ba';
+                ctx.strokeStyle = '#d4877a';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+                for (let i = 0; i < n; i++) {
+                    const r = radius * values[i];
+                    const x = centerX + r * Math.cos(angles[i]);
+                    const y = centerY + r * Math.sin(angles[i]);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                    ctx.fillStyle = '#d4877a';
+                    ctx.fill();
+                }
+            } catch (e) {
+                console.warn('雷达图绘制出错（不影响核心功能）:', e);
             }
-            ctx.shadowBlur = 0;
         }
 
+        // ---------- 更新UI ----------
         function updateUI() {
             renderStats();
             renderRadar();
@@ -716,9 +692,7 @@
             document.getElementById('playerName').value = state.name;
         }
 
-        // ============================================================
-        //  3. 核心逻辑
-        // ============================================================
+        // ---------- 应用效果 ----------
         function applyEffects(effects) {
             let msg = [];
             for (let key in effects) {
@@ -743,6 +717,7 @@
             }
         }
 
+        // ---------- 核心交互 ----------
         function handleSchedule(action) {
             if (state.gameOver || state.phase !== 'schedule') return;
 
@@ -791,10 +766,9 @@
             document.getElementById('feedbackToast').textContent = `✅ ${baseMsg} → ${feedback}`;
             updateUI();
 
-            // 进入剧情阶段
             state.phase = 'story';
             document.getElementById('phaseBadge').textContent = '🎬 剧情选择';
-            document.getElementById('scheduleButtons').querySelectorAll('button').forEach(b => b.disabled = true);
+            document.querySelectorAll('#scheduleButtons button').forEach(b => b.disabled = true);
             triggerStory();
         }
 
@@ -830,7 +804,6 @@
             if (!story || !story.options || !story.options[idx]) return;
 
             const choice = story.options[idx];
-            // 应用效果
             if (choice.effect) {
                 for (let k in choice.effect) {
                     if (state.stats.hasOwnProperty(k)) {
@@ -845,9 +818,7 @@
             document.getElementById('feedbackToast').textContent = `📖 剧情选择: ${choice.text} → ${feedback}`;
             updateUI();
 
-            // 禁用所有剧情按钮
-            document.getElementById('storyOptions').querySelectorAll('button').forEach(b => b.disabled = true);
-            // 延迟结束月份
+            document.querySelectorAll('#storyOptions button').forEach(b => b.disabled = true);
             setTimeout(() => {
                 finishMonth();
             }, 900);
@@ -858,26 +829,22 @@
             state.storyChosen = false;
             state.phase = 'schedule';
             document.getElementById('phaseBadge').textContent = '📋 安排日程';
-            document.getElementById('scheduleButtons').querySelectorAll('button').forEach(b => b.disabled = false);
+            document.querySelectorAll('#scheduleButtons button').forEach(b => b.disabled = false);
             document.getElementById('storyOptions').innerHTML = '';
 
             if (state.month >= 36) {
-                // 游戏结束
                 state.gameOver = true;
                 showEnding();
                 return;
             }
 
-            // 随机小事件提示
             const randomMsg = ['🌈 新的一月，继续加油！', '☕ 公司咖啡厅出了新品～', '📈 上个月表现不错，继续努力！', '🌙 夜深了，但梦想还在发光。'];
             document.getElementById('storyText').textContent = randomMsg[Math.floor(Math.random() * randomMsg.length)] + '\n请选择本月的训练日程。';
             document.getElementById('feedbackToast').textContent = '📅 新的一月，选择你的日程吧！';
             updateUI();
         }
 
-        // ============================================================
-        //  4. 结局系统 (8种)
-        // ============================================================
+        // ---------- 结局系统 ----------
         function showEnding() {
             const s = state.stats;
             const flags = state.flags;
@@ -890,7 +857,6 @@
             let desc = '三年的时光结束了...';
             let icon = '🌸';
 
-            // 判定逻辑 (综合考虑)
             const isHighAvg = avg > 70;
             const isLowMental = mental < 25;
             const isLowStamina = stamina < 20;
@@ -912,4 +878,31 @@
             } else if (isVocalKing && pop > 60) {
                 icon = '🎤';
                 title = '【天籁主唱】';
-                d
+                desc = '你的嗓音是上天赐予的礼物。你以主唱身份出道，每一首高音part都成为经典。你是音源强者，抒情曲的王者。';
+            } else if (isDanceKing && pop > 60) {
+                icon = '💃';
+                title = '【舞蹈机器】';
+                desc = '你的舞蹈实力让所有练习生望尘莫及。你以主舞身份出道，直拍数据断层第一。你是舞台的掌控者，被称为“人间舞蹈家”。';
+            } else if (isRapKing && pop > 60) {
+                icon = '🎧';
+                title = '【嘻哈鬼才】';
+                desc = '你的说唱flow独树一帜，歌词充满态度。你不仅成功出道，更成为队内的rap担和制作人。你打破了偶像的边界，被誉为“偶像界的黑泡之光”。';
+            } else if (isVisual && pop > 70) {
+                icon = '✨';
+                title = '【神颜门面】';
+                desc = '你的美貌是公司的王牌。你以门面担当出道，广告代言接到手软。你不仅是偶像，更是时尚圈的宠儿。';
+            } else if (isHighAvg && hasHardwork) {
+                icon = '🔥';
+                title = '【努力黑马】';
+                desc = '你并非天赋异禀，但你是最努力的那一个。你用汗水和毅力弥补了所有不足，最终成功出道。你的故事激励了无数人，你是“努力终有回报”的最佳代言。';
+            } else if (avg > 50 && pop > 50) {
+                icon = '🌟';
+                title = '【稳健出道组】';
+                desc = '你没有短板，也没有绝对的长板，但你是组合最需要的“万能胶”。你以中间名次出道，凭借稳定的发挥和好人缘，成为团队中不可或缺的一员。';
+            } else {
+                icon = '💫';
+                title = '【自由逐梦】';
+                desc = '你没能作为偶像出道，但这三年让你认清了自己的内心。你转作幕后制作人/独立歌手，你的音乐虽不大众，却深深打动了懂你的人。另一种人生，同样精彩。';
+            }
+
+            document.getElementById('phaseBadge').textContent = '🏁 结局';
