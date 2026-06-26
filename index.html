@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌸 练习生 · 三年之约</title>
+<title>🌸 kpop练习生 · 三年之约</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:#fcf6f0;color:#4a3b3b;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
@@ -100,7 +100,7 @@ body{font-family:'Segoe UI','PingFang SC','Malgun Gothic',sans-serif;background:
 
 <!-- 主游戏 -->
 <div class="app" id="gameApp">
-<div class="header"><h1>🌸 练习生 · 三年之约</h1><div class="meta-info"><div>📆 <span id="monthDisplay">1</span> / 36</div><div>🏷️ <span id="flagDisplay">新人</span></div></div></div>
+<div class="header"><h1>🌸 KPOP练习生 · 三年之约</h1><div class="meta-info"><div>📆 <span id="monthDisplay">1</span> / 36</div><div>🏷️ <span id="flagDisplay">新人</span></div></div></div>
 <div class="profile-radar-row">
 <div class="profile-card">
 <div class="name-area"><span class="name-display" id="playerNameDisplay">林娜恩</span><span class="badge">🎤 练习生</span></div>
@@ -422,13 +422,13 @@ function handleSchedule(action){
     if(state.gameOver || state.phase!=='schedule') return;
     var effects={}, baseMsg='';
     switch(action){
-        case'dance': effects={dance:6+Math.floor(Math.random()*4), stamina:-4, mental:1}; baseMsg='💃 练舞'; break;
-        case'vocal': effects={vocal:6+Math.floor(Math.random()*4), stamina:-3, mental:1}; baseMsg='🎤 练声'; break;
-        case'rap': effects={rap:6+Math.floor(Math.random()*4), stamina:-3, mental:1}; baseMsg='🎧 说唱'; break;
-        case'visual': effects={visual:7+Math.floor(Math.random()*3), popularity:2}; baseMsg='✨ 外貌'; break;
-        case'rest': effects={stamina:10+Math.floor(Math.random()*5), mental:6, popularity:-1}; baseMsg='🧘 休息'; break;
-        case'social': effects={popularity:8+Math.floor(Math.random()*5), mental:-3, visual:2}; baseMsg='📱 社交'; break;
-        case'mental': effects={mental:10+Math.floor(Math.random()*5), stamina:-2}; baseMsg='🧠 心理'; break;
+        case'dance': effects={dance:3+Math.floor(Math.random()*4), stamina:-4, mental:1}; baseMsg='💃 练舞'; break;
+        case'vocal': effects={vocal:3+Math.floor(Math.random()*4), stamina:-3, mental:1}; baseMsg='🎤 练声'; break;
+        case'rap': effects={rap:3+Math.floor(Math.random()*4), stamina:-3, mental:1}; baseMsg='🎧 说唱'; break;
+        case'visual': effects={visual:4+Math.floor(Math.random()*3), popularity:2}; baseMsg='✨ 外貌'; break;
+        case'rest': effects={stamina:5+Math.floor(Math.random()*5), mental:6, popularity:-1}; baseMsg='🧘 休息'; break;
+        case'social': effects={popularity:5+Math.floor(Math.random()*5), mental:-3, visual:2}; baseMsg='📱 社交'; break;
+        case'mental': effects={mental:5+Math.floor(Math.random()*5), stamina:-2}; baseMsg='🧠 心理'; break;
         default: return;
     }
     for(var k in effects){ if(state.stats.hasOwnProperty(k)){ var v=state.stats[k]+effects[k]; state.stats[k]=Math.min(100,Math.max(0,v)); } }
